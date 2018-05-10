@@ -1,0 +1,48 @@
+{
+  "pages":[
+    "pages/start/start",
+    "pages/index/index",
+    "pages/putout/putout",
+    "pages/personal/personal"
+  ],
+
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "南小二闲置物品交易信息发布平台",
+    "navigationBarTextStyle":"black"
+  },
+
+  "tabBar":{
+    "color":"#9DACB7",
+    "selectedColor":"#34B457",
+    "backgroundColor":"#F7F7F9",
+    "borderStyle": "black",
+    "position":"bottom",
+    "list":[{
+      "pagePath": "pages/index/index",
+      "iconPath": "images/nav/home-off.png",
+      "selectedIconPath": "images/nav/home-on.png",
+      "text": "首页"
+    },{
+      "pagePath": "pages/putout/putout",
+      "iconPath": "images/nav/order-off.png",
+      "selectedIconPath": "images/nav/order-on.png",
+      "text": "发布"
+    },{
+      "pagePath": "pages/personal/personal",
+      "iconPath": "images/nav/my-off.png",
+      "selectedIconPath": "images/nav/my-on.png",
+      "text": "我的"
+    }]
+  },
+
+  "networkTimeout":{
+    "request":30000,
+    "connectSocket":30000,
+    "uploadFile":30000,
+    "downloadFile":30000
+  },
+
+  "debug":true
+}
