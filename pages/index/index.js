@@ -23,7 +23,6 @@ Page({
     userInfo: {},
     swiperCurrent: 0,
     selectCurrent: 0,
-    categories: [],
     activeCategoryId: 0,
     goods: [],
     scrollTop: "0",
