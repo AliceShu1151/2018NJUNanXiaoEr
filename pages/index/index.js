@@ -47,6 +47,6 @@ Page({
     this.setData({
       activeCategoryId: e.currentTarget.id
     });
-    this.getGoodsList(this.data.activeCategoryId);
+    //this.getGoodsList(this.data.activeCategoryId);
   }
 })
