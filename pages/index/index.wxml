@@ -1,20 +1,20 @@
 <!--index.wxml-->
 <!--1px = 750/320 = 2.34rpx;-->
-<view class="container">
-  <view class="remind-box" wx:if="{{remind}}">
+<view class="remind-box" wx:if="{{remind}}">
     <image class="remind-img" src="/images/more/loading.gif"></image>
-  </view>
-  <block wx:else>
+</view>
+<block wx:else>
+<view class="container">
    <view class="swiper-container">
-        <swiper class="swiper_box" autoplay="true" interval="true" duration="1000" bindchange="swiperchange">
+        <swiper class="swiper_box" autoplay="true" interval="3000" duration="1000" bindchange="swiperchange">
             <block wx:for="{{banners}}" wx:key="id">
                 <swiper-item>
-                    <image bindtap="tapBanner" data-id="{{item.businessId}}" src="{{item.picUrl}}_m" class="slide-image" width="750rpx" height="300rpx"/>
+                    <image bindtap="tapBanner" id="{{item.businessId}}" src="{{item.picUrl}}" class="slide-image" width="750rpx" height="300rpx"/>
                 </swiper-item>
             </block>
         </swiper>
         <view class="dots">  
-            <block wx:for="{{banners}}" wx:key="unique">  
+            <block wx:for="{{banners}}" wx:key="businessId">  
                 <view class="dot{{index == swiperCurrent ? ' active' : ''}}"></view>  
             </block>  
         </view>  
@@ -49,16 +49,16 @@
     </view>
     
     <view class="goods-container">
-        <view class="goods-box" wx:for-items="{{goods}}" wx:key="{{index}}" bindtap="toDetailsTap" data-id="{{item.id}}">
+        <view class="goods-box" wx:for="{{goods}}" wx:key="{{index}}" bindtap="toDetailsTap" id="{{item.businessId}}">
            <view class="img-box">
-              <image src="{{item.pic}}_m" class="image" mode="aspectFill" lazy-load="true"/>
+              <image src="{{item.pic}}" class="image" mode="aspectFill" lazy-load="true"/>
            </view>
            <view class="goods-title">{{item.name}}</view>
            <view style='display:flex;'>
-            <view class="goods-price">¥ {{item.minPrice}}</view>
+            <view class="goods-price">¥ {{item.price}}</view>
            </view>           
         </view>
     </view>
     <view hidden="{{loadingMoreHidden ? true : false}}" class="no-more-goods">没有更多啦</view>
-  </block>
 </view>
+</block>
