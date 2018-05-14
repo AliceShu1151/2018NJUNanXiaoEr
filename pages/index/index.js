@@ -131,8 +131,12 @@ Page({
 		query.find().then(goodsTbl => {
 			goods = goodsTbl;
 			//res此时是一个二维数组
-			//this.setData({ goods: goods });
-			//console.log(goods);
+			/**岳翔 5-14
+			 * 注意：操作查询结果无法传值，只能在then()内进行操作
+			 * 就算是传给外层变量也会是Undefined
+			 * 可能与bmob异步查询机制有关（可以看到console.log不按顺序进行记录）
+			 * */
+			//
 			//打印总条数
 			for (let i = 0; i < goods.length; ++i) {
 				//每查询一次建一次Bmob对象
