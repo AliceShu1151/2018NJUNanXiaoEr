@@ -1,2 +1,46 @@
-<!--pages/personal/personal.wxml-->
-<text>pages/personal/personal.wxml</text>
+<view class="container">
+    <view class="userinfo">
+    <view class="userbaseinfo">
+       <view style='margin: 20rpx'>微信昵称：{{ userInfo.nickName }}</view> 
+      <!-- <view style='margin: 20rpx'>微信昵称：</view> -->
+      <view style='margin: 20rpx'>所在院系：</view>
+      <view style='margin: 20rpx'>联系方式：</view>
+    </view>
+		<image wx:if="{{userInfo && userInfo.avatarUrl}}" class="userinfo-avatar" src="{{ userInfo.avatarUrl }}" background-size="cover"></image> 
+	</view>
+
+
+  <view class="my-item">
+    <image src="/images/personal/2.png" class="logo"></image>
+    <navigator url="/pages/order-list/index" hover-class="navigator-hover">我发布的</navigator>
+  </view>
+
+  <view class="my-item">
+    <image src="/images/personal/1.png" class="logo"></image>
+    <navigator url="/pages/select-address/index" hover-class="navigator-hover">我卖出的</navigator>
+  </view>
+
+  <view class="my-item">
+    <image src="/images/personal/1.png" class="logo"></image>
+    <navigator url="/pages/mycoupons/index" hover-class="navigator-hover">我买到的</navigator>
+  </view>
+
+    <view class="my-item">
+    <image src="/images/personal/1.png" class="logo"></image>
+    <navigator url="/pages/mycoupons/index" hover-class="navigator-hover">我收藏的</navigator>
+  </view>
+
+    <view class="my-item">
+    <image src="/images/personal/1.png" class="logo"></image>
+    <navigator url="/pages/mycoupons/index" hover-class="navigator-hover">我关注的</navigator>
+  </view>
+
+    <view class="my-item">
+    <image src="/images/personal/1.png" class="logo"></image>
+    <navigator url="/pages/mycoupons/index" hover-class="navigator-hover">收到的评价</navigator>
+  </view>
+  
+  <view style="height:20rpx;background: #eee;width:100%;"></view>
+  <view class="version">@NJU 南小二</view>
+  <view style="height:20rpx;background: #eee;width:100%;"></view>
+</view>
