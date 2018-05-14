@@ -48,8 +48,8 @@ Page({
   },
   //获取用户信息
   userInfoHandler: function(e) {
-    app.globalData.userInfo = e.detail.rawData;
-    console.log(app.globalData.userInfo);
+    app.globalData.userInfo = e.detail.userInfo;
+    //console.log(app.globalData.userInfo);
   },
   /**
    * 对话框确认按钮点击事件
