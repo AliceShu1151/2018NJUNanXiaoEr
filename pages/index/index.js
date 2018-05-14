@@ -118,7 +118,7 @@ Page({
 		
 
 		//岳翔 5-13：初始化bmob
-		let Bmob = require("../../hydrogen-js-sdk-master/dist/Bmob-1.1.1.min.js");
+		let Bmob = require("../../utils/hydrogen-js-sdk-master/dist/Bmob-1.3.0.min.js");
 		Bmob.initialize("e663c7332cbc5d0c48349e5609048c99", "e24aad5768f2b86e7a86b6f5dea6bc65");
 
 		const query = Bmob.Query("goods");

@@ -1,2 +1,4 @@
 yingyingying
+<view>商品名:{{ name }}</view><!--瞎写的，实际不能渲染，商品页再说-->
+<view>价格:¥ {{ price }}</view>
 <view>{{businessId}}</view>
