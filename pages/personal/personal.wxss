@@ -1,7 +1,8 @@
 .container{
-  min-height: 100%;
+  display: flex;
+  padding: 0;
+  height: 100%;
   overflow: hidden;
-  overflow-y: hidden;
 }
 .userinfo {
 	display: flex;
@@ -22,9 +23,10 @@
 
 
 .userinfo-avatar {
-	width: 300rpx;
+	width: 330rpx;
 	height: 200rpx;
-	margin: 30rpx;
+  margin-top: 35rpx;
+	margin-right: 70rpx;
 	border-radius: 50%;
 }
 

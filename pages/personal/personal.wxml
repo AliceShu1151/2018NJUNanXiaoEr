@@ -1,13 +1,13 @@
 <view class="container">
     <view class="userinfo">
-    <view class="userbaseinfo">
-       <view style='margin: 20rpx'>微信昵称：{{ userInfo.nickName }}</view> 
-      <!-- <view style='margin: 20rpx'>微信昵称：</view> -->
-      <view style='margin: 20rpx'>所在院系：</view>
-      <view style='margin: 20rpx'>联系方式：</view>
-    </view>
-		<image wx:if="{{userInfo && userInfo.avatarUrl}}" class="userinfo-avatar" src="{{ userInfo.avatarUrl }}" background-size="cover"></image> 
-	</view>
+      <view class="userbaseinfo">
+        <view style='margin: 20rpx'>微信昵称：{{ userInfo.nickName }}</view> 
+        <!-- <view style='margin: 20rpx'>微信昵称：</view> -->
+        <view style='margin: 20rpx'>所在院系：</view>
+        <view style='margin: 20rpx'>联系方式：</view>
+      </view>
+		  <image wx:if="{{userInfo && userInfo.avatarUrl}}" class="userinfo-avatar" src="{{ userInfo.avatarUrl }}" background-size="cover"></image> 
+	   </view>
 
 
   <view class="my-item">

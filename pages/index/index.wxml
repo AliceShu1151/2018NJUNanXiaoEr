@@ -9,7 +9,7 @@
             <swiper class="swiper_box" autoplay="true" interval="3000" duration="1000" bindchange="swiperchange">
                 <block wx:for="{{banners}}" wx:key="id">
                     <swiper-item>
-                        <image bindtap="tapBanner" id="{{item.timeStamp}}" src="{{item.img}}" class="slide-image" width="750rpx" height="300rpx" />
+                        <image bindtap="tapBanner" id="{{item.timeStamp}}" src="{{item.img}}" mode="aspectFit" width="300rpx" height="300rpx" />
                     </swiper-item>
                 </block>
             </swiper>
@@ -56,7 +56,7 @@
 		<view class="goods-container">
             <view class="goods-box" wx:for="{{ goods }}" wx:key="{{ index }}" bindtap="toDetailsTap" id="{{ item.timeStamp }}">
                 <view class="img-box">
-                    <image src="{{ item.img }}" class="image" mode="aspectFill" lazy-load="true" />
+                    <image src="{{ item.img }}" class="image" mode="aspectFit" lazy-load="true" />
                 </view>
                 <view class="goods-title">{{ item.name }}</view>
                 <view style='display:flex;'>
