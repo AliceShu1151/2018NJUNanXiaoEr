@@ -9,12 +9,12 @@
             <swiper class="swiper_box" autoplay="true" interval="3000" duration="1000" bindchange="swiperchange">
                 <block wx:for="{{banners}}" wx:key="id">
                     <swiper-item>
-                        <image bindtap="tapBanner" id="{{item.businessId}}" src="{{item.picUrl}}" class="slide-image" width="750rpx" height="300rpx" />
+                        <image bindtap="tapBanner" id="{{item.timeStamp}}" src="{{item.img}}" class="slide-image" width="750rpx" height="300rpx" />
                     </swiper-item>
                 </block>
             </swiper>
             <view class="dots">
-                <block wx:for="{{banners}}" wx:key="businessId">
+                <block wx:for="{{banners}}" wx:key="timeStamp">
                     <view class="dot{{index == swiperCurrent ? ' active' : ''}}"></view>
                 </block>
             </view>

@@ -1,11 +1,13 @@
 //index.js
 //获取应用实例
 var app = getApp()
+
 Page({
 	data: {
 		//数据初始化定义
 		remind: '加载中',
-		goods: [],
+		goods: {},
+		banners: {},
 		noticeList: {
 			dataList: ['嘻嘻嘻', '嘤嘤嘤', '嘿嘿嘿']
 		},
@@ -32,16 +34,11 @@ Page({
 	//页面加载时的初始化操作
 	onLoad: function () {
 		//console.log(app.globalData.userInfo);
-		var that = this;
+
+		//加载轮播图
+		this.renderBanners();
 		//加载全部商品
-		that.getGoodsList(0);
-		//实际开发时为轮播图获取接口
-		that.setData({
-			banners: [
-				{ businessId: 0, picUrl: '../../images/goods01.png' },
-				{ businessId: 1, picUrl: '../../images/goods02.png' }
-			]
-		})
+		this.getGoodsList(0);
 	},
 
 	//页面初次渲染完成后的操作
@@ -104,30 +101,48 @@ Page({
 		})
 	},
 
+	//轮播图渲染
+	renderBanners: function(){
+		let Bmob = require("../../utils/hydrogen-js-sdk-master/dist/Bmob-1.3.0.min.js");
+		Bmob.initialize("e663c7332cbc5d0c48349e5609048c99", "e24aad5768f2b86e7a86b6f5dea6bc65");
+		const query = Bmob.Query("goods");
+		query.select("timeStamp");
+		query.limit(3); //banners数量
+		query.find().then(goodsTbl => {
+			let banners = goodsTbl;
+			this.setData({ banners: banners });
+			for (let i = 0; i < banners.length; ++i) {
+				const queryImg = Bmob.Query("goodsImgs");
+				let timeStamp = banners[i]["timeStamp"]
+				queryImg.equalTo("goods", "==", timeStamp)
+				queryImg.order("createdAt");
+				queryImg.limit(1);
+				queryImg.find().then(goodsImgsTbl => {
+					let imgUrl = goodsImgsTbl[0]["img"]["url"];
+					banners[i]["img"] = imgUrl;
+					this.setData({ banners: banners });
+				});
+			}
+		});
+		
+	},
+
 	//商品加载
 	getGoodsList: function (categoryId) {
 		/**
 		 * 岳翔 5-13：
 		 * 测试demo
 		 */
-		
+		let Bmob = require("../../utils/hydrogen-js-sdk-master/dist/Bmob-1.3.0.min.js");
+		Bmob.initialize("e663c7332cbc5d0c48349e5609048c99", "e24aad5768f2b86e7a86b6f5dea6bc65");
+		const query = Bmob.Query("goods");
 		let goods = this.data.goods;
-
 		let categoryNameList = new Array("全部", "化妆品", "服饰装扮", "食品饮料", "演出门票", "数码电子", "其他");
 		let	categoryName = categoryNameList[categoryId];
 		
-
-		//岳翔 5-13：初始化bmob
-		let Bmob = require("../../utils/hydrogen-js-sdk-master/dist/Bmob-1.3.0.min.js");
-		Bmob.initialize("e663c7332cbc5d0c48349e5609048c99", "e24aad5768f2b86e7a86b6f5dea6bc65");
-
-		const query = Bmob.Query("goods");
-
-		console.log("查询开始查询开始查询开始查询开始查询开始");
 		if(categoryName != "全部"){
 			query.equalTo("category", "==", categoryName);
 		}
-		
 		query.find().then(goodsTbl => {
 			goods = goodsTbl;
 			//res此时是一个二维数组
