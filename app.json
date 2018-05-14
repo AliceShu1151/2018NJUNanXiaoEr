@@ -5,7 +5,9 @@
     "pages/putout/putout",
     "pages/personal/personal",
     "pages/good_details/good_details",
-    "pages/search_results/search_results"
+    "pages/search_results/search_results",
+    "pages/sellerInfo/sellerInfo",
+    "pages/myCollection/myCollection"
   ],
 
   "window":{
