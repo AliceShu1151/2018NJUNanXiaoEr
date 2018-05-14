@@ -16,7 +16,7 @@
    <view class="goods-info">
         <view class="goods-title">{{goodsData.name}}</view>
         <view class="goods-price" style="padding-left:35rpx;">¥ {{ goodsData.price }}</view>
-        <view class="goods-price" style="color:#999;font-size:24rpx;">浏览{{ goodsData.clicks }}次</view>
+        <view class="goods-price" style="color:#999;font-size:24rpx;">浏览{{ goodsData.clicks + 1 }}次</view>
         <!--view class="goods-price" style="color:#999;font-size:22rpx;">卖家：{{goodsData.seller}}</view-->
 
         <!--注意，等待数据库接入后要将下一句代码的src改为卖家的头像URL-->

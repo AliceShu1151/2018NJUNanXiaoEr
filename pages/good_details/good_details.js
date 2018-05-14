@@ -24,10 +24,15 @@ Page({
 		Bmob.initialize("e663c7332cbc5d0c48349e5609048c99", "e24aad5768f2b86e7a86b6f5dea6bc65");
 		const query = Bmob.Query("goods");
 		const queryImgs = Bmob.Query("goodsImgs");
-
+		
 		let id = Number(this.data.goodsId) //注意！要转int才能查询成功
+
 		query.equalTo("timeStamp", "==", id);
 		query.find().then(goodsTbl => {
+			//浏览量 + 1
+			let clicks = goodsTbl[0]["clicks"];
+			goodsTbl.set("clicks", clicks + 1);
+			goodsTbl.saveAll();
 			let goodsData = this.data.goodsData;
 			goodsData = goodsTbl[0];
 			this.setData({ goodsData: goodsData });

@@ -50,7 +50,7 @@
 		<!--
 			岳翔 5-13:
 			循环渲染商品起始位置
-			列表循环数据被放置在index.js的111行处
+			列表循环数据被放置在index.js中
 			绑定函数：bindtap = functionName, functionName定义可在.js文件中找到
 		-->
 		<view class="goods-container">
