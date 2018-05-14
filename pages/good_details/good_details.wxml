@@ -18,6 +18,8 @@
         <view class="goods-price" style="padding-left:35rpx;">¥ {{good_data.price}}</view>
         <view class="goods-price" style="color:#999;font-size:24rpx;">浏览{{good_data.viewTimes}}次</view>
         <!--view class="goods-price" style="color:#999;font-size:22rpx;">卖家：{{good_data.seller}}</view-->
+
+        <!--注意，等待数据库接入后要将下一句代码的src改为卖家的头像URL-->
         <image class="logo" src="{{userInfo.avatarUrl}}"></image>
    </view>
     <view class="goods-des-info">
@@ -28,15 +30,19 @@
          </view>
     </view>
     <view class="footer-box">        
-        <view class="contact">
-          <button style="opacity:0;position:absolute;" size="27"></button>
+        <!--view class="contact">
+          <button style="opacity:0;position:absolute;" size="27" bindtap="toSellerInfo"></button>
           <view style='position:absolute;bottom:10rpx;'> 卖家信息 </view>
+        </view-->
+        <view class="contact" bindtap="toSellerInfo">
+            <!--view class="shop-num">({{shopNum}})</view-->
+            <view style='position:absolute;bottom:10rpx;'> 卖家信息 </view>
         </view>
-        <view class="shop-cart-btn" bindtap="goShopCar">
+        <view class="shop-cart-btn" bindtap="toMyCollection">
             <!--view class="shop-num">({{shopNum}})</view-->
             <view style='position:absolute;bottom:10rpx;'> 我的收藏 </view>
         </view>
-        <view class="join-shop-cart" bindtap="toAddShopCar">加入收藏</view>
-        <view class="now-buy" bindtap="tobuy">我想购买</view>
+        <view class="join-shop-cart" bindtap="toAddCollection">加入收藏</view>
+        <view class="now-buy" bindtap="toBuy">我想购买</view>
    </view>
 </view>
