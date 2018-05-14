@@ -4,61 +4,79 @@
     <image class="remind-img" src="/images/more/loading.gif"></image>
 </view>
 <block wx:else>
-<view class="container">
-   <view class="swiper-container">
-        <swiper class="swiper_box" autoplay="true" interval="3000" duration="1000" bindchange="swiperchange">
-            <block wx:for="{{banners}}" wx:key="id">
-                <swiper-item>
-                    <image bindtap="tapBanner" id="{{item.businessId}}" src="{{item.picUrl}}" class="slide-image" width="750rpx" height="300rpx"/>
-                </swiper-item>
-            </block>
-        </swiper>
-        <view class="dots">  
-            <block wx:for="{{banners}}" wx:key="businessId">  
-                <view class="dot{{index == swiperCurrent ? ' active' : ''}}"></view>  
-            </block>  
-        </view>  
-   </view>
-    <view class="type-container">
-        <scroll-view class="type-navbar" scroll-x="true">
-            <view class="type-box" wx:for="{{categories}}" wx:for-item="item" wx:key="id">
-                <view id="{{item.id}}" class="type-navbar-item {{activeCategoryId == item.id ? 'type-item-on' : ''}}" bindtap="tabClick">
-                    {{item.name}}
+    <view class="container">
+        <view class="swiper-container">
+            <swiper class="swiper_box" autoplay="true" interval="3000" duration="1000" bindchange="swiperchange">
+                <block wx:for="{{banners}}" wx:key="id">
+                    <swiper-item>
+                        <image bindtap="tapBanner" id="{{item.businessId}}" src="{{item.picUrl}}" class="slide-image" width="750rpx" height="300rpx" />
+                    </swiper-item>
+                </block>
+            </swiper>
+            <view class="dots">
+                <block wx:for="{{banners}}" wx:key="businessId">
+                    <view class="dot{{index == swiperCurrent ? ' active' : ''}}"></view>
+                </block>
+            </view>
+        </view>
+        <view class="type-container">
+            <scroll-view class="type-navbar" scroll-x="true">
+                <view class="type-box" wx:for="{{categories}}" wx:for-item="item" wx:key="id">
+                    <view id="{{item.id}}" class="type-navbar-item {{activeCategoryId == item.id ? 'type-item-on' : ''}}" bindtap="tabClick">
+                        {{item.name}}
+                    </view>
+                </view>
+            </scroll-view>
+        </view>
+        <view class="search-view" style="background:{{ scrollTop === 0 ?'-webkit-linear-gradient(top, rgba(106,0,95, 1), rgba(106,0,95, 0.3))' :( scrollTop<200 ? 'rgba(106,0,95,'+(scrollTop/400+0.3) +')' : 'rgba(106,0,95,1)')  }} ">
+            <view class="serarch-content">
+                <image src="/images/search-pic.png" class="search-icon" />
+                <input placeholder="请输入搜索内容" class="search-input" maxlength="30" confirm-type="搜索" bindinput='listenerSearchInput' bindconfirm='toSearch'>
+                </input>
+                <button class='search-btn' bindtap="toSearch">搜索
+                </button>
+            </view>
+        </view>
+        <view wx:if="{{noticeList}}" class="notice">
+            <view class="notice_iteml">公告：</view>
+            <swiper wx:if="{{noticeList}}" class="notice_swiper" vertical="true" autoplay="true" circular="true" interval="3000">
+                <navigator wx:for-items="{{noticeList.dataList}}" wx:key="id" url="/pages/notice/show?id={{item.id}}" open-type="navigate">
+                    <swiper-item>
+                        <view class="notice_itemr">{{item}}</view>
+                    </swiper-item>
+                </navigator>
+            </swiper>
+        </view>
+		<!--
+			岳翔 5-13:
+			循环渲染商品起始位置
+			列表循环数据被放置在index.js的111行处
+			绑定函数：bindtap = functionName, functionName定义可在.js文件中找到
+		-->
+		<view class="goods-container">
+            <view class="goods-box" wx:for="{{ goods }}" wx:key="{{ index }}" bindtap="toDetailsTap" id="{{ item.timeStamp }}">
+                <view class="img-box">
+                    <image src="{{ item.img }}" class="image" mode="aspectFill" lazy-load="true" />
+                </view>
+                <view class="goods-title">{{ item.name }}</view>
+                <view style='display:flex;'>
+                    <view class="goods-price">¥ {{ item.price }}</view>
                 </view>
             </view>
-        </scroll-view>
-    </view>
-    <view class="search-view" style="background:{{ scrollTop === 0 ?'-webkit-linear-gradient(top, rgba(106,0,95, 1), rgba(106,0,95, 0.3))' :( scrollTop<200 ? 'rgba(106,0,95,'+(scrollTop/400+0.3) +')' : 'rgba(106,0,95,1)')  }} ">
-    <view class="serarch-content">
-      <image src="/images/search-pic.png" class="search-icon" />
-      <input placeholder="请输入搜索内容" class="search-input" maxlength="30" confirm-type="搜索" bindinput='listenerSearchInput' bindconfirm='toSearch'>
-      </input>
-      <button class='search-btn' bindtap="toSearch">搜索
-      </button>
-    </view>
-  </view>
-    <view wx:if="{{noticeList}}" class="notice">
-      <view class="notice_iteml">公告：</view>
-      <swiper wx:if="{{noticeList}}" class="notice_swiper" vertical="true" autoplay="true" circular="true" interval="3000">
-        <navigator wx:for-items="{{noticeList.dataList}}" wx:key="id" url="/pages/notice/show?id={{item.id}}" open-type="navigate">
-          <swiper-item >
-            <view class="notice_itemr">{{item}}</view>
-          </swiper-item>
-        </navigator>
-      </swiper>
-    </view>
-    
-    <view class="goods-container">
-        <view class="goods-box" wx:for="{{goods}}" wx:key="{{index}}" bindtap="toDetailsTap" id="{{item.businessId}}">
-           <view class="img-box">
-              <image src="{{item.pic}}" class="image" mode="aspectFill" lazy-load="true"/>
-           </view>
-           <view class="goods-title">{{item.name}}</view>
-           <view style='display:flex;'>
-            <view class="goods-price">¥ {{item.price}}</view>
-           </view>           
         </view>
+		<!--原代码-->
+		<!--<view class="goods-container">
+            <view class="goods-box" wx:for="{{ goods }}" wx:key="{{ index }}" bindtap="toDetailsTap" id="{{ item.businessId }}">
+                <view class="img-box">
+                    <image src="{{ item.pic }}" class="image" mode="aspectFill" lazy-load="true" />
+                </view>
+                <view class="goods-title">{{ item.name }}</view>
+                <view style='display:flex;'>
+                    <view class="goods-price">¥ {{ item.price }}</view>
+                </view>
+            </view>
+        </view>-->
+        <!--渲染结束-->
+        <view hidden="{{loadingMoreHidden ? true : false}}" class="no-more-goods">没有更多啦</view>
     </view>
-    <view hidden="{{loadingMoreHidden ? true : false}}" class="no-more-goods">没有更多啦</view>
-</view>
 </block>
