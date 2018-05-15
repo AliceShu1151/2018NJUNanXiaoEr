@@ -1,11 +1,12 @@
 
-    <view class="title-box" wx:if="{{!myCollection}}">
+    <view class="title-box" wx:if="{{myCollectionLength == 0}}">
         收藏夹空空如也～
     </view>
-    <view class="to-index-btn" bindtap="toIndexPage" wx:if="{{!myCollection}}">
+    <view class="to-index-btn" bindtap="toIndexPage" wx:if="{{myCollectionLength == 0}}">
             去逛逛
     </view>
 
+<view wx:if="{{myCollectionLength != 0}}">
     <view class="list-top">
         <view class="label">南小二</view>
         <view class="edit-btn" hidden="{{!saveHidden}}" bindtap="editTap">编辑</view>
@@ -15,7 +16,7 @@
         <view class="a-gooods" wx:for="{{myCollection}}"  wx:key="{{index}}" >
             <view class="a-goods-conts {{item.active? 'active':''}}" bindtap="selectTap" style="{{item.left}}" id="{{index}}">
                 <view class="goods-info">
-                    <view class="img-box">
+                    <view class="img-box" >
                         <image src="{{item.baseInfo.pic}}" class="img"/>
                     </view>
                     <view class="text-box">
@@ -36,6 +37,7 @@
             <view class="all-selected  {{allSelected?'active':''}}" bindtap="bindAllSelect">全选</view>
             <view class="total" hidden="{{noSelect}}">合计：¥ {{totalPrice}}</view>
         </view>
-        <view class="to-pay-btn {{noSelect?'no-select':''}}" hidden="{{!saveHidden}}" bindtap="toPayOrder">我想购买</view>
+        <view class="to-pay-btn {{noSelect?'no-select':''}}" hidden="{{!saveHidden}}" bindtap="wantToBuy">我想购买</view>
         <view class="to-pay-btn {{noSelect?'no-select':''}}" hidden="{{saveHidden}}" bindtap="deleteSelected">删除</view>
     </view>
+</view>
