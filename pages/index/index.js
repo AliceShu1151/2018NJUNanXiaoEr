@@ -34,7 +34,9 @@ Page({
 	//页面加载时的初始化操作
 	onLoad: function () {
 		//console.log(app.globalData.userInfo);
-
+		//岳翔：openid存入了全局变量，此处可以使用openid
+		console.log("**********************openid**********************:\n"
+		 + app.globalData.openid);
 		//加载轮播图
 		this.renderBanners();
 		//加载全部商品

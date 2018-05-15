@@ -3,38 +3,38 @@
 <!--弹窗-->
 <view class="modal-mask" bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{showModal}}"></view>
 <view class="modal-dialog" wx:if="{{showModal}}">
- <view class="modal-title">提示</view>
- <view class="modal-content">
-  南小二申请获取你的你的公开信息（微信昵称、头像等）
- </view>
- <view class="modal-footer">
- <!--view class="btn-cancel" bindtap="onCancel" data-status="cancel">拒绝</view-->
- <!--view class="btn-confirm" bindtap="onConfirm" data-status="confirm">允许</view-->
- <button class="btn-cancel" bindtap="onCancel" data-status="cancel">拒绝</button>
- <button class="btn-confirm" open-type="getUserInfo" bindgetuserinfo="userInfoHandler" bindtap="onConfirm" data-status="confirm">允许</button>
- </view>
+    <view class="modal-title">提示</view>
+    <view class="modal-content">
+        南小二申请获取你的你的公开信息（微信昵称、头像等）
+    </view>
+    <view class="modal-footer">
+        <!--view class="btn-cancel" bindtap="onCancel" data-status="cancel">拒绝</view-->
+        <!--view class="btn-confirm" bindtap="onConfirm" data-status="confirm">允许</view-->
+        <button class="btn-cancel" bindtap="onCancel" data-status="cancel">拒绝</button>
+        <button class="btn-confirm" open-type="getUserInfo" bindgetuserinfo="userInfoHandler" bindtap="onConfirm" data-status="confirm">允许</button>
+    </view>
 </view>
 
 <view class="container">
-  <view class="remind-box" wx:if="{{remind}}">
-    <image class="remind-img" src="/images/more/loading.gif"></image>
-  </view>
-  <block wx:else>
-    <image class="title" src="/images/more/title8.png"></image>
-    <view class="content">
-      <view class="hd" style="transform:rotateZ({{angle}}deg);">
-        <!--image class="logo" src="{{userInfo.avatarUrl}}"></image-->
-        <open-data class="logo" type="userAvatarUrl"></open-data>
-        <image class="wave" src="/images/more/wave.png" mode="aspectFill"></image>
-        <image class="wave wave-bg" src="/images/more/wave.png" mode="aspectFill"></image>
-      </view>
-      <view class="bd">
-         <image class="smalltitle" src="/images/more/confirm-word1.png"></image>
-        <view class="confirm-btn" bindtap='goToIndex'>
-          <text >进入平台</text>
-        </view>
-        <text class="copyright">copyright@ 南小二闲置物品交易信息发布平台开发小组</text>
-      </view>
+    <view class="remind-box" wx:if="{{remind}}">
+        <image class="remind-img" src="/images/more/loading.gif"></image>
     </view>
-  </block>
+    <block wx:else>
+        <image class="title" src="/images/more/title8.png"></image>
+        <view class="content">
+            <view class="hd" style="transform:rotateZ({{angle}}deg);">
+                <!--image class="logo" src="{{userInfo.avatarUrl}}"></image-->
+                <open-data class="logo" type="userAvatarUrl"></open-data>
+                <image class="wave" src="/images/more/wave.png" mode="aspectFill"></image>
+                <image class="wave wave-bg" src="/images/more/wave.png" mode="aspectFill"></image>
+            </view>
+            <view class="bd">
+                <image class="smalltitle" src="/images/more/confirm-word1.png"></image>
+                <view class="confirm-btn" bindtap='goToIndex'>
+                    <text>进入平台</text>
+                </view>
+                <text class="copyright">copyright@ 南小二闲置物品交易信息发布平台开发小组</text>
+            </view>
+        </view>
+    </block>
 </view>
