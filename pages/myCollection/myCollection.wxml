@@ -1,2 +1,41 @@
-<!--pages/myCollection/myCollection.wxml-->
-<text>pages/myCollection/myCollection.wxml</text>
+
+    <view class="title-box" wx:if="{{!myCollection}}">
+        收藏夹空空如也～
+    </view>
+    <view class="to-index-btn" bindtap="toIndexPage" wx:if="{{!myCollection}}">
+            去逛逛
+    </view>
+
+    <view class="list-top">
+        <view class="label">南小二</view>
+        <view class="edit-btn" hidden="{{!saveHidden}}" bindtap="editTap">编辑</view>
+        <view class="edit-btn" hidden="{{saveHidden}}" bindtap="saveTap">完成</view>
+    </view>
+    <view class="goodsList">
+        <view class="a-gooods" wx:for="{{myCollection}}"  wx:key="{{index}}" >
+            <view class="a-goods-conts {{item.active? 'active':''}}" bindtap="selectTap" style="{{item.left}}" id="{{index}}">
+                <view class="goods-info">
+                    <view class="img-box">
+                        <image src="{{item.baseInfo.pic}}" class="img"/>
+                    </view>
+                    <view class="text-box">
+                        <view class="goods-title">{{item.baseInfo.name}}</view>
+                        <view class="goods-label">浏览次数：{{item.baseInfo.clickTimes}}</view>
+                        <view class="goods-price">¥ {{item.baseInfo.price}}</view>
+                        <image class="logo" src="{{userInfo.avatarUrl}}"></image>
+                    </view>
+                </view>
+                <view class="delete-btn" data-index="{{index}}" catchtap="delItem">
+                  删除
+                </view>
+            </view>
+        </view>
+    </view>
+    <view class="jiesuan-box">
+        <view class="left-price">
+            <view class="all-selected  {{allSelected?'active':''}}" bindtap="bindAllSelect">全选</view>
+            <view class="total" hidden="{{noSelect}}">合计：¥ {{totalPrice}}</view>
+        </view>
+        <view class="to-pay-btn {{noSelect?'no-select':''}}" hidden="{{!saveHidden}}" bindtap="toPayOrder">我想购买</view>
+        <view class="to-pay-btn {{noSelect?'no-select':''}}" hidden="{{saveHidden}}" bindtap="deleteSelected">删除</view>
+    </view>
