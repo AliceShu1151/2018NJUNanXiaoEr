@@ -9,7 +9,7 @@ Page({
 		userInfo: {}
 	},
 	onLoad: function (options) {
-		var that = this;
+		let that = this;
 		// 页面初始化 options为页面跳转所带来的参数
 		that.setData({
 			goodsId: options.businessId,
@@ -20,12 +20,11 @@ Page({
 		/**岳翔 5-14：
 		 * 数据库获取商品信息
 		 */
-		let Bmob = require("../../utils/hydrogen-js-sdk-master/dist/Bmob-1.3.0.min.js");
-		Bmob.initialize("e663c7332cbc5d0c48349e5609048c99", "e24aad5768f2b86e7a86b6f5dea6bc65");
+		let Bmob = app.globalData.Bmob;
 		const query = Bmob.Query("goods");
 		const queryImgs = Bmob.Query("goodsImgs");
 		
-		let id = Number(this.data.goodsId) //注意！要转int才能查询成功
+		let id = Number(that.data.goodsId) //注意！要转int才能查询成功
 
 		query.equalTo("timeStamp", "==", id);
 		query.find().then(goodsTbl => {
@@ -33,19 +32,19 @@ Page({
 			let clicks = goodsTbl[0]["clicks"];
 			goodsTbl.set("clicks", clicks + 1);
 			goodsTbl.saveAll();
-			let goodsData = this.data.goodsData;
+			let goodsData = that.data.goodsData;
 			goodsData = goodsTbl[0];
-			this.setData({ goodsData: goodsData });
+			that.setData({ goodsData: goodsData });
 		});
 		queryImgs.equalTo("goods", "==", id);
 		queryImgs.find().then(imgVec => {
-			let goodsData = this.data.goodsData;
+			let goodsData = that.data.goodsData;
 			let vec = new Array();
 			for(let i = 0; i < imgVec.length; ++i){
 				vec[i] = imgVec[i]["img"]["url"];
 			}
 			goodsData["imgs"] = vec;
-			this.setData({ goodsData: goodsData });
+			that.setData({ goodsData: goodsData });
 		});
 
 		/*
@@ -60,7 +59,7 @@ Page({
 	 并传递到卖家信息页面
 	 */
 	toSellerInfo: function () {
-		var that = this;
+		let that = this;
 		console.log(that.data.goodsData.seller);
 		wx.navigateTo({
 			url: '../../pages/sellerInfo/sellerInfo?seller=' + that.data.goodsData.seller
@@ -82,15 +81,45 @@ Page({
 	*/
 	toAddCollection: function () {
 		/*
-		使用userInfo和businessId查询收藏表
+		使用userInfo和goodsId查询收藏表
 		检测是否收藏过
 		若未收藏过则往表中添加数据
 		*/
-		wx.showToast({
-			title: '添加成功',
-			icon: 'success',
-			duration: 1000
-		})
+		/** 岳翔：5-16
+		 * 实现db存取
+		 */
+		let that = this;
+		let Bmob = app.globalData.Bmob;
+		let goodsObjectId = that.data.goodsId;
+		let userOpenId = app.globalData.openid
+		const db = Bmob.Query("stars");
+		db.equalTo("userOpenId", "==", userOpenId);
+		db.find().then(res => {
+			let isStarred = false;
+			for(let i = 0; i < res.length; ++i){
+				if (res[i]["goodsObjectId"] == goodsObjectId){
+					isStarred = true;
+					break;
+				}
+			}
+			if(isStarred){
+				wx.showToast({
+					title: '已存在于收藏栏',
+					icon: 'success',
+					duration: 1000,
+				})
+			}
+			else{
+				db.set("userOpenId", userOpenId);
+				db.set("goodsObjectId", goodsObjectId);
+				db.save();
+				wx.showToast({
+					title: '添加成功',
+					icon: 'success',
+					duration: 1000,
+				})
+			}
+		});
 	},
 
 	/*

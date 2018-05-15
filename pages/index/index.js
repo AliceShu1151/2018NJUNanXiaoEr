@@ -8,6 +8,7 @@ Page({
 		remind: '加载中',
 		goods: {},
 		banners: {},
+		db: {},
 		noticeList: {
 			dataList: ['嘻嘻嘻', '嘤嘤嘤', '嘿嘿嘿']
 		},
@@ -31,16 +32,15 @@ Page({
 		searchInput: '',
 	},
 
+	
+
 	//页面加载时的初始化操作
 	onLoad: function () {
-		//console.log(app.globalData.userInfo);
-		//岳翔：openid存入了全局变量，此处可以使用openid
-		console.log("**********************openid**********************:\n"
-		 + app.globalData.openid);
+		let that = this;
 		//加载轮播图
-		this.renderBanners();
+		that.renderBanners();
 		//加载全部商品
-		this.getGoodsList(0);
+		that.getGoodsList(0);
 	},
 
 	//页面初次渲染完成后的操作
@@ -104,25 +104,24 @@ Page({
 	},
 
 	//轮播图渲染
-	renderBanners: function(){
-		let Bmob = require("../../utils/hydrogen-js-sdk-master/dist/Bmob-1.3.0.min.js");
-		Bmob.initialize("e663c7332cbc5d0c48349e5609048c99", "e24aad5768f2b86e7a86b6f5dea6bc65");
-		const query = Bmob.Query("goods");
-		query.select("timeStamp");
-		query.limit(3); //banners数量
-		query.find().then(goodsTbl => {
+	renderBanners: function() {
+		let that = this;
+		let Bmob = app.globalData.Bmob;
+		const dbGoods = Bmob.Query("goods");
+		dbGoods.select("timeStamp");
+		dbGoods.limit(3); //banners数量
+		dbGoods.find().then(function (goodsTbl) {
 			let banners = goodsTbl;
-			this.setData({ banners: banners });
 			for (let i = 0; i < banners.length; ++i) {
-				const queryImg = Bmob.Query("goodsImgs");
+				const dbImg = Bmob.Query("goodsImgs");
 				let timeStamp = banners[i]["timeStamp"]
-				queryImg.equalTo("goods", "==", timeStamp)
-				queryImg.order("createdAt");
-				queryImg.limit(1);
-				queryImg.find().then(goodsImgsTbl => {
+				dbImg.equalTo("goods", "==", timeStamp)
+				dbImg.order("createdAt");
+				dbImg.limit(1);
+				dbImg.find().then(function (goodsImgsTbl) {
 					let imgUrl = goodsImgsTbl[0]["img"]["url"];
 					banners[i]["img"] = imgUrl;
-					this.setData({ banners: banners });
+					that.setData({ banners: banners });
 				});
 			}
 		});
@@ -135,41 +134,40 @@ Page({
 		 * 岳翔 5-13：
 		 * 测试demo
 		 */
-		let Bmob = require("../../utils/hydrogen-js-sdk-master/dist/Bmob-1.3.0.min.js");
-		Bmob.initialize("e663c7332cbc5d0c48349e5609048c99", "e24aad5768f2b86e7a86b6f5dea6bc65");
-		const query = Bmob.Query("goods");
-		let goods = this.data.goods;
+		let that = this;
+		let Bmob = app.globalData.Bmob;
+		const dbGoods = Bmob.Query("goods");
+		let goods = that.data.goods;
 		let categoryNameList = new Array("全部", "化妆品", "服饰装扮", "食品饮料", "演出门票", "数码电子", "其他");
 		let	categoryName = categoryNameList[categoryId];
 		
 		if(categoryName != "全部"){
-			query.equalTo("category", "==", categoryName);
+			dbGoods.equalTo("category", "==", categoryName);
 		}
-		query.find().then(goodsTbl => {
+		dbGoods.find().then(goodsTbl => {
 			goods = goodsTbl;
 			//res此时是一个二维数组
 			/**岳翔 5-14
 			 * 注意：操作查询结果无法传值，只能在then()内进行操作
 			 * 就算是传给外层变量也会是Undefined
-			 * 可能与bmob异步查询机制有关（可以看到console.log不按顺序进行记录）
+			 * 与bmob异步查询机制有关（可以看到console.log不按顺序进行记录）
 			 * */
-			//
 			//打印总条数
 			for (let i = 0; i < goods.length; ++i) {
 				//每查询一次建一次Bmob对象
-				const queryImg = Bmob.Query("goodsImgs");
+				const dbImg = Bmob.Query("goodsImgs");
 				let timeStamp = goods[i]["timeStamp"]
-				queryImg.equalTo("goods", "==", timeStamp)
-				queryImg.order("createdAt");
-				queryImg.limit(1);
-				queryImg.find().then(goodsImgsTbl => {
+				dbImg.equalTo("goods", "==", timeStamp)
+				dbImg.order("createdAt");
+				dbImg.limit(1);
+				dbImg.find().then(goodsImgsTbl => {
 					//取第一条查询结果的第一个图片
 					/**岳翔：5-14
 					 * file文件如果存图片，查询结果有filename & url两者，只需取用url即可
 					 * */
 					let imgUrl = goodsImgsTbl[0]["img"]["url"];
 					goods[i]["img"] = imgUrl;
-					this.setData({ goods: goods }); //微信小程序唯一动态赋值方法
+					that.setData({ goods: goods }); //微信小程序唯一动态赋值方法
 				});
 			}
 		});

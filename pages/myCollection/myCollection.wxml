@@ -16,12 +16,12 @@
             <view class="a-goods-conts {{item.active? 'active':''}}" bindtap="selectTap" style="{{item.left}}" id="{{index}}">
                 <view class="goods-info">
                     <view class="img-box" >
-                        <image src="{{item.baseInfo.pic}}" class="img"/>
+                        <image src="{{item.img}}" class="img"/>
                     </view>
                     <view class="text-box">
-                        <view class="goods-title">{{item.baseInfo.name}}</view>
-                        <view class="goods-label">浏览次数：{{item.baseInfo.clickTimes}}</view>
-                        <view class="goods-price">¥ {{item.baseInfo.price}}</view>
+                        <view class="goods-title">{{item.name}}</view>
+                        <view class="goods-label">浏览次数：{{item.clicks}}</view>
+                        <view class="goods-price">¥ {{item.price}}</view>
                         <image class="logo" src="{{userInfo.avatarUrl}}"></image>
                     </view>
                 </view>
