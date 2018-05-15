@@ -10,7 +10,7 @@ Page({
     allSelected: false,
     saveHidden: true,
     userInfo: {},
-
+    noSelect: true,
     /*
     myCollection是收藏夹商品信息的基本形式
     可将从数据库获取的商品信息放在baseInfo里
@@ -21,7 +21,7 @@ Page({
      */
     myCollection: [
       { baseInfo: { businessId: 0, name: "QAQ", price: 200, pic: '../../images/goods01.png', clickTimes: 5, sbWantsToBuy: false }, active: false },
-      { baseInfo: { businessId: 1, name: "QAQ", price: 200, pic: '../../images/goods02.png', clickTimes: 6, sbWantsToBuy: false }, active: true }
+      { baseInfo: { businessId: 1, name: "QAQ", price: 200, pic: '../../images/goods02.png', clickTimes: 6, sbWantsToBuy: false }, active: false }
     ],
     myCollectionLength: 0,
     totalPrice: ''
@@ -53,6 +53,22 @@ Page({
     });
   },
 
+  //判断有无被选中的商品对象
+  isNoSelect: function() {
+    var that = this;
+    for(var i = 0; i < that.data.myCollection.length; i++){
+      if(that.data.myCollection[i].active){
+        that.setData({
+          noSelect: false
+        });
+        return;
+      }
+    }
+    that.setData({
+      noSelect: true
+    });
+  },
+
   //单独选择
   selectTap: function (e) {
     //console.log(e.currentTarget.id);
@@ -66,9 +82,10 @@ Page({
       tmpCollection[e.currentTarget.id].active = false;
     }
     that.setData({
-      myCollection: tmpCollection
+      myCollection: tmpCollection,
     });
     that.caculateTotalPrice();
+    that.isNoSelect();
   },
 
   //全选
@@ -84,9 +101,10 @@ Page({
         tmpCollection[i].active = true;
       }
       that.setData({
-        myCollection: tmpCollection
+        myCollection: tmpCollection,
       });
       that.caculateTotalPrice();
+      that.isNoSelect();
     }
     else {
       //取消全选
@@ -98,68 +116,101 @@ Page({
         tmpCollection[i].active = false;
       }
       that.setData({
-        myCollection: tmpCollection
+        myCollection: tmpCollection,
       });
       that.caculateTotalPrice();
+      that.isNoSelect();
     }
   },
 
   //删除被选中的商品
   deleteSelected: function () {
     var that = this;
-    wx.showModal({
-      title: '提示',
-      content: '您确定要删除选中的收藏商品吗？',
-      success: function (res) {
-        /*
-        该部分为删除收藏商品的demo
-        实际使用需要对数据库商品表进行修改
-        */
-        if (res.confirm) {
-          var tmpCollection = [];
-          for (var i = 0; i < that.data.myCollection.length; i++) {
-            if (!that.data.myCollection[i].active) {
-              tmpCollection.push(that.data.myCollection[i]);
-            }
-          }
-          that.setData({
-            myCollection: tmpCollection,
-            myCollectionLength: tmpCollection.length
-          });
-
-          that.caculateTotalPrice();
-        }
+    var tmpCollection = [];
+    var tmpCollection_2 = [];
+    for (var i = 0; i < that.data.myCollection.length; i++) {
+      if (!that.data.myCollection[i].active) {
+        tmpCollection.push(that.data.myCollection[i]);
       }
-    });
+      else{
+        tmpCollection_2.push(that.data.myCollection[i]);
+      }
+    }
+    if(tmpCollection_2.length != 0){
+      wx.showModal({
+        title: '提示',
+        content: '您确定要删除选中的收藏商品吗？',
+        success: function (res) {
+          /*
+          该部分为删除收藏商品的demo
+          实际使用需要对数据库商品表进行修改
+          */
+          if (res.confirm) {
+            that.setData({
+              myCollection: tmpCollection,
+              myCollectionLength: tmpCollection.length
+            });
+          that.caculateTotalPrice();
+          that.isNoSelect();
+          }
+        }
+      });
+    }
+    else{
+      wx.showModal({
+        title: '提示',
+        content: '未选中任何收藏商品。'
+      })
+    }
   },
 
   wantToBuy: function() {
     var that = this;
-    wx.showModal({
-      title: '提示',
-      content: '点击确认后商品进入待购买队列，为了避免卖家损失，请尽快与卖家联系',
-      success: function (res) {
-        /*
-        使用删除功能，
-        模拟将收藏商品移入待购买列表
-        此过程需要对商品表、用户收藏表进行修改
-        */
-        if (res.confirm) {
-          var tmpCollection = [];
-          for (var i = 0; i < that.data.myCollection.length; i++) {
-            if (!that.data.myCollection[i].active) {
-              that.data.myCollection[i].baseInfo.sbWantsToBuy = true;
-              tmpCollection.push(that.data.myCollection[i]);
-            }
-          }
-          that.setData({
-            myCollection: tmpCollection,
-            myCollectionLength: tmpCollection.length
-          });
-
-          that.caculateTotalPrice();
-        }
+    var tmpCollection = [];
+    var tmpCollection_2 = [];
+    for (var i = 0; i < that.data.myCollection.length; i++) {
+      if (!that.data.myCollection[i].active) {
+        that.data.myCollection[i].baseInfo.sbWantsToBuy = true;
+        tmpCollection.push(that.data.myCollection[i]);
       }
+      else{
+        tmpCollection_2.push(that.data.myCollection[i]);
+      }
+    }
+    if(tmpCollection_2.length != 0){
+      wx.showModal({
+        title: '提示',
+        content: '点击确认后商品进入待购买队列，为了避免卖家损失，请尽快与卖家联系',
+        success: function (res) {
+          /*
+          使用删除功能，
+          模拟将收藏商品移入待购买列表
+          此过程需要对商品表、用户收藏表进行修改
+          */
+          if (res.confirm) {
+
+            that.setData({
+              myCollection: tmpCollection,
+              myCollectionLength: tmpCollection.length
+            });
+
+            that.caculateTotalPrice();
+            that.isNoSelect();
+          }
+        }
+      });
+    }
+    else{
+      wx.showModal({
+        title: '提示',
+        content: '未选中任何收藏商品。',
+      })
+    }
+  },
+
+  toIndexPage: function() {
+    wx.switchTab({
+      url: '../../pages/index/index'
     });
   },
 
