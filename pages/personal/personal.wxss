@@ -20,6 +20,7 @@
   overflow: hidden;
 }
 .userinfo {
+  border-radius: 20px;
 	display: flex;
 	flex-direction: row;
 	padding: 50rpx 0;
@@ -68,11 +69,12 @@
 	font-size: 24rpx;
 	text-align: center;  
   padding: 40rpx;
+  color: #6A005F;
+  font-weight: bolder;
 }
 
 .my-item{
     width: 100%;
-    background: url(https://cdn.it120.cc/images/weappshop/arrow-right.png) no-repeat 750rpx center;
     background-size: 16rpx auto,750rpx auto;
     margin: 8rpx 0;  
     border-bottom: 1px solid #eee;
@@ -83,7 +85,6 @@
 
 .about{
     width: 100%;
-    background: url(https://cdn.it120.cc/images/weappshop/arrow-right.png) no-repeat 750rpx center;
     background-size: 16rpx auto,750rpx auto;
     margin: 20rpx 0; 
     height: 70rpx;
