@@ -1,4 +1,3 @@
-
     <view class="title-box" wx:if="{{myCollectionLength == 0}}">
         收藏夹空空如也～
     </view>
