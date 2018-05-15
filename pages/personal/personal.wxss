@@ -1,3 +1,18 @@
+.remind-box {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 300rpx;
+}
+
+.remind-img {
+    width: 250rpx;
+    height: 250rpx;
+    padding-bottom: 25rpx;
+}
+
 .container{
   display: flex;
   padding: 0;
@@ -63,6 +78,7 @@
     border-bottom: 1px solid #eee;
     height: 100rpx;
     line-height: 100rpx;
+    font-size: 28rpx;
 }
 
 .about{
@@ -70,7 +86,7 @@
     background: url(https://cdn.it120.cc/images/weappshop/arrow-right.png) no-repeat 750rpx center;
     background-size: 16rpx auto,750rpx auto;
     margin: 20rpx 0; 
-    height: 80rpx;
+    height: 70rpx;
     line-height: 80rpx;
     padding-left: 100rpx;
 }
