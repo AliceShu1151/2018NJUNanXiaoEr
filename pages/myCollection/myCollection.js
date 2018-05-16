@@ -63,10 +63,31 @@ Page({
         });
         return;
       }
+      else{
+        that.setData({
+          allSelected: false
+        });
+      }
     }
     that.setData({
-      noSelect: true
+      noSelect: true,
     });
+  },
+
+  //判断是否为全选状态
+  isAllSelected: function () {
+    for (var i = 0; i < this.data.myCollection.length; i++) {
+      if (!this.data.myCollection[i].active) {
+        this.setData({
+          allSelected: false
+        });
+        return;
+      }
+    }
+    this.setData({
+      allSelected: true
+    });
+    //console.log(this.data.allSelected);
   },
 
   //单独选择
@@ -86,6 +107,7 @@ Page({
     });
     that.caculateTotalPrice();
     that.isNoSelect();
+    that.isAllSelected();
   },
 
   //全选
@@ -103,8 +125,6 @@ Page({
       that.setData({
         myCollection: tmpCollection,
       });
-      that.caculateTotalPrice();
-      that.isNoSelect();
     }
     else {
       //取消全选
@@ -118,9 +138,10 @@ Page({
       that.setData({
         myCollection: tmpCollection,
       });
-      that.caculateTotalPrice();
-      that.isNoSelect();
     }
+    that.caculateTotalPrice();
+    that.isNoSelect();
+    that.isAllSelected();
   },
 
   //删除被选中的商品
@@ -152,6 +173,7 @@ Page({
             });
           that.caculateTotalPrice();
           that.isNoSelect();
+          that.isAllSelected();
           }
         }
       });
@@ -196,6 +218,7 @@ Page({
 
             that.caculateTotalPrice();
             that.isNoSelect();
+            that.isAllSelected();
           }
         }
       });
