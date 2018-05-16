@@ -261,15 +261,12 @@ Page({
 	wantToBuy: function () {
 		let that = this;
 		let tmpCollection = [];
+    //tmpCollection_2存储被选中的商品信息
 		let tmpCollection_2 = [];
 		for (let i = 0; i < that.data.myCollection.length; i++) {
-			if (!that.data.myCollection[i].active) {
-				that.data.myCollection[i].baseInfo.sbWantsToBuy = true;
-				tmpCollection.push(that.data.myCollection[i]);
-			}
-			else {
-				tmpCollection_2.push(that.data.myCollection[i]);
-			}
+      if(that.data.myCollection[i].active){
+        tmpCollection_2.push(that.data.myCollection[i]);
+      }
 		}
 		if (tmpCollection_2.length != 0) {
 			wx.showModal({
@@ -294,10 +291,18 @@ Page({
 							res.set("buyer", app.globalData.userOpenId);
 							res.saveAll();
 						});
-						that.setData({
-							myCollection: tmpCollection,
-							myCollectionLength: tmpCollection.length
-						});
+
+            //取消全选
+            that.setData({
+              allSelected: false
+            });
+            let tmpCollection = that.data.myCollection;
+            for (let i = 0; i < that.data.myCollection.length; i++) {
+              tmpCollection[i].active = false;
+            }
+            that.setData({
+              myCollection: tmpCollection,
+            });
 
 						that.caculateTotalPrice();
 						that.isNoSelect();
