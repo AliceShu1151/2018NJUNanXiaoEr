@@ -34,9 +34,26 @@ Page({
 		})
 	},
 	saveTap: function () {
-		this.setData({
+    let that = this;
+
+		that.setData({
 			saveHidden: true
-		})
+		});
+
+    //取消全选
+    that.setData({
+      allSelected: false
+    });
+    let tmpCollection = that.data.myCollection;
+    for (let i = 0; i < that.data.myCollection.length; i++) {
+      tmpCollection[i].active = false;
+    }
+    that.setData({
+      myCollection: tmpCollection,
+    });
+		that.caculateTotalPrice();
+    that.isNoSelect();
+    that.isAllSelected();
 	},
 
 	//计算收藏商品总价，页面加载时调用
