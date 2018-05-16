@@ -24,7 +24,7 @@ Page({
 			//{ baseInfo: { businessId: 0, name: "QAQ", price: 200, pic: '../../images/goods01.png', clickTimes: 5, sbWantsToBuy: false }, active: false },
 			//{ baseInfo: { businessId: 1, name: "QAQ", price: 200, pic: '../../images/goods02.png', clickTimes: 6, sbWantsToBuy: false }, active: false }
 		],
-		myCollectionLength: 0,
+		myCollectionLength: 5,
 		totalPrice: ''
 	},
 
@@ -225,6 +225,7 @@ Page({
 		dbStars.equalTo("userOpenId", "==", app.globalData.openid);
 		dbStars.order("-createdAt");
 		dbStars.find().then(res => {
+			that.setData({ myCollectionLength: res.length });
 			for (let i = 0; i < res.length; ++i) {
 				let myCollection = that.data.myCollection;
 				const dbGoods = Bmob.Query("goods");
@@ -233,10 +234,6 @@ Page({
 				dbGoods.find().then(res => {
 					myCollection[i] = res[0];
 					myCollection[i]["active"] = false;
-					that.setData({
-						myCollection: myCollection,
-						myCollectionLength: i + 1,
-					});
 					const dbImg = Bmob.Query("goodsImgs");
 					dbImg.equalTo("goods", "==", Number(timeStamp)); //此时timestamp是string。。。等哪天改objectID就没这么麻烦了
 					dbImg.order("createdAt");
