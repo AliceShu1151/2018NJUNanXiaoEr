@@ -1,5 +1,5 @@
 // pages/myCollection/myCollection.js
-var app = getApp();
+let app = getApp();
 
 Page({
 
@@ -41,11 +41,11 @@ Page({
 
 	//计算收藏商品总价，页面加载时调用
 	caculateTotalPrice: function () {
-		var that = this;
-		var total = 0;
-		for (var i = 0; i < that.data.myCollection.length; i++) {
+		let that = this;
+		let total = 0;
+		for (let i = 0; i < that.data.myCollection.length; i++) {
 			if (that.data.myCollection[i].active) {
-				total = total + that.data.myCollection[i].baseInfo.price;
+				total = total + that.data.myCollection[i].price;
 			}
 		}
 		that.setData({
@@ -55,8 +55,8 @@ Page({
 
 	//判断有无被选中的商品对象
 	isNoSelect: function () {
-		var that = this;
-		for (var i = 0; i < that.data.myCollection.length; i++) {
+		let that = this;
+		for (let i = 0; i < that.data.myCollection.length; i++) {
 			if (that.data.myCollection[i].active) {
 				that.setData({
 					noSelect: false
@@ -76,15 +76,16 @@ Page({
 
 	//判断是否为全选状态
 	isAllSelected: function () {
-		for (var i = 0; i < this.data.myCollection.length; i++) {
-			if (!this.data.myCollection[i].active) {
-				this.setData({
+		let that = this;
+		for (let i = 0; i < that.data.myCollection.length; i++) {
+			if (!that.data.myCollection[i].active) {
+				that.setData({
 					allSelected: false
 				});
 				return;
 			}
 		}
-		this.setData({
+		that.setData({
 			allSelected: true
 		});
 		//console.log(this.data.allSelected);
@@ -93,8 +94,8 @@ Page({
 	//单独选择
 	selectTap: function (e) {
 		//console.log(e.currentTarget.id);
-		var that = this;
-		var tmpCollection = that.data.myCollection;
+		let that = this;
+		let tmpCollection = that.data.myCollection;
 		//console.log(tmpCollection[0].active);
 		if (!tmpCollection[e.currentTarget.id].active) {
 			tmpCollection[e.currentTarget.id].active = true;
@@ -112,14 +113,14 @@ Page({
 
 	//全选
 	bindAllSelect: function () {
-		var that = this;
+		let that = this;
 		if (!that.data.allSelected) {
 			//全选
 			that.setData({
 				allSelected: true
 			});
-			var tmpCollection = that.data.myCollection;
-			for (var i = 0; i < that.data.myCollection.length; i++) {
+			let tmpCollection = that.data.myCollection;
+			for (let i = 0; i < that.data.myCollection.length; i++) {
 				tmpCollection[i].active = true;
 			}
 			that.setData({
@@ -131,8 +132,8 @@ Page({
 			that.setData({
 				allSelected: false
 			});
-			var tmpCollection = that.data.myCollection;
-			for (var i = 0; i < that.data.myCollection.length; i++) {
+			let tmpCollection = that.data.myCollection;
+			for (let i = 0; i < that.data.myCollection.length; i++) {
 				tmpCollection[i].active = false;
 			}
 			that.setData({
@@ -146,10 +147,10 @@ Page({
 
 	//删除被选中的商品
 	deleteSelected: function () {
-		var that = this;
-		var tmpCollection = [];
-		var tmpCollection_2 = [];
-		for (var i = 0; i < that.data.myCollection.length; i++) {
+		let that = this;
+		let tmpCollection = [];
+		let tmpCollection_2 = [];
+		for (let i = 0; i < that.data.myCollection.length; i++) {
 			if (!that.data.myCollection[i].active) {
 				tmpCollection.push(that.data.myCollection[i]);
 			}
@@ -166,7 +167,23 @@ Page({
 					该部分为删除收藏商品的demo
 					实际使用需要对数据库商品表进行修改
 					*/
+					/**yx: 5-16
+					 * 删除功能实现
+					 */
 					if (res.confirm) {
+						let Bmob = app.globalData.Bmob;
+						const db = Bmob.Query("stars");
+						let goodsVec = new Array();
+						for (let i = 0; i < tmpCollection_2.length; ++i){
+							goodsVec[i] = String(tmpCollection_2[i]["timeStamp"]);
+						}
+						console.log(goodsVec);
+						console.log(tmpCollection_2);
+						db.equalTo("userOpenId", "==", app.globalData.openid);
+						db.containedIn("goodsObjectId", goodsVec);
+						db.find().then(res => {
+							res.destroyAll();
+						});
 						that.setData({
 							myCollection: tmpCollection,
 							myCollectionLength: tmpCollection.length
@@ -187,10 +204,10 @@ Page({
 	},
 
 	wantToBuy: function () {
-		var that = this;
-		var tmpCollection = [];
-		var tmpCollection_2 = [];
-		for (var i = 0; i < that.data.myCollection.length; i++) {
+		let that = this;
+		let tmpCollection = [];
+		let tmpCollection_2 = [];
+		for (let i = 0; i < that.data.myCollection.length; i++) {
 			if (!that.data.myCollection[i].active) {
 				that.data.myCollection[i].baseInfo.sbWantsToBuy = true;
 				tmpCollection.push(that.data.myCollection[i]);
