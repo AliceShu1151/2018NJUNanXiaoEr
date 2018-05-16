@@ -1,13 +1,20 @@
 //获取小程序实例
 var app = getApp();
 
+/*
+yhr 5-16:
+data中添加canBuy
+用于标识该物品能否被置位待购买商品
+*/
 Page({
 	data: {
+    canBuy: false,
 		goodsObjectId: '',
 		//此处goodsData只是一个demo
 		goodsData: {},
 		userInfo: {}
 	},
+
 	onLoad: function (options) {
 		let that = this;
 		// 页面初始化 options为页面跳转所带来的参数
@@ -45,8 +52,20 @@ Page({
 			}
 			goodsData["imgs"] = vec;
 			that.setData({ goodsData: goodsData });
-		});
 
+    /*
+    yhr 5-16: 
+    获取商品state
+    修改data中的canBuy状态
+    */
+      if(that.data.goodsData.state == 0){
+        console.log(that.data.goodsData);
+        that.setData({
+          canBuy: true
+        });
+      }
+
+		});
 		/*
 		此处编写函数来获取data中的goodsData
 		这是一个object类型的变量
@@ -125,26 +144,38 @@ Page({
 	},
 
 	/*
-	将物品置为待购状态
+  yhr 5-16:
+  若物品可被置为待购商品
+	则将物品置为待购状态
 	商品不会再被其他用户设为代购状态
-	同时修改商品表中的属性
+	同时修改商品表中的属性及data中的canBuy
 	*/
 	toBuy: function () {
 		var that = this;
-		wx.showModal({
-			title: '提示',
-			content: '点击“我想购买”后，该商品将无法被其他用户购买，请务必尽快与卖家联系。',
-			success: function (res) {
-				if (res.confirm) {
-					//对商品表进行修改
-					//并跳转至卖家信息页
-					wx.navigateTo({
-						url: '../../pages/sellerInfo/sellerInfo?seller=' + that.data.goodsData.seller
-					});
-				}
-				else if (res.cancel) {
-				}
-			}
-		})
+		if(that.data.goodsData.state != 0){
+      console.log(that.data.goodsData.state);
+      wx.showModal({
+        title: '提示',
+        content: '该商品出于交易状态，无法加入您想购买的商品列表~',
+      })
+    }
+    else{
+      wx.showModal({
+        title: '提示',
+        content: '点击“我想购买”后，该商品将无法被其他用户购买，请务必尽快与卖家联系。',
+        success: function (res) {
+          if (res.confirm) {
+            //对商品表进行修改
+            //并跳转至卖家信息页
+            wx.navigateTo({
+              url: '../../pages/sellerInfo/sellerInfo?seller=' + that.data.goodsData.seller
+            });
+            that.setData({
+              canBuy: false
+            });
+          }
+        }
+      })
+    }
 	}
 })
