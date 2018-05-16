@@ -329,7 +329,11 @@ Page({
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad: function (options) {
-		let that = this;
+    let that = this;
+    console.log(app.globalData.userInfo);
+    that.setData({
+      userInfo: app.globalData.userInfo
+    });
 		let Bmob = app.globalData.Bmob;
 		const dbStars = Bmob.Query("stars");
 		dbStars.equalTo("userOpenId", "==", app.globalData.userOpenId);
