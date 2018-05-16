@@ -3,7 +3,7 @@ var app = getApp();
 
 Page({
 	data: {
-		goodsid: '',
+		goodsObjectId: '',
 		//此处goodsData只是一个demo
 		goodsData: {},
 		userInfo: {}
@@ -12,7 +12,7 @@ Page({
 		let that = this;
 		// 页面初始化 options为页面跳转所带来的参数
 		that.setData({
-			goodsId: options.businessId,
+			goodsObjectId: options.businessId,
 			userInfo: app.globalData.userInfo
 		});
 		//console.log(that.data.userInfo);
@@ -24,9 +24,9 @@ Page({
 		const query = Bmob.Query("goods");
 		const queryImgs = Bmob.Query("goodsImgs");
 		
-		let id = Number(that.data.goodsId) //注意！要转int才能查询成功
+		let goodsObjectId = that.data.goodsObjectId;
 
-		query.equalTo("timeStamp", "==", id);
+		query.equalTo("objectId", "==", goodsObjectId);
 		query.find().then(goodsTbl => {
 			//浏览量 + 1
 			let clicks = goodsTbl[0]["clicks"];
@@ -36,7 +36,7 @@ Page({
 			goodsData = goodsTbl[0];
 			that.setData({ goodsData: goodsData });
 		});
-		queryImgs.equalTo("goods", "==", id);
+		queryImgs.equalTo("goodsObjectId", "==", goodsObjectId);
 		queryImgs.find().then(imgVec => {
 			let goodsData = that.data.goodsData;
 			let vec = new Array();
@@ -90,8 +90,8 @@ Page({
 		 */
 		let that = this;
 		let Bmob = app.globalData.Bmob;
-		let goodsObjectId = that.data.goodsId;
-		let userOpenId = app.globalData.openid
+		let goodsObjectId = that.data.goodsObjectId;
+		let userOpenId = app.globalData.userOpenId;
 		const db = Bmob.Query("stars");
 		db.equalTo("userOpenId", "==", userOpenId);
 		db.find().then(res => {
@@ -110,6 +110,8 @@ Page({
 				})
 			}
 			else{
+				//console.log(userOpenId);
+				//console.log(goodsObjectId);
 				db.set("userOpenId", userOpenId);
 				db.set("goodsObjectId", goodsObjectId);
 				db.save();

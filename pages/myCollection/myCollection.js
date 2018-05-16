@@ -175,11 +175,11 @@ Page({
 						const db = Bmob.Query("stars");
 						let goodsVec = new Array();
 						for (let i = 0; i < tmpCollection_2.length; ++i){
-							goodsVec[i] = String(tmpCollection_2[i]["timeStamp"]);
+							goodsVec[i] = tmpCollection_2[i]["objectId"];
 						}
-						console.log(goodsVec);
-						console.log(tmpCollection_2);
-						db.equalTo("userOpenId", "==", app.globalData.openid);
+						//console.log(goodsVec);
+						//console.log(tmpCollection_2);
+						db.equalTo("userOpenId", "==", app.globalData.userOpenId);
 						db.containedIn("goodsObjectId", goodsVec);
 						db.find().then(res => {
 							res.destroyAll();
@@ -261,20 +261,20 @@ Page({
 		let that = this;
 		let Bmob = app.globalData.Bmob;
 		const dbStars = Bmob.Query("stars");
-		dbStars.equalTo("userOpenId", "==", app.globalData.openid);
+		dbStars.equalTo("userOpenId", "==", app.globalData.userOpenId);
 		dbStars.order("-createdAt");
 		dbStars.find().then(res => {
 			that.setData({ myCollectionLength: res.length });
 			for (let i = 0; i < res.length; ++i) {
 				let myCollection = that.data.myCollection;
 				const dbGoods = Bmob.Query("goods");
-				let timeStamp = res[i]["goodsObjectId"];
-				dbGoods.equalTo("timeStamp", "==", Number(timeStamp));
+				let goodsObjectId = res[i]["goodsObjectId"];
+				dbGoods.equalTo("objectId", "==", goodsObjectId);
 				dbGoods.find().then(res => {
 					myCollection[i] = res[0];
 					myCollection[i]["active"] = false;
 					const dbImg = Bmob.Query("goodsImgs");
-					dbImg.equalTo("goods", "==", Number(timeStamp)); //此时timestamp是string。。。等哪天改objectID就没这么麻烦了
+					dbImg.equalTo("goodsObjectId", "==", goodsObjectId); //此时timestamp是string。。。等哪天改objectID就没这么麻烦了
 					dbImg.order("createdAt");
 					dbImg.limit(1);
 					dbImg.find().then(goodsImgsTbl => {

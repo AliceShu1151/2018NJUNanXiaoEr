@@ -2,7 +2,7 @@
 App({
 	globalData: {
 		userInfo: null,
-		openid: null,
+		userOpenId: null,
 		sessionKey: null,
 		Bmob: null,
 	},
@@ -19,8 +19,8 @@ App({
 		Bmob.initialize("e663c7332cbc5d0c48349e5609048c99", "e24aad5768f2b86e7a86b6f5dea6bc65");
 		that.globalData.Bmob = Bmob;
 
-		//岳翔：5-16  获取openid并检查是否db内是否已存在openid
-		that.getOpenId();
+		//岳翔：5-16  获取userOpenId并检查是否db内是否已存在userOpenId
+		that.getuserOpenId();
 	},
 
 	getUserInfo: function (cb) {
@@ -38,12 +38,12 @@ App({
 
 	},
 
-	getOpenId() {
+	getuserOpenId() {
 		let that = this;
 		wx.login({
 			/**岳翔 5-15
-			 * openid成功获取
-			 * 获取后会存入app.globalData.openid
+			 * userOpenId成功获取
+			 * 获取后会存入app.globalData.userOpenId
 			 */
 			success: res => {
 				let appID = "wx210839d33ea2e4dc";
@@ -63,16 +63,16 @@ App({
 						 * 解决方法：①放在success回调函数中 ②使用promise库（暂时先不用）
 						 */
 						//let that = this;
-						that.globalData.openid = res.data.openid;
-						//console.log(that.globalData.openid);
+						that.globalData.userOpenId = res.data.openid;
+						//console.log(that.globalData.userOpenId);
 						let Bmob = that.globalData.Bmob;
 						const db = Bmob.Query("users");
-						let openid = that.globalData.openid;
-						//console.log(openid);
-						db.equalTo("openid", "==", openid);
+						let userOpenId = that.globalData.userOpenId;
+						//console.log(userOpenId);
+						db.equalTo("userOpenId", "==", userOpenId);
 						db.find().then(res => {
 							if (res.length == 0) {
-								db.set("openid", openid);
+								db.set("userOpenId", userOpenId);
 								db.save();
 							}
 						});

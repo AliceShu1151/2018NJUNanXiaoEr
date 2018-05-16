@@ -108,17 +108,17 @@ Page({
 		let that = this;
 		let Bmob = app.globalData.Bmob;
 		const dbGoods = Bmob.Query("goods");
-		dbGoods.select("timeStamp");
 		dbGoods.limit(3); //banners数量
 		dbGoods.find().then(function (goodsTbl) {
 			let banners = goodsTbl;
 			for (let i = 0; i < banners.length; ++i) {
 				const dbImg = Bmob.Query("goodsImgs");
-				let timeStamp = banners[i]["timeStamp"]
-				dbImg.equalTo("goods", "==", timeStamp)
+				let goodsObjectId = banners[i]["objectId"];
+				dbImg.equalTo("goodsObjectId", "==", goodsObjectId);
 				dbImg.order("createdAt");
 				dbImg.limit(1);
 				dbImg.find().then(function (goodsImgsTbl) {
+					//console.log(goodsImgsTbl);
 					let imgUrl = goodsImgsTbl[0]["img"]["url"];
 					banners[i]["img"] = imgUrl;
 					that.setData({ banners: banners });
@@ -156,8 +156,8 @@ Page({
 			for (let i = 0; i < goods.length; ++i) {
 				//每查询一次建一次Bmob对象
 				const dbImg = Bmob.Query("goodsImgs");
-				let timeStamp = goods[i]["timeStamp"]
-				dbImg.equalTo("goods", "==", timeStamp)
+				let goodsObjectId = goods[i]["objectId"]
+				dbImg.equalTo("goodsObjectId", "==", goodsObjectId)
 				dbImg.order("createdAt");
 				dbImg.limit(1);
 				dbImg.find().then(goodsImgsTbl => {

@@ -9,12 +9,12 @@
             <swiper class="swiper_box" autoplay="true" interval="3000" duration="1000" bindchange="swiperchange">
                 <block wx:for="{{banners}}" wx:key="id">
                     <swiper-item>
-                        <image bindtap="tapBanner" id="{{item.timeStamp}}" src="{{item.img}}" mode="aspectFit" width="300rpx" height="300rpx" />
+                        <image bindtap="tapBanner" id="{{item.objectId}}" src="{{item.img}}" mode="aspectFit" width="300rpx" height="300rpx" />
                     </swiper-item>
                 </block>
             </swiper>
             <view class="dots">
-                <block wx:for="{{banners}}" wx:key="timeStamp">
+                <block wx:for="{{banners}}" wx:key="objectId">
                     <view class="dot{{index == swiperCurrent ? ' active' : ''}}"></view>
                 </block>
             </view>
@@ -54,7 +54,7 @@
 			绑定函数：bindtap = functionName, functionName定义可在.js文件中找到
 		-->
 		<view class="goods-container">
-            <view class="goods-box" wx:for="{{ goods }}" wx:key="{{ index }}" bindtap="toDetailsTap" id="{{ item.timeStamp }}">
+            <view class="goods-box" wx:for="{{ goods }}" wx:key="{{ index }}" bindtap="toDetailsTap" id="{{ item.objectId }}">
                 <view class="img-box">
                     <image src="{{ item.img }}" class="image" mode="aspectFit" lazy-load="true" />
                 </view>
