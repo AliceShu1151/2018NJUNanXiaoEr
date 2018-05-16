@@ -92,13 +92,29 @@ Page({
 	},
 
 	//单独选择
+  /*
+  yhr 5-16：
+  在将可选中物品置入待购买列表的状态时，无法选中已被自己或他人置入待购买列表的商品
+  但在编辑状态下仍可选中并删除
+  */
 	selectTap: function (e) {
 		//console.log(e.currentTarget.id);
 		let that = this;
 		let tmpCollection = that.data.myCollection;
-		//console.log(tmpCollection[0].active);
+		//5-16 主要在第一个判断语句内进行了修改
 		if (!tmpCollection[e.currentTarget.id].active) {
-			tmpCollection[e.currentTarget.id].active = true;
+      if(tmpCollection[e.currentTarget.id].state == 0 && that.data.saveHidden){
+			  tmpCollection[e.currentTarget.id].active = true;
+      }
+      else if (tmpCollection[e.currentTarget.id].state != 0 && that.data.saveHidden){
+        wx.showModal({
+          title: '提示',
+          content: '存在收藏商品已被你或他人置入待购买队列，您无法选中。但在编辑状态下，您可将其选中并移出收藏列表。',
+        });
+      }
+      else if(!that.data.saveHidden){
+        tmpCollection[e.currentTarget.id].active = true;
+      }
 		}
 		else {
 			tmpCollection[e.currentTarget.id].active = false;
@@ -112,8 +128,15 @@ Page({
 	},
 
 	//全选
+  /*
+  yhr 5-16:
+  在将可选中物品置入待购买列表的状态时，无法选中已被自己或他人置入待购买列表的商品
+  但在编辑状态下仍可选中并删除
+  */
 	bindAllSelect: function () {
 		let that = this;
+    //count用于判断收藏列表中是否有已被置于待够列表的商品
+    let count = 0;
 		if (!that.data.allSelected) {
 			//全选
 			that.setData({
@@ -121,8 +144,23 @@ Page({
 			});
 			let tmpCollection = that.data.myCollection;
 			for (let i = 0; i < that.data.myCollection.length; i++) {
-				tmpCollection[i].active = true;
+        //同上个单选函数，也在第一个if语句进行修改
+        if (that.data.saveHidden && that.data.myCollection[i].state == 0){
+          tmpCollection[i].active = true;
+        }
+        else if (that.data.saveHidden && that.data.myCollection[i].state != 0){
+          count += 1;
+        }
+        else if(!that.data.saveHidden){
+          tmpCollection[i].active = true;
+        }
 			}
+      if (count >= 1){
+        wx.showModal({
+          title: '提示',
+          content: '存在收藏商品已被你或他人置入待购买队列，您无法选中。但在编辑状态下，您可将其选中并移出收藏列表。',
+        })
+      }
 			that.setData({
 				myCollection: tmpCollection,
 			});
