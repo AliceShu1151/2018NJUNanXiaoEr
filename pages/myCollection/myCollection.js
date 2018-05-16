@@ -282,7 +282,18 @@ Page({
 					此过程需要对商品表、用户收藏表进行修改
 					*/
 					if (res.confirm) {
-
+						let Bmob = app.globalData.Bmob;
+						const db = Bmob.Query("goods");
+						let goodsVec = new Array();
+						for (let i = 0; i < tmpCollection_2.length; ++i) {
+							goodsVec[i] = tmpCollection_2[i]["objectId"];
+						}
+						db.containedIn("objectId", goodsVec);
+						db.find().then(res => {
+							res.set("state", 1);
+							res.set("buyer", app.globalData.userOpenId);
+							res.saveAll();
+						});
 						that.setData({
 							myCollection: tmpCollection,
 							myCollectionLength: tmpCollection.length

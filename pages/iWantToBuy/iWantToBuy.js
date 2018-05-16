@@ -194,7 +194,7 @@ Page({
 		const db = Bmob.Query("goods");
 		db.equalTo("buyer", "==", app.globalData.userOpenId);
 		db.equalTo("state", "==", 1);
-		db.order("-updatedAt");
+		db.order("updatedAt");
 		db.find().then(res => {
 			that.setData({ iWantToBuyLength: res.length });
 			for (let i = 0; i < res.length; ++i) {
