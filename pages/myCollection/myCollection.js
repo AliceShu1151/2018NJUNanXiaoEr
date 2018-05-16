@@ -34,26 +34,26 @@ Page({
 		})
 	},
 	saveTap: function () {
-    let that = this;
+		let that = this;
 
 		that.setData({
 			saveHidden: true
 		});
 
-    //取消全选
-    that.setData({
-      allSelected: false
-    });
-    let tmpCollection = that.data.myCollection;
-    for (let i = 0; i < that.data.myCollection.length; i++) {
-      tmpCollection[i].active = false;
-    }
-    that.setData({
-      myCollection: tmpCollection,
-    });
+		//取消全选
+		that.setData({
+			allSelected: false
+		});
+		let tmpCollection = that.data.myCollection;
+		for (let i = 0; i < that.data.myCollection.length; i++) {
+			tmpCollection[i].active = false;
+		}
+		that.setData({
+			myCollection: tmpCollection,
+		});
 		that.caculateTotalPrice();
-    that.isNoSelect();
-    that.isAllSelected();
+		that.isNoSelect();
+		that.isAllSelected();
 	},
 
 	//计算收藏商品总价，页面加载时调用
@@ -109,29 +109,29 @@ Page({
 	},
 
 	//单独选择
-  /*
-  yhr 5-16：
-  在将可选中物品置入待购买列表的状态时，无法选中已被自己或他人置入待购买列表的商品
-  但在编辑状态下仍可选中并删除
-  */
+	/*
+	yhr 5-16：
+	在将可选中物品置入待购买列表的状态时，无法选中已被自己或他人置入待购买列表的商品
+	但在编辑状态下仍可选中并删除
+	*/
 	selectTap: function (e) {
 		//console.log(e.currentTarget.id);
 		let that = this;
 		let tmpCollection = that.data.myCollection;
 		//5-16 主要在第一个判断语句内进行了修改
 		if (!tmpCollection[e.currentTarget.id].active) {
-      if(tmpCollection[e.currentTarget.id].state == 0 && that.data.saveHidden){
-			  tmpCollection[e.currentTarget.id].active = true;
-      }
-      else if (tmpCollection[e.currentTarget.id].state != 0 && that.data.saveHidden){
-        wx.showModal({
-          title: '提示',
-          content: '存在收藏商品已被你或他人置入待购买队列，您无法选中。但在编辑状态下，您可将其选中并移出收藏列表。',
-        });
-      }
-      else if(!that.data.saveHidden){
-        tmpCollection[e.currentTarget.id].active = true;
-      }
+			if (tmpCollection[e.currentTarget.id].state == 0 && that.data.saveHidden) {
+				tmpCollection[e.currentTarget.id].active = true;
+			}
+			else if (tmpCollection[e.currentTarget.id].state != 0 && that.data.saveHidden) {
+				wx.showModal({
+					title: '提示',
+					content: '存在收藏商品已被你或他人置入待购买队列，您无法选中。但在编辑状态下，您可将其选中并移出收藏列表。',
+				});
+			}
+			else if (!that.data.saveHidden) {
+				tmpCollection[e.currentTarget.id].active = true;
+			}
 		}
 		else {
 			tmpCollection[e.currentTarget.id].active = false;
@@ -145,15 +145,15 @@ Page({
 	},
 
 	//全选
-  /*
-  yhr 5-16:
-  在将可选中物品置入待购买列表的状态时，无法选中已被自己或他人置入待购买列表的商品
-  但在编辑状态下仍可选中并删除
-  */
+	/*
+	yhr 5-16:
+	在将可选中物品置入待购买列表的状态时，无法选中已被自己或他人置入待购买列表的商品
+	但在编辑状态下仍可选中并删除
+	*/
 	bindAllSelect: function () {
 		let that = this;
-    //count用于判断收藏列表中是否有已被置于待够列表的商品
-    let count = 0;
+		//count用于判断收藏列表中是否有已被置于待够列表的商品
+		let count = 0;
 		if (!that.data.allSelected) {
 			//全选
 			that.setData({
@@ -161,23 +161,23 @@ Page({
 			});
 			let tmpCollection = that.data.myCollection;
 			for (let i = 0; i < that.data.myCollection.length; i++) {
-        //同上个单选函数，也在第一个if语句进行修改
-        if (that.data.saveHidden && that.data.myCollection[i].state == 0){
-          tmpCollection[i].active = true;
-        }
-        else if (that.data.saveHidden && that.data.myCollection[i].state != 0){
-          count += 1;
-        }
-        else if(!that.data.saveHidden){
-          tmpCollection[i].active = true;
-        }
+				//同上个单选函数，也在第一个if语句进行修改
+				if (that.data.saveHidden && that.data.myCollection[i].state == 0) {
+					tmpCollection[i].active = true;
+				}
+				else if (that.data.saveHidden && that.data.myCollection[i].state != 0) {
+					count += 1;
+				}
+				else if (!that.data.saveHidden) {
+					tmpCollection[i].active = true;
+				}
 			}
-      if (count >= 1){
-        wx.showModal({
-          title: '提示',
-          content: '存在收藏商品已被你或他人置入待购买队列，您无法选中。但在编辑状态下，您可将其选中并移出收藏列表。',
-        })
-      }
+			if (count >= 1) {
+				wx.showModal({
+					title: '提示',
+					content: '存在收藏商品已被你或他人置入待购买队列，您无法选中。但在编辑状态下，您可将其选中并移出收藏列表。',
+				})
+			}
 			that.setData({
 				myCollection: tmpCollection,
 			});
@@ -229,7 +229,7 @@ Page({
 						let Bmob = app.globalData.Bmob;
 						const db = Bmob.Query("stars");
 						let goodsVec = new Array();
-						for (let i = 0; i < tmpCollection_2.length; ++i){
+						for (let i = 0; i < tmpCollection_2.length; ++i) {
 							goodsVec[i] = tmpCollection_2[i]["objectId"];
 						}
 						//console.log(goodsVec);
@@ -261,12 +261,12 @@ Page({
 	wantToBuy: function () {
 		let that = this;
 		let tmpCollection = [];
-    //tmpCollection_2存储被选中的商品信息
+		//tmpCollection_2存储被选中的商品信息
 		let tmpCollection_2 = [];
 		for (let i = 0; i < that.data.myCollection.length; i++) {
-      if(that.data.myCollection[i].active){
-        tmpCollection_2.push(that.data.myCollection[i]);
-      }
+			if (that.data.myCollection[i].active) {
+				tmpCollection_2.push(that.data.myCollection[i]);
+			}
 		}
 		if (tmpCollection_2.length != 0) {
 			wx.showModal({
@@ -290,19 +290,35 @@ Page({
 							res.set("state", 1);
 							res.set("buyer", app.globalData.userOpenId);
 							res.saveAll();
+							let starredVec = new Array();
+							let myCollection = that.data.myCollection;
+							for (let i = 0; i < myCollection.length; ++i){
+								starredVec.push(myCollection[i].objectId);
+							}
+							/**岳翔5-17
+							 * 购买后重新渲染我的收藏
+							 */
+							db.containedIn("objectId", starredVec);
+							db.order("-updatedAt");
+							db.find().then(res => {
+								for (let i = 0; i < myCollection.length; ++i) {
+									myCollection[i].state = res[i].state;
+								}
+								that.setData({ myCollection: myCollection });
+							});
 						});
 
-            //取消全选
-            that.setData({
-              allSelected: false
-            });
-            let tmpCollection = that.data.myCollection;
-            for (let i = 0; i < that.data.myCollection.length; i++) {
-              tmpCollection[i].active = false;
-            }
-            that.setData({
-              myCollection: tmpCollection,
-            });
+						//取消全选
+						that.setData({
+							allSelected: false
+						});
+						let tmpCollection = that.data.myCollection;
+						for (let i = 0; i < that.data.myCollection.length; i++) {
+							tmpCollection[i].active = false;
+						}
+						that.setData({
+							myCollection: tmpCollection,
+						});
 
 						that.caculateTotalPrice();
 						that.isNoSelect();
@@ -329,11 +345,11 @@ Page({
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad: function (options) {
-    let that = this;
-    console.log(app.globalData.userInfo);
-    that.setData({
-      userInfo: app.globalData.userInfo
-    });
+		let that = this;
+		//console.log(app.globalData.userInfo);
+		that.setData({
+			userInfo: app.globalData.userInfo
+		});
 		let Bmob = app.globalData.Bmob;
 		const dbStars = Bmob.Query("stars");
 		dbStars.equalTo("userOpenId", "==", app.globalData.userOpenId);
