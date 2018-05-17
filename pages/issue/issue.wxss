@@ -172,7 +172,7 @@ color:#E5E5E5;
 .priceInput{
   color: black;
   font-size: 40rpx;
-  margin-left: 20%;
+  margin-left: 5%;
 }
 
 
@@ -181,7 +181,7 @@ color:#E5E5E5;
   color: black;
   margin-top: -60rpx;
   width: 70%;
-  margin-left: 40%;
+  margin-left: 20%;
   font-size: 25rpx;
   text-align: center;
 }
