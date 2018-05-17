@@ -1,6 +1,7 @@
 //login.js
 //获取应用实例
 var app = getApp();
+let Bmob = app.globalData.Bmob;
 Page({
 	data: {
 		showModal: false,
@@ -52,7 +53,7 @@ Page({
 		//console.log(app.globalData.userInfo);
 
 		//头像设置
-		let db = app.globalData.Bmob.Query("users");
+		let db = Bmob.Query("users");
 		db.equalTo("userOpenId", "==", app.globalData.userOpenId);
 		db.find().then(res => {
 			res.set("avatarUrl", app.globalData.userInfo.avatarUrl);

@@ -1,5 +1,6 @@
 // pages/myCollection/myCollection.js
 let app = getApp();
+let Bmob = app.globalData.Bmob;
 
 Page({
 
@@ -226,7 +227,6 @@ Page({
 					 * 删除功能实现
 					 */
 					if (res.confirm) {
-						let Bmob = app.globalData.Bmob;
 						const db = Bmob.Query("stars");
 						let goodsVec = new Array();
 						for (let i = 0; i < tmpCollection_2.length; ++i) {
@@ -279,7 +279,6 @@ Page({
 					此过程需要对商品表、用户收藏表进行修改
 					*/
 					if (res.confirm) {
-						let Bmob = app.globalData.Bmob;
 						const db = Bmob.Query("goods");
 						let goodsVec = new Array();
 						for (let i = 0; i < tmpCollection_2.length; ++i) {
@@ -342,26 +341,25 @@ Page({
 		that.setData({
 			userInfo: app.globalData.userInfo
 		});
-		let Bmob = app.globalData.Bmob;
-		const dbStars = Bmob.Query("stars");
-		dbStars.equalTo("userOpenId", "==", app.globalData.userOpenId);
-		dbStars.order("-createdAt");
-		dbStars.find().then(res => {
+		const db = Bmob.Query("stars");
+		db.equalTo("userOpenId", "==", app.globalData.userOpenId);
+		db.order("-createdAt");
+		db.find().then(res => {
 			that.setData({ myCollectionLength: res.length });
 			for (let i = 0; i < res.length; ++i) {
 				let myCollection = that.data.myCollection;
-				const dbGoods = Bmob.Query("goods");
+				const db = Bmob.Query("goods");
 				let goodsObjectId = res[i]["goodsObjectId"];
-				dbGoods.equalTo("objectId", "==", goodsObjectId);
-				dbGoods.find().then(res => {
+				db.equalTo("objectId", "==", goodsObjectId);
+				db.find().then(res => {
 					myCollection[i] = res[0];
 					myCollection[i]["active"] = false;
-					const dbImg = Bmob.Query("goodsImgs");
-					dbImg.equalTo("goodsObjectId", "==", goodsObjectId); //此时timestamp是string。。。等哪天改objectID就没这么麻烦了
-					dbImg.order("createdAt");
-					dbImg.limit(1);
-					dbImg.find().then(goodsImgsTbl => {
-						let imgUrl = goodsImgsTbl[0]["img"]["url"];
+					const db = Bmob.Query("goodsImgs");
+					db.equalTo("goodsObjectId", "==", goodsObjectId); //此时timestamp是string。。。等哪天改objectID就没这么麻烦了
+					db.order("createdAt");
+					db.limit(1);
+					db.find().then(goodsImgsTbl => {
+						let imgUrl = goodsImgsTbl[0]["imgUrl"];
 						myCollection[i]["img"] = imgUrl;
 						that.setData({
 							myCollection: myCollection,
@@ -375,52 +373,4 @@ Page({
 		that.caculateTotalPrice();
 	},
 
-	/**
-	 * 生命周期函数--监听页面初次渲染完成
-	 */
-	onReady: function () {
-
-	},
-
-	/**
-	 * 生命周期函数--监听页面显示
-	 */
-	onShow: function () {
-
-	},
-
-	/**
-	 * 生命周期函数--监听页面隐藏
-	 */
-	onHide: function () {
-
-	},
-
-	/**
-	 * 生命周期函数--监听页面卸载
-	 */
-	onUnload: function () {
-
-	},
-
-	/**
-	 * 页面相关事件处理函数--监听用户下拉动作
-	 */
-	onPullDownRefresh: function () {
-
-	},
-
-	/**
-	 * 页面上拉触底事件的处理函数
-	 */
-	onReachBottom: function () {
-
-	},
-
-	/**
-	 * 用户点击右上角分享
-	 */
-	onShareAppMessage: function () {
-
-	}
 })

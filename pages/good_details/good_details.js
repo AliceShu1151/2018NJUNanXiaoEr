@@ -1,6 +1,6 @@
 //获取小程序实例
 var app = getApp();
-
+let Bmob = app.globalData.Bmob;
 /*
 yhr 5-16:
 data中添加canBuy
@@ -27,14 +27,12 @@ Page({
 		/**岳翔 5-14：
 		 * 数据库获取商品信息
 		 */
-		let Bmob = app.globalData.Bmob;
-		const query = Bmob.Query("goods");
-		const queryImgs = Bmob.Query("goodsImgs");
+		const db = Bmob.Query("goods");
 
 		let goodsObjectId = that.data.goodsObjectId;
 
-		query.equalTo("objectId", "==", goodsObjectId);
-		query.find().then(goodsTbl => {
+		db.equalTo("objectId", "==", goodsObjectId);
+		db.find().then(goodsTbl => {
 			//浏览量 + 1
 			let clicks = goodsTbl[0]["clicks"];
 			goodsTbl.set("clicks", clicks + 1);
@@ -42,29 +40,22 @@ Page({
 			let goodsData = that.data.goodsData;
 			goodsData = goodsTbl[0];
 			that.setData({ goodsData: goodsData });
-		});
-		queryImgs.equalTo("goodsObjectId", "==", goodsObjectId);
-		queryImgs.find().then(imgVec => {
-			let goodsData = that.data.goodsData;
-			let vec = new Array();
-			for (let i = 0; i < imgVec.length; ++i) {
-				vec[i] = imgVec[i]["img"]["url"];
-			}
-			goodsData["imgs"] = vec;
-			that.setData({ goodsData: goodsData });
-
-			/*
-			yhr 5-16: 
-			获取商品state
-			修改data中的canBuy状态
-			*/
+			const db = Bmob.Query("goodsImgs");
+			db.equalTo("goodsObjectId", "==", goodsObjectId);
+			db.find().then(res => {
+				let goodsData = that.data.goodsData;
+				let vec = new Array();
+				for (let item of res) {
+					vec.push(item.imgUrl);
+				}
+				goodsData["imgs"] = vec;
+				that.setData({ goodsData: goodsData });
+			});
 			if (that.data.goodsData.state == 0) {
-				//console.log(that.data.goodsData);
 				that.setData({
 					canBuy: true
 				});
 			}
-
 		});
 		/*
 		此处编写函数来获取data中的goodsData
@@ -108,7 +99,6 @@ Page({
 		 * 实现db存取
 		 */
 		let that = this;
-		let Bmob = app.globalData.Bmob;
 		let goodsObjectId = that.data.goodsObjectId;
 		let userOpenId = app.globalData.userOpenId;
 		const db = Bmob.Query("stars");
@@ -159,7 +149,7 @@ Page({
 				content: '该商品处于交易状态，无法加入您想购买的商品列表~',
 			});
 		}
-		else if (that.data.goodsData.state == 2){
+		else if (that.data.goodsData.state == 2) {
 			wx.showModal({
 				title: '提示',
 				content: '该商品已卖出',
@@ -176,7 +166,6 @@ Page({
 						/**岳翔 5-16
 						 * 与数据库联动
 						 */
-						let db = app.globalData.Bmob.Query("goods");
 						db.get(that.data.goodsObjectId).then(res => {
 							res.set("state", 1);
 							res.set("buyer", app.globalData.userOpenId);

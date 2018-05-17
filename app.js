@@ -1,10 +1,8 @@
 //app.js
 App({
 	globalData: {
-		hasAvatar: false,
 		userInfo: null,
 		userOpenId: null,
-		sessionKey: null,
 		Bmob: null,
 	},
 
@@ -22,6 +20,9 @@ App({
 
 		//岳翔：5-16  获取userOpenId并检查是否db内是否已存在userOpenId
 		that.getuserOpenId();
+
+		//岳翔：5-17 假装登录Bmob，因为上传文件需要登录……真心被这个坑了，文档也没给出说明……
+		Bmob.User.login('123', '456');
 	},
 
 	getUserInfo: function (cb) {
@@ -58,11 +59,6 @@ App({
 					//format: http://cloud.bmob.cn/{Secret Key}/{云函数名}?{参数名}={值}&{参数名}={值}…
 					url: url,
 					success: res => {
-						/** 岳翔 5-16:
-						 * 小程序的request和bmob都是异步
-						 * 也即是说遇到request后程序不会等待request执行完再去执行外层代码
-						 * 解决方法：①放在success回调函数中 ②使用promise库（暂时先不用）
-						 */
 						//let that = this;
 						that.globalData.userOpenId = res.data.openid;
 						//console.log(that.globalData.userOpenId);

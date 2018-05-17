@@ -119,7 +119,7 @@ Page({
 				dbImg.limit(1);
 				dbImg.find().then(function (goodsImgsTbl) {
 					//console.log(goodsImgsTbl);
-					let imgUrl = goodsImgsTbl[0]["img"]["url"];
+					let imgUrl = goodsImgsTbl[0]["imgUrl"];
 					banners[i]["img"] = imgUrl;
 					that.setData({ banners: banners });
 				});
@@ -165,7 +165,7 @@ Page({
 					/**岳翔：5-14
 					 * file文件如果存图片，查询结果有filename & url两者，只需取用url即可
 					 * */
-					let imgUrl = goodsImgsTbl[0]["img"]["url"];
+					let imgUrl = goodsImgsTbl[0]["imgUrl"];
 					goods[i]["img"] = imgUrl;
 					that.setData({ goods: goods }); //微信小程序唯一动态赋值方法
 				});

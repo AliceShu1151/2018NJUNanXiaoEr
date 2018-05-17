@@ -287,7 +287,7 @@ Page({
 				dbImg.order("createdAt");
 				dbImg.limit(1);
 				dbImg.find().then(goodsImgsTbl => {
-					let imgUrl = goodsImgsTbl[0]["img"]["url"];
+					let imgUrl = goodsImgsTbl[0]["imgUrl"];
 					iWantToBuy[i]["img"] = imgUrl;
 					that.setData({
 						iWantToBuy: iWantToBuy,
