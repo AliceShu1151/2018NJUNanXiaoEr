@@ -18,7 +18,7 @@ Page({
 		product_category: '化妆品',
 		//urlArr: [],
 		tempFilePaths: [],
-		value: ['A'],
+		value: [],
 		items: [{ name: 'A', value: '化妆品' }, { name: 'B', value: '服饰装扮' }, { name: 'C', value: '食品饮料' }, { name: 'D', value: '演出门票' }, { name: 'E', value: '数码电子' }, { name: 'F', value: '其他' }]
 
 	},
@@ -120,12 +120,12 @@ Page({
 			sizeType: ['compressed'], // 可以指定是原图还是压缩图，默认二者都有
 			sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
 			success: function (res) {
-				//console.log(res);
+				console.log(res);
 				// 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片  
-				let tempFilePaths = res.tempFilePaths;
-				let urlArr = that.data.urlArr;
+        let tempFilePaths = that.data.tempFilePaths;
+        tempFilePaths.push(res.tempFilePaths);
 				that.setData({
-					tempFilePaths: res.tempFilePaths
+					tempFilePaths: tempFilePaths
 				});
 				if (res.tempFilePaths.length == 9) {
 					that.setData({

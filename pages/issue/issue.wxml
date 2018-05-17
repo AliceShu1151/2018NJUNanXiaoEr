@@ -3,17 +3,17 @@
     <view class="allView">
     <view class="titleAndDetail">
           <view class="view-title_hd">
-            <input placeholder="宝贝标题" bindblur="productTitle" class="title" value="{{productTitle}}"/>
+            <input placeholder="宝贝标题" bindblur="productTitle" class="title" value="{{product_name}}"/>
           </view>
           <view class="view-content_hd">
-            <textarea placeholder="宝贝的购买渠道，新旧/价格的描述" placeholder-class="view-content-style" class="baobei" bindblur="productDetail"  value="{{productDetail}}"/>
+            <textarea placeholder="宝贝的购买渠道，新旧/价格的描述" placeholder-class="view-content-style" class="baobei" bindblur="productDetail"  value="{{product_description}}"/>
           </view>
       </view>
     </view>
     
     <view class="view-price_hd">
       <view class="price">价格：
-      <input class="priceInput" value="{{productPrice}}"/></view> 
+      <input class="priceInput" bindblur="productPrice" value="{{product_price}}"/></view> 
     </view>
 
     <!-- 分类格式还需修改 -->
@@ -25,8 +25,8 @@
     
     <text class="imageTitle">上传图片:<text style="color:#737373;font-size:30rpx;">(至少一张)</text></text>
      <view class="gallery">
-        <view class="itemImage" wx:for="{{urlArr}}" >
-            <image class="thumb"  src="{{item}}" />
+        <view class="itemImage" wx:for="{{tempFilePaths}}" >
+            <image class="thumb" mode="aspectFit"  src="{{item}}" />
             <image class="delete" src="../../images/issue/deleteImage.png" data-index="{{index}}" bindtap="deleteImage"></image>
         </view>
 
@@ -34,7 +34,7 @@
         
     </view>
     
-    <button  class="submitButton"  formType="submit">提交</button>
+    <button  class="submitButton"  bindtap="submit">提交</button>
     
   </form>
 

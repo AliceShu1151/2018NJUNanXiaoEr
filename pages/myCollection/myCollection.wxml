@@ -16,7 +16,7 @@
             <view class="a-goods-conts {{item.active? 'active':''}}" bindtap="selectTap" style="{{item.left}}" id="{{index}}">
                 <view class="goods-info">
                     <view class="img-box" >
-                        <image src="{{item.img}}" class="img"/>
+                        <image src="{{item.img}}" mode="aspectFit" class="img"/>
                     </view>
                     <view class="text-box">
                         <view class="goods-title">{{item.name}}</view>

@@ -83,7 +83,7 @@ page{
     height:160rpx;
     overflow: hidden;
     margin-right: 20rpx;
-    background-color: #d8d8d8;
+    background-color: #ffffff;
 }
 .goods-info .text-box{
     width: 440rpx;
