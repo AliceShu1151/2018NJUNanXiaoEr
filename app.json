@@ -2,12 +2,12 @@
   "pages":[
     "pages/start/start",
     "pages/index/index",
-    "pages/putout/putout",
     "pages/personal/personal",
     "pages/good_details/good_details",
     "pages/search_results/search_results",
     "pages/sellerInfo/sellerInfo",
-    "pages/myCollection/myCollection"
+    "pages/myCollection/myCollection",
+    "pages/issue/issue"
   ],
 
   "window":{
@@ -29,7 +29,7 @@
       "selectedIconPath": "images/nav/home-on.png",
       "text": "首页"
     },{
-      "pagePath": "pages/putout/putout",
+      "pagePath": "pages/issue/issue",
       "iconPath": "images/nav/order-off.png",
       "selectedIconPath": "images/nav/order-on.png",
       "text": "发布"

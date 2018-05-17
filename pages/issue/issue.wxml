@@ -1,0 +1,41 @@
+<view class="page">
+  <form bindsubmit="bindSubmit">
+    <view class="allView">
+    <view class="titleAndDetail">
+          <view class="view-title_hd">
+            <input placeholder="宝贝标题" bindblur="productTitle" class="title" value="{{productTitle}}"/>
+          </view>
+          <view class="view-content_hd">
+            <textarea placeholder="宝贝的购买渠道，新旧/价格的描述" placeholder-class="view-content-style" class="baobei" bindblur="productDetail"  value="{{productDetail}}"/>
+          </view>
+      </view>
+    </view>
+    
+    <view class="view-price_hd">
+      <view class="price">价格：
+      <input class="priceInput" value="{{productPrice}}"/></view> 
+    </view>
+
+    <!-- 分类格式还需修改 -->
+    <view class="view-price_hd">
+      <view class="price">分类(点击修改)：  </view>
+    
+      <multi-selector class='selector' value='{{value}}' bindchange='bindSelectorChange' bindmodalopen='onModalOpen' placeholder='请选择分类' items='{{items}}' bindmodalclose='onModalClose' show-value='{{false}}'></multi-selector>
+    </view>
+    
+    <text class="imageTitle">上传图片:<text style="color:#737373;font-size:30rpx;">(至少一张)</text></text>
+     <view class="gallery">
+        <view class="itemImage" wx:for="{{urlArr}}" >
+            <image class="thumb"  src="{{item}}" />
+            <image class="delete" src="../../images/issue/deleteImage.png" data-index="{{index}}" bindtap="delete"></image>
+        </view>
+
+        <image class="thumb" src="../../images/issue/upload.png"  bindtap="upImg"/>
+        
+    </view>
+    
+    <button  class="submitButton"  formType="submit">提交</button>
+    
+  </form>
+
+</view>
