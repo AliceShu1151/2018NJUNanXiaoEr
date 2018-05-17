@@ -37,7 +37,7 @@
             <view class="all-selected  {{allSelected?'active':''}}" bindtap="bindAllSelect">全选</view>
             <view class="total" hidden="{{noSelect}}">合计：¥ {{totalPrice}}</view>
         </view>
-        <view class="to-pay-btn {{noSelect?'no-select':''}}" hidden="{{!saveHidden}}" bindtap="contactSeller">联系卖家</view>
-        <view class="to-pay-btn {{noSelect?'no-select':''}}" hidden="{{saveHidden}}" bindtap="completeTransactions">完成交易</view>
+        <!--view class="to-pay-btn {{noSelect?'no-select':''}}" hidden="{{!saveHidden}}" bindtap="viewDetails">查看详情</view-->
+        <view class="to-pay-btn {{noSelect?'no-select':''}}" bindtap="cancelOrder">撤销订单</view>
     </view>
 </view>
