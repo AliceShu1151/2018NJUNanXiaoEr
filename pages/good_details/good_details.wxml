@@ -9,7 +9,7 @@
         </swiper>
         <view class="dots">  
             <block wx:for="{{ goodsData.imgs }}">  
-                <view class="dot{{ index == swiperCurrent ? ' active ' : '' }}"></view>  
+                <view class="dot{{index == swiperCurrent ? ' active' : ''}}"></view>
             </block>  
         </view>  
    </view>
