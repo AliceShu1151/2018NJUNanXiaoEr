@@ -1,5 +1,5 @@
 // pages/issue/issue.js
-var app = getApp();
+let app = getApp();
 Page({
   data: {
     urlArr: [],
@@ -29,10 +29,11 @@ Page({
 
   },
 
-  delete: function (e) {
+  deleteImage: function (e) {
     // 获取本地显示的图片数组
-    var index = e.currentTarget.dataset.index;
-    var urlArr = that.data.urlArr;
+    let that = this;
+    let index = e.currentTarget.dataset.index;
+    let urlArr = that.data.urlArr;
     urlArr.splice(index, 1);
     that.setData({
       urlArr: urlArr
@@ -41,7 +42,7 @@ Page({
   },
 
   upImg: function () {
-    var that = this;
+    let that = this;
     wx.chooseImage({
       count: 9, // 默认9
       sizeType: ['compressed'], // 可以指定是原图还是压缩图，默认二者都有
@@ -49,8 +50,8 @@ Page({
       success: function (res) {
         console.log(res);
         // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片  
-        var tempFilePaths = res.tempFilePaths;
-        var urlArr = that.data.urlArr;
+        let tempFilePaths = res.tempFilePaths;
+        let urlArr = that.data.urlArr;
         that.setData({
           tempFilePaths: res.tempFilePaths
         });
@@ -61,8 +62,8 @@ Page({
           mask: true,
           duration: 10000
         })
-        var uploadImgCount = 0;
-        for (var i = 0, h = tempFilePaths.length; i < h; i++) {
+        let uploadImgCount = 0;
+        for (let i = 0, h = tempFilePaths.length; i < h; i++) {
           urlArr.push(tempFilePaths[i]);
           that.setData({
             urlArr: urlArr
@@ -80,9 +81,9 @@ Page({
           },
           success: function (res) {
             uploadImgCount++;
-            var data = JSON.parse(res.data);
+            let data = JSON.parse(res.data);
             //服务器返回格式: { "Catalog": "testFolder", "FileName": "1.jpg", "Url": "https://test.com/1.jpg" }  
-            var productInfo = that.data.productInfo;
+            let productInfo = that.data.productInfo;
             if (productInfo.bannerInfo == null) {
               productInfo.bannerInfo = [];
             }
@@ -107,92 +108,3 @@ Page({
   },
 
 })
-  // bindChooiceProduct: function () {
-  //   var that = this;
-
-  //   wx.chooseImage({
-  //     count: 3,  //最多可以选择的图片总数  
-  //     sizeType: ['compressed'], // 可以指定是原图还是压缩图，默认二者都有  
-  //     sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有  
-  //     success: function (res) {
-  //       // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片  
-  //       //var tempFilePaths = res.tempFilePaths;
-  //       //console.log(tempFilePaths);
-  //       that.setData({
-  //         tempFilePaths: res.tempFilePaths
-  //       });
-  //       //启动上传等待中...  
-  //       wx.showToast({
-  //         title: '正在上传...',
-  //         icon: 'loading',
-  //         mask: true,
-  //         duration: 10000
-  //       })
-  //       var uploadImgCount = 0;
-  //       // for (var i = 0, h = tempFilePaths.length; i < h; i++) {
-  //       //   wx.uploadFile({
-  //       //     url: "https://cloud.bmob.cn/c415a33732ba7759/issue",
-  //       //     filePath: tempFilePaths[i],
-  //       //     name: 'uploadfile_ant',
-  //       //     formData: {
-  //       //       'imgIndex': i
-  //       //     },
-  //       //     header: {
-  //       //       "Content-Type": "multipart/form-data"
-  //       //     },
-  //       //     success: function (res) {
-  //       //       uploadImgCount++;
-  //       //       var data = JSON.parse(res.data);
-  //       //       //服务器返回格式: { "Catalog": "testFolder", "FileName": "1.jpg", "Url": "https://test.com/1.jpg" }  
-  //       //       var productInfo = that.data.productInfo;
-  //       //       if (productInfo.bannerInfo == null) {
-  //       //         productInfo.bannerInfo = [];
-  //       //       }
-  //       //       productInfo.bannerInfo.push({
-  //       //         "catalog": data.Catalog,
-  //       //         "fileName": data.FileName,
-  //       //         "url": data.Url
-  //       //       });
-  //       //       that.setData({
-  //       //         productInfo: productInfo
-  //       //       });
-
-  //       //       //如果是最后一张,则隐藏等待中  
-  //       //       if (uploadImgCount == tempFilePaths.length) {
-  //       //         wx.hideToast();
-  //       //       }
-  //       //     },
-  //       //     fail: function (res) {
-  //       //       wx.hideToast();
-  //       //       wx.showModal({
-  //       //         title: '错误提示',
-  //       //         content: '上传图片失败',
-  //       //         showCancel: false,
-  //       //         success: function (res) { }
-  //       //       })
-  //       //     },
-  //       //     complete: function (res) {
-  //       //       //console.log(res)
-  //       //       //前台显示
-  //       //       that.setData({
-  //       //         source: res.tempFilePaths
-  //       //       })
-
-  //       //       // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
-  //       //       var tempFilePaths = res.tempFilePaths
-  //       //       wx.uploadFile({
-  //       //         url: "https://cloud.bmob.cn/c415a33732ba7759/issue",
-  //       //         // url: 'http://www.website.com/home/api/uploadimg',
-  //       //         filePath: tempFilePaths[0],
-  //       //         name: 'file',
-
-  //       //         success: function (res) {
-  //       //           //打印
-  //       //           console.log(res.data)
-  //       //         }
-  //       //       })
-  //       //     }
-  //       //   });
-  //       // }
-  //     }
-  //   });
