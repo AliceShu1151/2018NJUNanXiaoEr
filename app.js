@@ -1,7 +1,7 @@
 //app.js
 App({
 	globalData: {
-		hasLogged: false,
+		hasAvatar: false,
 		userInfo: null,
 		userOpenId: null,
 		sessionKey: null,
@@ -73,11 +73,8 @@ App({
 						db.equalTo("userOpenId", "==", userOpenId);
 						db.find().then(res => {
 							if (res.length == 0) {
-								db.set("userOpenId", userOpenId);
-								db.save();
-							}
-							else{
-								that.globalData.hasLogged = true;
+								res.set("userOpenId", userOpenId);
+								res.save();
 							}
 						});
 					},

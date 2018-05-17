@@ -51,9 +51,7 @@ Page({
 		app.globalData.userInfo = e.detail.userInfo;
 		//console.log(app.globalData.userInfo);
 
-		if(app.globalData.hasLogged){
-			return;
-		}
+		//头像设置
 		let db = app.globalData.Bmob.Query("users");
 		db.equalTo("userOpenId", "==", app.globalData.userOpenId);
 		db.find().then(res => {
