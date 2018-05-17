@@ -205,14 +205,16 @@ Page({
 			db.save().then(res => {
 				let objectId = res.objectId;
 				for (let item of tempFilePaths) {
-					file = Bmob.File("upload.jpg", item);
+					//console.log(item);
+					file = Bmob.File("upload.jpg", item[0]);
 				}
+				console.log(file);
 				file.save().then(res => {
 					let db = Bmob.Query("goodsImgs");
 					for (let item of res) {
 						item = JSON.parse(item);
-						console.log(item);
-						console.log(item.url, objectId);
+						//console.log(item);
+						//console.log(item.url, objectId);
 						db.set("imgUrl", item.url);
 						db.set("goodsObjectId", objectId);
 						db.save();
