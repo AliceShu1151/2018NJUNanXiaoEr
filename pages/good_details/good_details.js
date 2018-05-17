@@ -12,7 +12,8 @@ Page({
 		goodsObjectId: '',
 		//此处goodsData只是一个demo
 		goodsData: {},
-		userInfo: {}
+		userInfo: {},
+    swiperCurrent: 0
 	},
 
 	onLoad: function (options) {
@@ -72,6 +73,15 @@ Page({
 		他的properties有名称、文字描述、图片等
 		*/
 	},
+
+  //监听轮播图变换
+  swiperchange: function (e) {
+    //console.log(e.detail.current)
+    this.setData({
+      swiperCurrent: e.detail.current
+    })
+    console.log(e.detail.current);
+  },
 
 	/*
 	 seller为用户的唯一标识
