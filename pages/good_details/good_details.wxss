@@ -163,6 +163,10 @@ swiper-item image {
   font-size: 34rpx;
 }
 
+.footer-box .now-buy.no-select{
+    background-color: #ccc;
+}
+
 .logo {
   position: absolute;
   left: 90%;

@@ -1,28 +1,28 @@
-
-    <view class="title-box" wx:if="{{myCollectionLength == 0}}">
-        收藏夹空空如也～
+<!--pages/iWantToBuy/iWantToBuy.wxml-->
+    <view class="title-box" wx:if="{{iWantToBuyLength == 0}}">
+        看来您没有啥想购买的哦~
     </view>
-    <view class="to-index-btn" bindtap="toIndexPage" wx:if="{{myCollectionLength == 0}}">
+    <view class="to-index-btn" bindtap="toIndexPage" wx:if="{{iWantToBuyLength == 0}}">
             去逛逛
     </view>
 
-<view wx:if="{{myCollectionLength != 0}}">
+<view wx:if="{{iWantToBuyLength != 0}}">
     <view class="list-top">
         <view class="label">南小二</view>
         <view class="edit-btn" hidden="{{!saveHidden}}" bindtap="editTap">编辑</view>
         <view class="edit-btn" hidden="{{saveHidden}}" bindtap="saveTap">完成</view>
     </view>
     <view class="goodsList">
-        <view class="a-gooods" wx:for="{{myCollection}}"  wx:key="{{index}}" >
+        <view class="a-gooods" wx:for="{{iWantToBuy}}"  wx:key="{{index}}" >
             <view class="a-goods-conts {{item.active? 'active':''}}" bindtap="selectTap" style="{{item.left}}" id="{{index}}">
                 <view class="goods-info">
                     <view class="img-box" >
-                        <image src="{{item.baseInfo.pic}}" class="img"/>
+                        <image src="{{item.img}}" class="img"/>
                     </view>
                     <view class="text-box">
-                        <view class="goods-title">{{item.baseInfo.name}}</view>
-                        <view class="goods-label">浏览次数：{{item.baseInfo.clickTimes}}</view>
-                        <view class="goods-price">¥ {{item.baseInfo.price}}</view>
+                        <view class="goods-title">{{item.name}}</view>
+                        <view class="goods-label">浏览次数：{{item.clickTimes}}</view>
+                        <view class="goods-price">¥ {{item.price}}</view>
                         <image class="logo" src="{{userInfo.avatarUrl}}"></image>
                     </view>
                 </view>
@@ -37,7 +37,7 @@
             <view class="all-selected  {{allSelected?'active':''}}" bindtap="bindAllSelect">全选</view>
             <view class="total" hidden="{{noSelect}}">合计：¥ {{totalPrice}}</view>
         </view>
-        <view class="to-pay-btn {{noSelect?'no-select':''}}" hidden="{{!saveHidden}}" bindtap="wantToBuy">我想购买</view>
-        <view class="to-pay-btn {{noSelect?'no-select':''}}" hidden="{{saveHidden}}" bindtap="deleteSelected">删除</view>
+        <!--view class="to-pay-btn {{noSelect?'no-select':''}}" hidden="{{!saveHidden}}" bindtap="viewDetails">查看详情</view-->
+        <view class="to-pay-btn {{noSelect?'no-select':''}}" bindtap="cancelOrder">撤销订单</view>
     </view>
 </view>

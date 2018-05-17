@@ -1,4 +1,5 @@
-/* pages/myCollection/myCollection.wxss */
+/* pages/iWantToBuy/iWantToBuy.wxss */
+
 page{
     min-height: 100%;
   background-color: #F2f2f2;

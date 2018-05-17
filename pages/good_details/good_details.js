@@ -1,18 +1,25 @@
 //获取小程序实例
 var app = getApp();
 
+/*
+yhr 5-16:
+data中添加canBuy
+用于标识该物品能否被置位待购买商品
+*/
 Page({
 	data: {
-		goodsid: '',
+		canBuy: false,
+		goodsObjectId: '',
 		//此处goodsData只是一个demo
 		goodsData: {},
 		userInfo: {}
 	},
+
 	onLoad: function (options) {
-		var that = this;
+		let that = this;
 		// 页面初始化 options为页面跳转所带来的参数
 		that.setData({
-			goodsId: options.businessId,
+			goodsObjectId: options.businessId,
 			userInfo: app.globalData.userInfo
 		});
 		//console.log(that.data.userInfo);
@@ -20,34 +27,45 @@ Page({
 		/**岳翔 5-14：
 		 * 数据库获取商品信息
 		 */
-		let Bmob = require("../../utils/hydrogen-js-sdk-master/dist/Bmob-1.3.0.min.js");
-		Bmob.initialize("e663c7332cbc5d0c48349e5609048c99", "e24aad5768f2b86e7a86b6f5dea6bc65");
+		let Bmob = app.globalData.Bmob;
 		const query = Bmob.Query("goods");
 		const queryImgs = Bmob.Query("goodsImgs");
-		
-		let id = Number(this.data.goodsId) //注意！要转int才能查询成功
 
-		query.equalTo("timeStamp", "==", id);
+		let goodsObjectId = that.data.goodsObjectId;
+
+		query.equalTo("objectId", "==", goodsObjectId);
 		query.find().then(goodsTbl => {
 			//浏览量 + 1
 			let clicks = goodsTbl[0]["clicks"];
 			goodsTbl.set("clicks", clicks + 1);
 			goodsTbl.saveAll();
-			let goodsData = this.data.goodsData;
+			let goodsData = that.data.goodsData;
 			goodsData = goodsTbl[0];
-			this.setData({ goodsData: goodsData });
+			that.setData({ goodsData: goodsData });
 		});
-		queryImgs.equalTo("goods", "==", id);
+		queryImgs.equalTo("goodsObjectId", "==", goodsObjectId);
 		queryImgs.find().then(imgVec => {
-			let goodsData = this.data.goodsData;
+			let goodsData = that.data.goodsData;
 			let vec = new Array();
-			for(let i = 0; i < imgVec.length; ++i){
+			for (let i = 0; i < imgVec.length; ++i) {
 				vec[i] = imgVec[i]["img"]["url"];
 			}
 			goodsData["imgs"] = vec;
-			this.setData({ goodsData: goodsData });
-		});
+			that.setData({ goodsData: goodsData });
 
+			/*
+			yhr 5-16: 
+			获取商品state
+			修改data中的canBuy状态
+			*/
+			if (that.data.goodsData.state == 0) {
+				//console.log(that.data.goodsData);
+				that.setData({
+					canBuy: true
+				});
+			}
+
+		});
 		/*
 		此处编写函数来获取data中的goodsData
 		这是一个object类型的变量
@@ -60,7 +78,7 @@ Page({
 	 并传递到卖家信息页面
 	 */
 	toSellerInfo: function () {
-		var that = this;
+		let that = this;
 		console.log(that.data.goodsData.seller);
 		wx.navigateTo({
 			url: '../../pages/sellerInfo/sellerInfo?seller=' + that.data.goodsData.seller
@@ -82,38 +100,97 @@ Page({
 	*/
 	toAddCollection: function () {
 		/*
-		使用userInfo和businessId查询收藏表
+		使用userInfo和goodsId查询收藏表
 		检测是否收藏过
 		若未收藏过则往表中添加数据
 		*/
-		wx.showToast({
-			title: '添加成功',
-			icon: 'success',
-			duration: 1000
-		})
+		/** 岳翔：5-16
+		 * 实现db存取
+		 */
+		let that = this;
+		let Bmob = app.globalData.Bmob;
+		let goodsObjectId = that.data.goodsObjectId;
+		let userOpenId = app.globalData.userOpenId;
+		const db = Bmob.Query("stars");
+		db.equalTo("userOpenId", "==", userOpenId);
+		db.find().then(res => {
+			let isStarred = false;
+			for (let i = 0; i < res.length; ++i) {
+				if (res[i]["goodsObjectId"] == goodsObjectId) {
+					isStarred = true;
+					break;
+				}
+			}
+			if (isStarred) {
+				wx.showToast({
+					title: '已存在于收藏栏',
+					icon: 'success',
+					duration: 1000,
+				})
+			}
+			else {
+				//console.log(userOpenId);
+				//console.log(goodsObjectId);
+				db.set("userOpenId", userOpenId);
+				db.set("goodsObjectId", goodsObjectId);
+				db.save();
+				wx.showToast({
+					title: '添加成功',
+					icon: 'success',
+					duration: 1000,
+				})
+			}
+		});
 	},
 
 	/*
-	将物品置为待购状态
+  yhr 5-16:
+  若物品可被置为待购商品
+	则将物品置为待购状态
 	商品不会再被其他用户设为代购状态
-	同时修改商品表中的属性
+	同时修改商品表中的属性及data中的canBuy
 	*/
 	toBuy: function () {
-		var that = this;
-		wx.showModal({
-			title: '提示',
-			content: '点击“我想购买”后，该商品将无法被其他用户购买，请务必尽快与卖家联系。',
-			success: function (res) {
-				if (res.confirm) {
-					//对商品表进行修改
-					//并跳转至卖家信息页
-					wx.navigateTo({
-						url: '../../pages/sellerInfo/sellerInfo?seller=' + that.data.goodsData.seller
-					});
+		let that = this;
+		if (that.data.goodsData.state == 1) {
+			//console.log(that.data.goodsData.state);
+			wx.showModal({
+				title: '提示',
+				content: '该商品处于交易状态，无法加入您想购买的商品列表~',
+			});
+		}
+		else if (that.data.goodsData.state == 2){
+			wx.showModal({
+				title: '提示',
+				content: '该商品已卖出',
+			});
+		}
+		else {
+			wx.showModal({
+				title: '提示',
+				content: '点击“我想购买”后，该商品将无法被其他用户购买，请务必尽快与卖家联系。',
+				success: function (res) {
+					if (res.confirm) {
+						//对商品表进行修改
+						//并跳转至卖家信息页
+						/**岳翔 5-16
+						 * 与数据库联动
+						 */
+						let db = app.globalData.Bmob.Query("goods");
+						db.get(that.data.goodsObjectId).then(res => {
+							res.set("state", 1);
+							res.set("buyer", app.globalData.userOpenId);
+							res.save();
+						});
+						wx.navigateTo({
+							url: '../../pages/sellerInfo/sellerInfo?seller=' + that.data.goodsData.seller
+						});
+						that.setData({
+							canBuy: false
+						});
+					}
 				}
-				else if (res.cancel) {
-				}
-			}
-		})
+			})
+		}
 	}
 })

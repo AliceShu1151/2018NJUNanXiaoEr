@@ -45,7 +45,7 @@
 
     <view class="my-item">
       <image src="/images/personal/1.png" class="logo"></image>
-      <navigator url="/pages/myCollection/myCollection" hover-class="navigator-hover">我想购买的</navigator>
+      <navigator url="/pages/iWantToBuy/iWantToBuy" hover-class="navigator-hover">我想购买的</navigator>
     </view>
 
     <view class="my-item">
