@@ -171,7 +171,8 @@ page{
   width: 160rpx;
   height: 160rpx;
   margin-left: -80rpx;
-  border-radius: 160rpx;
+  border-radius: 50%;
+  overflow:hidden;
   animation: sway 10s ease-in-out infinite;
   opacity: .95;
 }

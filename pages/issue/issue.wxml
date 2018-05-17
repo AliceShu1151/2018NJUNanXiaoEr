@@ -27,7 +27,7 @@
      <view class="gallery">
         <view class="itemImage" wx:for="{{urlArr}}" >
             <image class="thumb"  src="{{item}}" />
-            <image class="delete" src="../../images/issue/deleteImage.png" data-index="{{index}}" bindtap="delete"></image>
+            <image class="delete" src="../../images/issue/deleteImage.png" data-index="{{index}}" bindtap="deleteImage"></image>
         </view>
 
         <image class="thumb" src="../../images/issue/upload.png"  bindtap="upImg"/>
