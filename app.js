@@ -1,6 +1,7 @@
 //app.js
 App({
 	globalData: {
+		hasLogged: false,
 		userInfo: null,
 		userOpenId: null,
 		sessionKey: null,
@@ -74,6 +75,9 @@ App({
 							if (res.length == 0) {
 								db.set("userOpenId", userOpenId);
 								db.save();
+							}
+							else{
+								that.globalData.hasLogged = true;
 							}
 						});
 					},

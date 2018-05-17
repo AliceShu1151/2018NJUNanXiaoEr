@@ -51,18 +51,15 @@ Page({
 		app.globalData.userInfo = e.detail.userInfo;
 		//console.log(app.globalData.userInfo);
 
-		/** 岳翔：5-15
-		 * e.detail 返回getUserInfo结果
-		 * e.detail.encryptedData包含全部敏感信息
-		 * 用户的唯一标识符unionid就包含在内
-		 * 通过调用微信提供的aes解密代码破解明文
-		 */
-		if(app.globalData.isInSession){
-			return; //在session期则直接返回
+		if(app.globalData.hasLogged){
+			return;
 		}
-		let appID = "wx210839d33ea2e4dc";
-		let appSecret = "307e15cfe15abbc9cd6321adbf73b205";
-		let encryptedData = e.detail.encryptedData;
+		let db = app.globalData.Bmob.Query("users");
+		db.equalTo("userOpenId", "==", app.globalData.userOpenId);
+		db.find().then(res => {
+			res.set("avatarUrl", app.globalData.userInfo.avatarUrl);
+			res.saveAll();
+		})
 	},
 
 	/**
