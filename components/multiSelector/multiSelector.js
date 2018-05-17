@@ -78,19 +78,28 @@ Component({
       const items = this.data.items;
       items.forEach(item => { item.checked = false });
       const selected = [];
+      const selecte_name = [];
+      var last_check = 0;
       for (let i = 0; i < value.length; i++) {
         for (let j = 0; j < items.length; j++) {
           if (value[i] === items[j].name) {
+            items[last_check].checked = false;
             items[j].checked = true;
+            selected.pop();
             selected.push(items[j].value);
+            selecte_name.pop();
+            selecte_name.push(items[j].name);
+            last_check = j;
             break;
           }
         }
       }
+      // console.log(selecte_name);
+      // console.log(this.data.value);
       this.setData({
         changed: true,
         items: items,
-        tempValue: value,
+        tempValue: selecte_name,
         tempSelected: selected
       })
     },
