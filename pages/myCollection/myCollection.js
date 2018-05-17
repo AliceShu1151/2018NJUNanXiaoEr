@@ -308,21 +308,13 @@ Page({
 							});
 						});
 
-						//取消全选
-						that.setData({
-							allSelected: false
-						});
-						let tmpCollection = that.data.myCollection;
-						for (let i = 0; i < that.data.myCollection.length; i++) {
-							tmpCollection[i].active = false;
-						}
-						that.setData({
-							myCollection: tmpCollection,
-						});
-
-						that.caculateTotalPrice();
-						that.isNoSelect();
-						that.isAllSelected();
+            /*
+            yhr 5-17
+            点击我想购买后直接进入我想购买的页面
+            */
+            wx.redirectTo({
+              url: '../../pages/iWantToBuy/iWantToBuy',
+            });
 					}
 				}
 			});
