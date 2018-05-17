@@ -14,6 +14,9 @@
         <view style='margin: 20rpx;font-size: 25rpx' wx:if="{{userInfo.gender == 0}}">性别：未知</view>
       </view>
       <image wx:if="{{userInfo && userInfo.avatarUrl}}" class="userinfo-avatar" src="{{ userInfo.avatarUrl }}" background-size="cover"></image>
+      <!--  编辑按钮待编辑  -->
+      <image class='edit' src="../../images/personal/addr-edit.png" background-size="cover"></image>
+
     </view>
 
     <image src="/images/addr-line.png" style="height: 4rpx;"></image>
