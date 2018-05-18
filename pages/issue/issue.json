@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "我的发布",
+  "navigationBarTitleText": "发布",
   "usingComponents": {
     "multi-selector": "/components/multiSelector/multiSelector"
   }
