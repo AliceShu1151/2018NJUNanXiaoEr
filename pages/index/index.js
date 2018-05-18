@@ -107,10 +107,11 @@ Page({
 	renderBanners: function() {
 		let that = this;
 		let Bmob = app.globalData.Bmob;
-		const dbGoods = Bmob.Query("goods");
-		dbGoods.limit(3); //banners数量
-		dbGoods.find().then(function (goodsTbl) {
-			let banners = goodsTbl;
+		let db = Bmob.Query("goods");
+		db.limit(3); //banners数量
+		db.order("-createdAt");
+		db.find().then(res => {
+			let banners = res;
 			//console.log(banners);
 			that.setData({ banners: banners });
 		});
