@@ -15,7 +15,7 @@
       </view>
       <image wx:if="{{userInfo && userInfo.avatarUrl}}" class="userinfo-avatar" src="{{ userInfo.avatarUrl }}" background-size="cover"></image>
       <!--  编辑按钮待编辑  -->
-      <image class='edit' src="../../images/personal/addr-edit.png" background-size="cover"></image>
+      <image class='edit' src="../../images/personal/addr-edit.png" background-size="cover" bindtap="toEdit"></image>
 
     </view>
 
