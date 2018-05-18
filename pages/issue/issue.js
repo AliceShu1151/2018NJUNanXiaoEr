@@ -183,7 +183,7 @@ Page({
 	submit: function () {
 		let that = this;
 		if (that.data.ableToClick) {
-			if (that.data.tempFilePaths.length == 0) {
+			if (that.data.tempFiles.length == 0) {
 				wx.showModal({
 					title: '提示',
 					content: '上传的图片数量至少为一张！',
@@ -214,54 +214,80 @@ Page({
 				/*
 				对数据库的操作写在这里
 				*/
-				let tempFilePaths = that.data.tempFilePaths;
-				let file;
-				let db = Bmob.Query("goods");
-				console.log(that.data.product_name, that.data.product_price, that.data.product_description, that.data.product_category, app.globalData.userOpenId);
-				db.set("name", that.data.product_name);
-				db.set("price", that.data.product_price);
-				db.set("description", that.data.product_description);
-				db.set("category", that.data.product_category);
-				db.set("seller", app.globalData.userOpenId);
-				db.set("state", 0);
-				db.set("clicks", 0);
-				console.log("okokokokokokok");
-				db.save().then(res => {
-					let objectId = res.objectId;
-					for (let item of tempFilePaths) {
-						//console.log(item);
-						file = Bmob.File("upload.jpg", item[0]);
-					}
-					console.log(file);
-					file.save().then(res => {
-						let db = Bmob.Query("goodsImgs");
-						for (let item of res) {
-							item = JSON.parse(item);
-							//console.log(item);
-							//console.log(item.url, objectId);
-							db.set("imgUrl", item.url);
-							db.set("goodsObjectId", objectId);
-							db.save();
-
-							/*
-							yhr 5-18:
-							提示发布成功
-							并跳转到、并重新加载首页
-							*/
-							wx.showToast({
-								title: '发布成功',
-								icon: 'success',
-								duration: 1000
+				let tempFiles = that.data.tempFiles;
+				console.log(tempFiles);
+				let file1 = Bmob.File();
+				let item = tempFiles[0];
+				console.log(item);
+				file1 = Bmob.File("upload.jpg", item.path);
+				file1.save().then(res => {
+					let obj = Bmob.Query("goods");
+					let item1 = JSON.parse(res);
+					//console.log(that.data.product_name, that.data.product_price, that.data.product_description, that.data.product_category, app.globalData.userOpenId);
+					obj.set("name", that.data.product_name);
+					obj.set("price", that.data.product_price);
+					obj.set("description", that.data.product_description);
+					obj.set("category", that.data.product_category);
+					obj.set("seller", app.globalData.userOpenId);
+					obj.set("state", 0);
+					obj.set("clicks", 0);
+					obj.set("imgUrl", item1.url);
+					//console.log("okokokokokokok");
+					obj.save().then(res => {
+						let file;
+						let objectId = res.objectId;
+						if (tempFiles.length == 1) {
+							let obj = Bmob.Query("goodsImgs");
+							obj.set("goodsObjectId", objectId);
+							obj.set("imgUrl", item1.url);
+							obj.save().then(res => {
+								that.issued();
 							});
-							that.sleep(1200);
-							wx.reLaunch({
-								url: '../../pages/index/index',
-							});
+							return;
 						}
+						for (let i = 1; i < tempFiles.length; ++i) {
+							let item = tempFiles[i];
+							//console.log(item);
+							file = Bmob.File("upload.jpg", item.path);
+						}
+						//console.log(file);
+						file.save().then(res => {
+							let addQueue = new Array();
+							for (let item of res) {
+								let obj = Bmob.Query("goodsImgs");
+								item = JSON.parse(item);
+								//console.log(item);
+								//console.log(item.url, objectId);
+								obj.set("goodsObjectId", objectId)
+								obj.set("imgUrl", item.url);
+								addQueue.push(obj);
+							}
+							Bmob.Query("goodsImgs").saveAll(addQueue).then(res => {
+								that.issued();
+							});
+						});
 					});
 				});
 			}
 		}
+	},
+
+	/*
+	yhr 5-18:
+	提示发布成功
+	并跳转到、并重新加载首页
+	*/
+	issued: function () {
+		let that = this;
+		wx.showToast({
+			title: '发布成功',
+			icon: 'success',
+			duration: 1000
+		});
+		that.sleep(1200);
+		wx.reLaunch({
+			url: '../../pages/index/index',
+		});
 	},
 
 	sleep: function (sleepTime) {
