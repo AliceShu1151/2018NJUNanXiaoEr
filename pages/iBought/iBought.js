@@ -5,14 +5,35 @@ Page({
    * 页面的初始数据
    */
   data: {
-  
+    userInfo: {},
+    saveHidden: true,
+    goodBought: [
+      { businessId: 0, name: "QAQ", price: 200, img: '../../images/goods01.png', clickTimes: 5, state: 1, active: false },
+      { businessId: 1, name: "QAQ", price: 200, img: '../../images/goods02.png', clickTimes: 6, state: 1, active: false }
+    ],
+    goodBoughtLength: 5,
+  },
+
+  clickTap: function (e) {
+    wx.navigateTo({
+      url: "/pages/good_details/good_details?businessId=" + this.data.soldOut[e.currentTarget.id].businessId
+    });
+  },
+
+  toIndexPage: function () {
+    wx.reLaunch({
+      url: '../../pages/index/index'
+    });
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-  
+    this.setData({
+      goodBoughtLength: this.data.goodBought.length
+    });
+    console.log(this.data.goodBoughtLength)
   },
 
   /**

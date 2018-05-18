@@ -21,7 +21,7 @@ Page({
   },
 
   toIssuePage: function() {
-    wx.navigateTo({
+    wx.reLaunch({
       url: '../../pages/issue/issue',
     });
   },
