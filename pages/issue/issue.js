@@ -226,6 +226,12 @@ Page({
               db.set("imgUrl", item.url);
               db.set("goodsObjectId", objectId);
               db.save();
+
+              /*
+              yhr 5-18:
+              提示发布成功
+              并跳转到、并重新加载首页
+              */
               wx.showToast({
                 title: '发布成功',
                 icon: 'success',
