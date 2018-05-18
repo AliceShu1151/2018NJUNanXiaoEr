@@ -9,7 +9,10 @@
     "pages/myCollection/myCollection",
     "pages/issue/issue",
     "pages/iWantToBuy/iWantToBuy",
-    "pages/editUserInfo/editUserInfo"
+    "pages/editUserInfo/editUserInfo",
+    "pages/myIssuedGood/myIssuedGood",
+    "pages/mySoldOut/mySoldOut",
+    "pages/iBought/iBought"
   ],
 
   "window":{

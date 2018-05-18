@@ -1,0 +1,101 @@
+.remind-box {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 300rpx;
+}
+
+.remind-img {
+    width: 250rpx;
+    height: 250rpx;
+    padding-bottom: 25rpx;
+}
+
+
+.container{
+  display: flex;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+}
+.userinfo {
+  border-radius: 20px;
+	display: flex;
+	flex-direction: row;
+	padding: 50rpx 0;
+  margin: 20rpx;
+	background: #6A005F;
+  color: #FFF;
+  padding-left: 20rpx;
+  width: 750rpx;
+}
+
+
+.userbaseinfo{
+  margin: 20rpx;
+  color: #FFF;
+  width: 750rpx;
+}
+
+.edit{
+  position: absolute;
+  width: 35rpx;
+  height: 35rpx;
+  margin-left: 88%; 
+}
+
+.userinfo-avatar {
+	width: 330rpx;
+	height: 200rpx;
+  margin-top: 35rpx;
+	margin-right: 70rpx;
+	border-radius: 50%;
+}
+
+.userinfo-nickname {
+  margin-top: 20rpx;
+  color: #FFF;
+}
+
+.logo {
+	display: flex;
+	flex-direction: column;
+	padding: 25rpx 0;
+  width: 50rpx;
+  height: 50rpx;
+  float:left;
+  margin-right: 20rpx;
+  margin-left: 50rpx;
+}
+
+.version {
+  width:100%;
+  height: 40rpx;
+	line-height: 40rpx;
+	font-size: 24rpx;
+	text-align: center;  
+  padding: 40rpx;
+  color: #6A005F;
+  font-weight: bolder;
+}
+
+.my-item{
+    width: 100%;
+    background-size: 16rpx auto,750rpx auto;
+    margin: 8rpx 0;  
+    border-bottom: 1px solid #eee;
+    height: 100rpx;
+    line-height: 100rpx;
+    font-size: 28rpx;
+}
+
+.about{
+    width: 100%;
+    background-size: 16rpx auto,750rpx auto;
+    margin: 20rpx 0; 
+    height: 70rpx;
+    line-height: 80rpx;
+    padding-left: 100rpx;
+}
