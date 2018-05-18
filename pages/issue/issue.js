@@ -218,7 +218,7 @@ Page({
 				console.log(tempFiles);
 				let file1 = Bmob.File();
 				let item = tempFiles[0];
-				console.log(item);
+				//console.log(item);
 				file1 = Bmob.File("upload.jpg", item.path);
 				file1.save().then(res => {
 					let obj = Bmob.Query("goods");

@@ -124,15 +124,16 @@ Page({
 		 */
 		let that = this;
 		let Bmob = app.globalData.Bmob;
-		const dbGoods = Bmob.Query("goods");
+		let db = Bmob.Query("goods");
 		let goods = that.data.goods;
 		let categoryNameList = new Array("全部", "化妆品", "服饰装扮", "食品饮料", "演出门票", "数码电子", "其他");
 		let	categoryName = categoryNameList[categoryId];
 		
 		if(categoryName != "全部"){
-			dbGoods.equalTo("category", "==", categoryName);
+			db.equalTo("category", "==", categoryName);
 		}
-		dbGoods.find().then(goodsTbl => {
+		db.order("-createdAt");
+		db.find().then(goodsTbl => {
 			goods = goodsTbl;
 			that.setData({ goods: goods });
 		});
