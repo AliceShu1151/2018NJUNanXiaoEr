@@ -13,7 +13,7 @@ Page({
     添加ableToClick，默认值为true
     点击提交后置位false
 		*/
-    ableToClick: true,
+		ableToClick: true,
 		isFull: false,
 		product_name: '',
 		product_description: '',
@@ -21,7 +21,7 @@ Page({
 		//化妆品种类是默认值
 		product_category: '化妆品',
 		//urlArr: [],
-		tempFilePaths: [],
+		tempFiles: {},
 		value: [],
 		items: [{ name: 'A', value: '化妆品' }, { name: 'B', value: '服饰装扮' }, { name: 'C', value: '食品饮料' }, { name: 'D', value: '演出门票' }, { name: 'E', value: '数码电子' }, { name: 'F', value: '其他' }]
 
@@ -78,15 +78,15 @@ Page({
 			});
 			console.log(that.data.product_price);
 		}
-    else if(Number(e.detail.value) > 1000){
-      wx.showModal({
-        title: '提示',
-        content: '亲~您的物品价格太高了哟，这个小平台承受不起呢，换个地方卖吧~，',
-      });
-      that.setData({
-        product_price: Number(e.detail.value)
-      });
-    }
+		else if (Number(e.detail.value) > 10000) {
+			wx.showModal({
+				title: '提示',
+				content: '亲~您的物品价格太高了哟，这个小平台承受不起呢，换个地方卖吧~，',
+			});
+			that.setData({
+				product_price: Number(e.detail.value)
+			});
+		}
 		else {
 			that.setData({
 				product_price: Number(e.detail.value)
@@ -126,21 +126,28 @@ Page({
 	删除wx.uploadFile，应该在提交方法中调用该功能更为合适
 	当已经选择9张图片时应隐藏上传按钮
 	*/
+	/*
+	yhr 5-18:
+	修复上传图片时的bug
+	改用回调函数返回值的tempFiles属性
+	（原来使用的是tempFilePaths）
+	deletImage方法也做了相应的改动
+	*/
 	upImg: function () {
 		let that = this;
 		wx.chooseImage({
-			count: 9, // 默认9
+			count: 4,
 			sizeType: ['compressed'], // 可以指定是原图还是压缩图，默认二者都有
 			sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
 			success: function (res) {
 				console.log(res);
 				// 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片  
-        let tempFilePaths = that.data.tempFilePaths;
-        tempFilePaths.push(res.tempFilePaths);
+				let tempFiles = res.tempFiles;
 				that.setData({
-					tempFilePaths: tempFilePaths
+					tempFiles: tempFiles
 				});
-				if (res.tempFilePaths.length == 9) {
+				//console.log(that.data.tempFilePaths);
+				if (res.tempFilePaths.length == 4) {
 					that.setData({
 						isFull: true
 					});
@@ -159,10 +166,10 @@ Page({
 		// 获取本地显示的图片数组
 		let that = this;
 		let index = e.currentTarget.dataset.index;
-		let imagePaths = that.data.tempFilePaths;
+		let imagePaths = that.data.tempFiles;
 		imagePaths.splice(index, 1);
 		that.setData({
-			tempFilePaths: imagePaths,
+			tempFiles: imagePaths,
 			isFull: false
 		});
 		//console.log(that.data.tempFilePaths);
@@ -174,91 +181,91 @@ Page({
 	为修改数据库的入口
 	*/
 	submit: function () {
-    let that = this;
-    if(that.data.ableToClick){
-      if (that.data.tempFilePaths.length == 0) {
-        wx.showModal({
-          title: '提示',
-          content: '上传的图片数量至少为一张！',
-        });
-      }
-      else if (that.data.product_price == null || that.data.product_price <= 0 || that.data.product_price > 10000) {
-        wx.showModal({
-          title: '提示',
-          content: '请重新输入价格！',
-        });
-      }
-      else if (that.data.product_description == '') {
-        wx.showModal({
-          title: '提示',
-          content: '请输入商品描述！',
-        });
-      }
-      else if (that.data.product_name == '') {
-        wx.showModal({
-          title: '提示',
-          content: '请输入商品标题！',
-        })
-      }
-      else {
-        that.setData({
-          ableToClick: false
-        });
-        /*
-        对数据库的操作写在这里
-        */
-        let tempFilePaths = that.data.tempFilePaths;
-        let file;
-        let db = Bmob.Query("goods");
-        console.log(that.data.product_name, that.data.product_price, that.data.product_description, that.data.product_category, app.globalData.userOpenId);
-        db.set("name", that.data.product_name);
-        db.set("price", that.data.product_price);
-        db.set("description", that.data.product_description);
-        db.set("category", that.data.product_category);
-        db.set("seller", app.globalData.userOpenId);
-        db.set("state", 0);
-        db.set("clicks", 0);
-        console.log("okokokokokokok");
-        db.save().then(res => {
-          let objectId = res.objectId;
-          for (let item of tempFilePaths) {
-            //console.log(item);
-            file = Bmob.File("upload.jpg", item[0]);
-          }
-          console.log(file);
-          file.save().then(res => {
-            let db = Bmob.Query("goodsImgs");
-            for (let item of res) {
-              item = JSON.parse(item);
-              //console.log(item);
-              //console.log(item.url, objectId);
-              db.set("imgUrl", item.url);
-              db.set("goodsObjectId", objectId);
-              db.save();
+		let that = this;
+		if (that.data.ableToClick) {
+			if (that.data.tempFilePaths.length == 0) {
+				wx.showModal({
+					title: '提示',
+					content: '上传的图片数量至少为一张！',
+				});
+			}
+			else if (that.data.product_price == null || that.data.product_price <= 0 || that.data.product_price > 10000) {
+				wx.showModal({
+					title: '提示',
+					content: '请重新输入价格！',
+				});
+			}
+			else if (that.data.product_description == '') {
+				wx.showModal({
+					title: '提示',
+					content: '请输入商品描述！',
+				});
+			}
+			else if (that.data.product_name == '') {
+				wx.showModal({
+					title: '提示',
+					content: '请输入商品标题！',
+				})
+			}
+			else {
+				that.setData({
+					ableToClick: false
+				});
+				/*
+				对数据库的操作写在这里
+				*/
+				let tempFilePaths = that.data.tempFilePaths;
+				let file;
+				let db = Bmob.Query("goods");
+				console.log(that.data.product_name, that.data.product_price, that.data.product_description, that.data.product_category, app.globalData.userOpenId);
+				db.set("name", that.data.product_name);
+				db.set("price", that.data.product_price);
+				db.set("description", that.data.product_description);
+				db.set("category", that.data.product_category);
+				db.set("seller", app.globalData.userOpenId);
+				db.set("state", 0);
+				db.set("clicks", 0);
+				console.log("okokokokokokok");
+				db.save().then(res => {
+					let objectId = res.objectId;
+					for (let item of tempFilePaths) {
+						//console.log(item);
+						file = Bmob.File("upload.jpg", item[0]);
+					}
+					console.log(file);
+					file.save().then(res => {
+						let db = Bmob.Query("goodsImgs");
+						for (let item of res) {
+							item = JSON.parse(item);
+							//console.log(item);
+							//console.log(item.url, objectId);
+							db.set("imgUrl", item.url);
+							db.set("goodsObjectId", objectId);
+							db.save();
 
-              /*
-              yhr 5-18:
-              提示发布成功
-              并跳转到、并重新加载首页
-              */
-              wx.showToast({
-                title: '发布成功',
-                icon: 'success',
-                duration: 1000
-              });
-              that.sleep(1200);
-              wx.reLaunch({
-                url: '../../pages/index/index',
-              });
-            }
-          });
-        });
-      }
-    }
+							/*
+							yhr 5-18:
+							提示发布成功
+							并跳转到、并重新加载首页
+							*/
+							wx.showToast({
+								title: '发布成功',
+								icon: 'success',
+								duration: 1000
+							});
+							that.sleep(1200);
+							wx.reLaunch({
+								url: '../../pages/index/index',
+							});
+						}
+					});
+				});
+			}
+		}
 	},
 
-  sleep: function(sleepTime) {
-    for(var start = Date.now(); Date.now() - start <= sleepTime; ) { } 
-}
+	sleep: function (sleepTime) {
+		for (var start = Date.now(); Date.now() - start <= sleepTime;) { }
+	}
 
 })
