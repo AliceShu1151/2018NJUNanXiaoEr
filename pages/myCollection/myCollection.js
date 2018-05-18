@@ -354,16 +354,8 @@ Page({
 				db.find().then(res => {
 					myCollection[i] = res[0];
 					myCollection[i]["active"] = false;
-					const db = Bmob.Query("goodsImgs");
-					db.equalTo("goodsObjectId", "==", goodsObjectId); //此时timestamp是string。。。等哪天改objectID就没这么麻烦了
-					db.order("createdAt");
-					db.limit(1);
-					db.find().then(goodsImgsTbl => {
-						let imgUrl = goodsImgsTbl[0]["imgUrl"];
-						myCollection[i]["img"] = imgUrl;
-						that.setData({
-							myCollection: myCollection,
-						});
+					that.setData({
+						myCollection: myCollection,
 					});
 				});
 			}

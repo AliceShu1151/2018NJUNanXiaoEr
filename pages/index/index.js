@@ -1,6 +1,7 @@
 //index.js
 //获取应用实例
 var app = getApp()
+let Bmob = app.globalData.Bmob;
 
 Page({
 	data: {
@@ -106,7 +107,6 @@ Page({
 	//轮播图渲染
 	renderBanners: function() {
 		let that = this;
-		let Bmob = app.globalData.Bmob;
 		let db = Bmob.Query("goods");
 		db.limit(3); //banners数量
 		db.order("-createdAt");
@@ -124,18 +124,16 @@ Page({
 		 * 图片获取机制更新
 		 */
 		let that = this;
-		let Bmob = app.globalData.Bmob;
-		let db = Bmob.Query("goods");
-		let goods = that.data.goods;
 		let categoryNameList = new Array("全部", "化妆品", "服饰装扮", "食品饮料", "演出门票", "数码电子", "其他");
 		let	categoryName = categoryNameList[categoryId];
-		
+
+		let db = Bmob.Query("goods");
 		if(categoryName != "全部"){
 			db.equalTo("category", "==", categoryName);
 		}
 		db.order("-createdAt");
-		db.find().then(goodsTbl => {
-			goods = goodsTbl;
+		db.find().then(res => {
+			let goods = res;
 			that.setData({ goods: goods });
 		});
 	}

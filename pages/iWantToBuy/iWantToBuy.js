@@ -258,10 +258,10 @@ Page({
 	 */
 	onLoad: function (options) {
 		let that = this;
-		that.fetchGoods();
 		that.setData({
 			userInfo: app.globalData.userInfo,
 		});
+		that.fetchGoods();
 
 		//计算收藏商品总价
 		that.caculateTotalPrice();
@@ -279,10 +279,9 @@ Page({
 		db.order("-updatedAt");
 		db.find().then(res => {
 			that.setData({ iWantToBuyLength: res.length });
-			let iWantToBuy = that.data.iWantToBuy;
-			for (let i = 0; i < res.length; ++i) {
-				iWantToBuy[i] = res[i];
-				iWantToBuy[i]["active"] = false;
+			let iWantToBuy = res;
+			for (let item of iWantToBuy) {
+				item.active = false;
 			}
 			that.setData({
 				iWantToBuy: iWantToBuy,
