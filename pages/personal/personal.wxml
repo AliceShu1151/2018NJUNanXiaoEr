@@ -28,12 +28,12 @@
 
     <view class="my-item">
       <image src="/images/nav/cart-off.png" class="logo"></image>
-      <navigator url="/pages/myCollection/myCollection" hover-class="navigator-hover">我卖出的</navigator>
+      <navigator url="/pages/mySoldOut/mySoldOut" hover-class="navigator-hover">我卖出的</navigator>
     </view>
 
     <view class="my-item">
       <image src="/images/nav/cart-on.png" class="logo"></image>
-      <navigator url="/pages/myCollection/myCollection" hover-class="navigator-hover">我买到的</navigator>
+      <navigator url="/pages/iBought/iBought" hover-class="navigator-hover">我买到的</navigator>
     </view>
 
     <view class="my-item">

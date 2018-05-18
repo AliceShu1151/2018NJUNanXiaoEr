@@ -1,9 +1,9 @@
 <!--pages/myIssuedGood/myIssuedGood.wxml-->
     <view class="title-box" wx:if="{{issuedGoodLength == 0}}">
-        收藏夹空空如也～
+        您没有任何物品处于发布状态哦～
     </view>
-    <view class="to-index-btn" bindtap="toIndexPage" wx:if="{{issuedGoodLength == 0}}">
-            去逛逛
+    <view class="to-index-btn" bindtap="toIssuePage" wx:if="{{issuedGoodLength == 0}}">
+            去发布
     </view>
 
 <view wx:if="{{issuedGoodLength != 0}}">

@@ -20,6 +20,12 @@ Page({
     totalPrice: ''
   },
 
+  toIssuePage: function() {
+    wx.navigateTo({
+      url: '../../pages/issue/issue',
+    });
+  },
+
   /*下面两个函数用于编辑收藏列表*/
   editTap: function () {
     this.setData({
