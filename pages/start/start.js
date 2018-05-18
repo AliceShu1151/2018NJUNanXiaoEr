@@ -56,6 +56,7 @@ Page({
 		let db = Bmob.Query("users");
 		db.equalTo("userOpenId", "==", app.globalData.userOpenId);
 		db.find().then(res => {
+			//console.log(app.globalData.userInfo.avatarUrl);
 			res.set("avatarUrl", app.globalData.userInfo.avatarUrl);
 			res.saveAll();
 		})

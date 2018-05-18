@@ -111,28 +111,16 @@ Page({
 		dbGoods.limit(3); //banners数量
 		dbGoods.find().then(function (goodsTbl) {
 			let banners = goodsTbl;
-			for (let i = 0; i < banners.length; ++i) {
-				const dbImg = Bmob.Query("goodsImgs");
-				let goodsObjectId = banners[i]["objectId"];
-				dbImg.equalTo("goodsObjectId", "==", goodsObjectId);
-				dbImg.order("createdAt");
-				dbImg.limit(1);
-				dbImg.find().then(function (goodsImgsTbl) {
-					//console.log(goodsImgsTbl);
-					let imgUrl = goodsImgsTbl[0]["imgUrl"];
-					banners[i]["img"] = imgUrl;
-					that.setData({ banners: banners });
-				});
-			}
+			//console.log(banners);
+			that.setData({ banners: banners });
 		});
-		
 	},
 
 	//商品加载
 	getGoodsList: function (categoryId) {
 		/**
-		 * 岳翔 5-13：
-		 * 测试demo
+		 * 岳翔 5-18：
+		 * 图片获取机制更新
 		 */
 		let that = this;
 		let Bmob = app.globalData.Bmob;
@@ -146,37 +134,7 @@ Page({
 		}
 		dbGoods.find().then(goodsTbl => {
 			goods = goodsTbl;
-			//res此时是一个二维数组
-			/**岳翔 5-14
-			 * 注意：操作查询结果无法传值，只能在then()内进行操作
-			 * 就算是传给外层变量也会是Undefined
-			 * 与bmob异步查询机制有关（可以看到console.log不按顺序进行记录）
-			 * */
-			//打印总条数
-			for (let i = 0; i < goods.length; ++i) {
-				//每查询一次建一次Bmob对象
-				const dbImg = Bmob.Query("goodsImgs");
-				let goodsObjectId = goods[i]["objectId"]
-				dbImg.equalTo("goodsObjectId", "==", goodsObjectId)
-				dbImg.order("createdAt");
-				dbImg.limit(1);
-				dbImg.find().then(goodsImgsTbl => {
-					//取第一条查询结果的第一个图片
-					/**岳翔：5-14
-					 * file文件如果存图片，查询结果有filename & url两者，只需取用url即可
-					 * */
-					let imgUrl = goodsImgsTbl[0]["imgUrl"];
-					goods[i]["img"] = imgUrl;
-					that.setData({ goods: goods }); //微信小程序唯一动态赋值方法
-				});
-			}
+			that.setData({ goods: goods });
 		});
-
-		/**
-		* 岳翔 5-13:
-		* 非常重要的位置
-		* 此处用于设置商品属性
-		* 该数据会被用于列表循环中（详情见index.wxml的51-61行）
-		*/
 	}
 })

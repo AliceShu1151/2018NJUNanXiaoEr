@@ -14,7 +14,7 @@ App({
 		wx.setStorageSync('logs', logs);
 
 		//初始化数据库并存入全局变量
-		let Bmob = require("utils/hydrogen-js-sdk-master/dist/Bmob-1.3.0.min.js");
+		let Bmob = require("utils/hydrogen-js-sdk-master/dist/Bmob-1.1.1.min.js");
 		Bmob.initialize("e663c7332cbc5d0c48349e5609048c99", "e24aad5768f2b86e7a86b6f5dea6bc65");
 		that.globalData.Bmob = Bmob;
 
