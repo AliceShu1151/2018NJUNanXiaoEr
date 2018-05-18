@@ -8,7 +8,8 @@
     "pages/sellerInfo/sellerInfo",
     "pages/myCollection/myCollection",
     "pages/issue/issue",
-    "pages/iWantToBuy/iWantToBuy"
+    "pages/iWantToBuy/iWantToBuy",
+    "pages/editUserInfo/editUserInfo"
   ],
 
   "window":{
