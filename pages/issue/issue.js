@@ -9,7 +9,11 @@ Page({
 		方便在函数方法中修改
 		tempFilePaths应为列表而不是字符串，因为可能都是选择多个图片
 		isFull用来判断是否已选择9张图，并隐藏上传图片按钮
+    yhr 5-18:
+    添加ableToClick，默认值为true
+    点击提交后置位false
 		*/
+    ableToClick: true,
 		isFull: false,
 		product_name: '',
 		product_description: '',
@@ -103,7 +107,7 @@ Page({
 				product_category: '化妆品'
 			});
 		}
-		//console.log(that.data.product_category);
+		console.log(that.data.product_category);
 	},
 
 	//上传图片的方法
@@ -161,67 +165,85 @@ Page({
 	为修改数据库的入口
 	*/
 	submit: function () {
-		let that = this;
-		if (that.data.tempFilePaths.length == 0) {
-			wx.showModal({
-				title: '提示',
-				content: '上传的图片数量至少为一张！',
-			});
-		}
-		else if (that.data.product_price == null || that.data.product_price <= 0) {
-			wx.showModal({
-				title: '提示',
-				content: '请重新输入价格！',
-			});
-		}
-		else if (that.data.product_description == '') {
-			wx.showModal({
-				title: '提示',
-				content: '请输入商品描述！',
-			});
-		}
-		else if (that.data.product_name == '') {
-			wx.showModal({
-				title: '提示',
-				content: '请输入商品标题！',
-			})
-		}
-		else {
-			/*
-			对数据库的操作写在这里
-			*/
-			let tempFilePaths = that.data.tempFilePaths;
-			let file;
-			let db = Bmob.Query("goods");
-			console.log(that.data.product_name, that.data.product_price, that.data.product_description, that.data.product_category, app.globalData.userOpenId);
-			db.set("name", that.data.product_name);
-			db.set("price", that.data.product_price);
-			db.set("description", that.data.product_description);
-			db.set("category", that.data.product_category);
-			db.set("seller", app.globalData.userOpenId);
-			db.set("state", 0);
-			db.set("clicks", 0);
-			console.log("okokokokokokok");
-			db.save().then(res => {
-				let objectId = res.objectId;
-				for (let item of tempFilePaths) {
-					//console.log(item);
-					file = Bmob.File("upload.jpg", item[0]);
-				}
-				console.log(file);
-				file.save().then(res => {
-					let db = Bmob.Query("goodsImgs");
-					for (let item of res) {
-						item = JSON.parse(item);
-						//console.log(item);
-						//console.log(item.url, objectId);
-						db.set("imgUrl", item.url);
-						db.set("goodsObjectId", objectId);
-						db.save();
-					}
-				});
-			});
-		}
-	}
+    let that = this;
+    if(that.data.ableToClick){
+      if (that.data.tempFilePaths.length == 0) {
+        wx.showModal({
+          title: '提示',
+          content: '上传的图片数量至少为一张！',
+        });
+      }
+      else if (that.data.product_price == null || that.data.product_price <= 0) {
+        wx.showModal({
+          title: '提示',
+          content: '请重新输入价格！',
+        });
+      }
+      else if (that.data.product_description == '') {
+        wx.showModal({
+          title: '提示',
+          content: '请输入商品描述！',
+        });
+      }
+      else if (that.data.product_name == '') {
+        wx.showModal({
+          title: '提示',
+          content: '请输入商品标题！',
+        })
+      }
+      else {
+        that.setData({
+          ableToClick: false
+        });
+        /*
+        对数据库的操作写在这里
+        */
+        let tempFilePaths = that.data.tempFilePaths;
+        let file;
+        let db = Bmob.Query("goods");
+        console.log(that.data.product_name, that.data.product_price, that.data.product_description, that.data.product_category, app.globalData.userOpenId);
+        db.set("name", that.data.product_name);
+        db.set("price", that.data.product_price);
+        db.set("description", that.data.product_description);
+        db.set("category", that.data.product_category);
+        db.set("seller", app.globalData.userOpenId);
+        db.set("state", 0);
+        db.set("clicks", 0);
+        console.log("okokokokokokok");
+        db.save().then(res => {
+          let objectId = res.objectId;
+          for (let item of tempFilePaths) {
+            //console.log(item);
+            file = Bmob.File("upload.jpg", item[0]);
+          }
+          console.log(file);
+          file.save().then(res => {
+            let db = Bmob.Query("goodsImgs");
+            for (let item of res) {
+              item = JSON.parse(item);
+              //console.log(item);
+              //console.log(item.url, objectId);
+              db.set("imgUrl", item.url);
+              db.set("goodsObjectId", objectId);
+              db.save();
+              wx.showToast({
+                title: '发布成功',
+                icon: 'success',
+                duration: 1000
+              });
+              that.sleep(1200);
+              wx.reLaunch({
+                url: '../../pages/index/index',
+              });
+            }
+          });
+        });
+      }
+    }
+	},
+
+  sleep: function(sleepTime) {
+    for(var start = Date.now(); Date.now() - start <= sleepTime; ) { } 
+}
 
 })
