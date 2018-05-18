@@ -289,31 +289,14 @@ Page({
 							res.set("state", 1);
 							res.set("buyer", app.globalData.userOpenId);
 							res.saveAll();
-							let starredVec = new Array();
-							let myCollection = that.data.myCollection;
-							for (let i = 0; i < myCollection.length; ++i){
-								starredVec.push(myCollection[i].objectId);
-							}
-							/**岳翔5-17
-							 * 购买后重新渲染我的收藏
-							 */
-							db.containedIn("objectId", starredVec);
-							db.order("-updatedAt");
-							db.find().then(res => {
-								for (let i = 0; i < myCollection.length; ++i) {
-									myCollection[i].state = res[i].state;
-								}
-								that.setData({ myCollection: myCollection });
+							/*
+							yhr 5-17
+							点击我想购买后直接进入我想购买的页面
+							*/
+							wx.redirectTo({
+								url: '../../pages/iWantToBuy/iWantToBuy',
 							});
 						});
-
-            /*
-            yhr 5-17
-            点击我想购买后直接进入我想购买的页面
-            */
-            wx.redirectTo({
-              url: '../../pages/iWantToBuy/iWantToBuy',
-            });
 					}
 				}
 			});
@@ -343,27 +326,18 @@ Page({
 		});
 		const db = Bmob.Query("stars");
 		db.equalTo("userOpenId", "==", app.globalData.userOpenId);
-		db.order("-createdAt");
+		db.order("-updatedAt");
 		db.find().then(res => {
 			that.setData({ myCollectionLength: res.length });
+			let myCollection = that.data.myCollection;
 			for (let i = 0; i < res.length; ++i) {
-				let myCollection = that.data.myCollection;
 				const db = Bmob.Query("goods");
 				let goodsObjectId = res[i]["goodsObjectId"];
-				db.equalTo("objectId", "==", goodsObjectId);
-				db.find().then(res => {
-					myCollection[i] = res[0];
+				db.get(goodsObjectId).then(res => {
+					myCollection[i] = res;
 					myCollection[i]["active"] = false;
-					const db = Bmob.Query("goodsImgs");
-					db.equalTo("goodsObjectId", "==", goodsObjectId); //此时timestamp是string。。。等哪天改objectID就没这么麻烦了
-					db.order("createdAt");
-					db.limit(1);
-					db.find().then(goodsImgsTbl => {
-						let imgUrl = goodsImgsTbl[0]["imgUrl"];
-						myCollection[i]["img"] = imgUrl;
-						that.setData({
-							myCollection: myCollection,
-						});
+					that.setData({
+						myCollection: myCollection,
 					});
 				});
 			}

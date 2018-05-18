@@ -14,7 +14,7 @@ Page({
 			//{ baseInfo: { businessId: 0, name: "QAQ", price: 200, pic: '../../images/goods01.png', clickTimes: 5, sbWantsToBuy: false }, active: false },
 			//{ baseInfo: { businessId: 1, name: "QAQ", price: 200, pic: '../../images/goods02.png', clickTimes: 6, sbWantsToBuy: false }, active: false }
 		],
-		iWantToBuyLength: 0,
+		iWantToBuyLength: 5,
 		totalPrice: '',
 		userInfo: {}
 	},
@@ -213,26 +213,27 @@ Page({
 							db.find().then(res => {
 								res.set("state", 0);
 								res.set("buyer", "");
-								res.saveAll();
-								that.fetchGoods();
-							});
-							wx.showToast({
-								title: '撤销成功',
-							})
-							/*
-							yhr 5-17：
-							对数据库修改成功后
-							重新获取iWantToBuy
-							并进行更新data的操作
-							*/
-							that.setData({
-								iWantToBuy: tmpIWantToBuy,
-								iWantToBuyLength: tmpIWantToBuy.length
-							});
+								res.saveAll().then(res => {
+									that.fetchGoods();
+								});
+								wx.showToast({
+									title: '撤销成功',
+								})
+								/*
+								yhr 5-17：
+								对数据库修改成功后
+								重新获取iWantToBuy
+								并进行更新data的操作
+								*/
+								that.setData({
+									iWantToBuy: tmpIWantToBuy,
+									iWantToBuyLength: tmpIWantToBuy.length
+								});
 
-							that.caculateTotalPrice();
-							that.isNoSelect();
-							that.isAllSelected();
+								that.caculateTotalPrice();
+								that.isNoSelect();
+								that.isAllSelected();
+							});
 						}
 					}
 				});
@@ -247,7 +248,7 @@ Page({
 	},
 
 	toIndexPage: function () {
-		wx.switchTab({
+		wx.reLaunch({
 			url: '../../pages/index/index'
 		});
 	},
@@ -275,25 +276,17 @@ Page({
 		const db = Bmob.Query("goods");
 		db.equalTo("buyer", "==", app.globalData.userOpenId);
 		db.equalTo("state", "==", 1);
-		db.order("updatedAt");
+		db.order("-updatedAt");
 		db.find().then(res => {
 			that.setData({ iWantToBuyLength: res.length });
+			let iWantToBuy = that.data.iWantToBuy;
 			for (let i = 0; i < res.length; ++i) {
-				let iWantToBuy = that.data.iWantToBuy;
 				iWantToBuy[i] = res[i];
 				iWantToBuy[i]["active"] = false;
-				const dbImg = Bmob.Query("goodsImgs");
-				dbImg.equalTo("goodsObjectId", "==", iWantToBuy[i].objectId);
-				dbImg.order("createdAt");
-				dbImg.limit(1);
-				dbImg.find().then(goodsImgsTbl => {
-					let imgUrl = goodsImgsTbl[0]["imgUrl"];
-					iWantToBuy[i]["img"] = imgUrl;
-					that.setData({
-						iWantToBuy: iWantToBuy,
-					});
-				});
 			}
+			that.setData({
+				iWantToBuy: iWantToBuy,
+			});
 		});
 	},
 

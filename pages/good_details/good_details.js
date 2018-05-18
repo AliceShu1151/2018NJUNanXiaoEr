@@ -176,6 +176,7 @@ Page({
 						/**岳翔 5-16
 						 * 与数据库联动
 						 */
+						let db = Bmob.Query("goods");
 						db.get(that.data.goodsObjectId).then(res => {
 							res.set("state", 1);
 							res.set("buyer", app.globalData.userOpenId);
