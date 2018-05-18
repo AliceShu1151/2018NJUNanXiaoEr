@@ -8,7 +8,7 @@
         <view style='margin: 20rpx;font-size: 25rpx'>微信昵称：{{ userInfo.nickName }}</view>
         <!-- <view style='margin: 20rpx'>微信昵称：</view> -->
         <view style='margin: 20rpx;font-size: 25rpx'>所在院系：</view>
-        <view style='margin: 20rpx;font-size: 25rpx'>联系方式：</view>
+        <view style='margin: 20rpx;font-size: 25rpx'>年级：</view>
         <view style='margin: 20rpx;font-size: 25rpx' wx:if="{{userInfo.gender == 1}}">性别：♂</view>
         <view style='margin: 20rpx;font-size: 25rpx' wx:if="{{userInfo.gender == 2}}">性别：♀</view>
         <view style='margin: 20rpx;font-size: 25rpx' wx:if="{{userInfo.gender == 0}}">性别：未知</view>
@@ -23,7 +23,7 @@
 
     <view class="my-item">
       <image src="/images/personal/2.png" class="logo"></image>
-      <navigator url="/pages/myCollection/myCollection" hover-class="navigator-hover">我发布的</navigator>
+      <navigator url="/pages/myIssuedGood/myIssuedGood" hover-class="navigator-hover">我发布的</navigator>
     </view>
 
     <view class="my-item">
