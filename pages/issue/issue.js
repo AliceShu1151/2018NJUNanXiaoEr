@@ -236,15 +236,16 @@ Page({
 					obj.save().then(res => {
 						let file;
 						let objectId = res.objectId;
+						let obj = Bmob.Query("goodsImgs");
+						obj.set("goodsObjectId", objectId);
+						obj.set("imgUrl", item1.url);
 						if (tempFiles.length == 1) {
-							let obj = Bmob.Query("goodsImgs");
-							obj.set("goodsObjectId", objectId);
-							obj.set("imgUrl", item1.url);
 							obj.save().then(res => {
 								that.issued();
 							});
 							return;
 						}
+						obj.save();
 						for (let i = 1; i < tempFiles.length; ++i) {
 							let item = tempFiles[i];
 							//console.log(item);
