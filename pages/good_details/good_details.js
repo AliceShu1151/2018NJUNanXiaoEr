@@ -181,7 +181,18 @@ Page({
 							res.set("buyer", app.globalData.userOpenId);
 							res.save();
 						});
-						wx.navigateTo({
+            /*
+            yhr 5-18:
+            实现思路：
+            如商品处于可购买状态
+            点击我想购买，会将页面更改至卖家信息（不是跳转，是重新加载）
+            由于目前没有写卖家信息
+            所以该功能无效
+            因此在商品详情页点击我想购买后购买按钮仍有效
+            ………………………………
+            db没有定义
+            */
+						wx.redirectTo({
 							url: '../../pages/sellerInfo/sellerInfo?seller=' + that.data.goodsData.seller
 						});
 						that.setData({
