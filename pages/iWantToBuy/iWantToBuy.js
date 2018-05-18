@@ -247,7 +247,7 @@ Page({
 	},
 
 	toIndexPage: function () {
-		wx.switchTab({
+		wx.reLaunch({
 			url: '../../pages/index/index'
 		});
 	},
