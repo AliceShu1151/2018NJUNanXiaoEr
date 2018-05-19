@@ -25,10 +25,14 @@ Page({
 	fetchGoods: function (input) {
 		let that = this;
 		let db = Bmob.Query("goods");
-		db.equalTo("name", "==", input);
+		db.order("-createdAt");
 		db.find().then(res => {
-			//that.setData({ iWantToBuyLength: res.length });
-			let goods = res;
+			let goods = new Array();
+			for(let item of res){
+				if(item.name.indexOf(input) != -1){
+					goods.push(item);
+				}
+			}
 			that.setData({
 				goods: goods,
 				remind: "",
