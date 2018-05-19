@@ -158,7 +158,7 @@ color:#E5E5E5;
   padding-left: 15rpx;
   height: 60rpx;
   color: black;
-  font-size: 25rpx;
+  font-size: 28rpx;
 }
 .price{
   margin-top: 27rpx;
@@ -207,7 +207,7 @@ color:#E5E5E5;
 }
 
 .baobei{
-  font-size: 25rpx;
+  font-size: 28rpx;
   height: 145rpx;
   color: black;
 }
