@@ -92,7 +92,7 @@ Page({
 			}
 			if (res.selfIntroduction){
 				that.setData({
-					selfIntroduction: res.selfIntroudction
+					selfIntroduction: res.selfIntroduction
 				});
 			}
 			if (res.realName){

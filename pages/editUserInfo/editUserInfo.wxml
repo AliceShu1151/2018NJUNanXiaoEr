@@ -65,7 +65,7 @@ pages/my/mySetting/mySetting.wxml -->
       <view class="weui-label">邮箱</view>
     </view>
     <view class="weui-cell__bd">
-      <input class="weui-input" placeholder="请输入邮箱" bindinput="bindWechatInput" value="{{userMail}}" />
+      <input class="weui-input" placeholder="请输入邮箱" bindinput="bindEmailInput" value="{{userMail}}" />
     </view>
     <image class="remind-img" src="/images/editUserInfo/验证.png"></image>
   </view>
@@ -90,7 +90,7 @@ pages/my/mySetting/mySetting.wxml -->
       <view class="weui-label">真实姓名</view>
     </view>
     <view class="weui-cell__bd">
-      <input class="weui-input" placeholder="请输入姓名" bindinput="bindQQInput" value="{{userRealName}}" type="number" />
+      <input class="weui-input" placeholder="请输入姓名" bindinput="bindRealNameInput" value="{{userRealName}}" type="number" />
     </view>
   </view>
   <view class="weui-cell weui-cell_input">
