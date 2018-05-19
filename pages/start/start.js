@@ -1,6 +1,6 @@
 //login.js
 //获取应用实例
-var app = getApp();
+let app = getApp();
 let Bmob = app.globalData.Bmob;
 Page({
 	data: {
@@ -15,11 +15,13 @@ Page({
 		});
 	},
 	onLoad: function () {
-		var that = this;
+		let that = this;
 		wx.setNavigationBarTitle({
 			title: wx.getStorageSync('mallName')
 		});
+		
 	},
+
 	onShow: function () {
 
 	},
@@ -69,14 +71,14 @@ Page({
 		this.hideModal();
 	},
 	onReady: function () {
-		var that = this;
+		let that = this;
 		setTimeout(function () {
 			that.setData({
 				remind: ''
 			});
 		}, 1000);
 		wx.onAccelerometerChange(function (res) {
-			var angle = -(res.x * 30).toFixed(1);
+			let angle = -(res.x * 30).toFixed(1);
 			if (angle > 14) { angle = 14; }
 			else if (angle < -14) { angle = -14; }
 			if (that.data.angle !== angle) {
