@@ -108,8 +108,8 @@ Page({
 	renderBanners: function() {
 		let that = this;
 		let db = Bmob.Query("goods");
-		db.limit(3); //banners数量
-		db.order("-createdAt");
+		db.limit(4); //banners数量
+		db.order("-clicks");
 		db.find().then(res => {
 			let banners = res;
 			//console.log(banners);
