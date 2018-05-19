@@ -33,7 +33,12 @@ Page({
 		searchInput: '',
 	},
 
-	
+	onPullDownRefresh: function() {
+		wx.stopPullDownRefresh();
+		wx.reLaunch({
+			url: '../../pages/index/index',
+		})
+	},
 
 	//页面加载时的初始化操作
 	onLoad: function () {
