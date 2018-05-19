@@ -25,13 +25,6 @@ App({
 		Bmob.User.login('123', '456');
 	},
 
-	getUserInfo: function (cb) {
-		var that = this;
-		if (this.globalData.userInfo) {
-			typeof cb == "function" && cb(this.globalData.userInfo)
-		} 
-	},
-
 	/**岳翔 5-19
 	 * 之前用云函数成功造了个getOpenId的轮子，现在直接改为用官方接口，详细吐槽请看unUsed.js
 	 */
