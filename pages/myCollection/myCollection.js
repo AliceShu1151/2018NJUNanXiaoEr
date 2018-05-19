@@ -285,14 +285,15 @@ Page({
 						db.find().then(res => {
 							res.set("state", 1);
 							res.set("buyer", app.globalData.userOpenId);
-							res.saveAll();
-						});
-						/*
-						yhr 5-17
-						点击我想购买后直接进入我想购买的页面
-						*/
-						wx.redirectTo({
-							url: '../../pages/iWantToBuy/iWantToBuy',
+							res.saveAll().then(res => {
+								/*
+								yhr 5-17
+								点击我想购买后直接进入我想购买的页面
+								*/
+								wx.redirectTo({
+									url: '../../pages/iWantToBuy/iWantToBuy',
+								});
+							})
 						});
 					}
 				}
