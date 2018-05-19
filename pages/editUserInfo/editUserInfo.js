@@ -34,7 +34,7 @@ Page({
 			userUniversity: this.data.university[0],
 			userCollege: this.data.college[0],
 			userEducation: this.data.education[0],
-			userEntryYear: this.data.entryYear[3],
+			userEntryYear: this.data.entryYear[4],
 			userWechat: '',
 			userQQ: '',
 			userPhone: ''
@@ -44,96 +44,145 @@ Page({
 			if (res.university) {
 				that.setData({
 					userUniversity: res.university,
-					universityIndex: that.data.university.indexOf(that.data.userUniversity)
-				})
+					universityIndex: that.data.university.indexOf(res.university)
+				});
 			}
 			if (res.college) {
 				that.setData({
 					userCollege: res.college,
-					collegeIndex: that.data.college.indexOf(that.data.userCollege)
-				})
+					collegeIndex: that.data.college.indexOf(res.college)
+				});
 			}
 			if (res.education) {
 				that.setData({
 					userEducation: res.education,
-					educationIndex: that.data.education.indexOf(that.data.userEducation)
-				})
+					educationIndex: that.data.education.indexOf(res.education)
+				});
 			}
 			if (res.entryYear) {
 				that.setData({
 					userEntryYear: res.entryYear,
-					entryYearIndex: that.data.entryYear.indexOf(that.data.userEntryYear)
-				})
+					entryYearIndex: that.data.entryYear.indexOf(res.entryYear)
+				});
+			}
+			if (res.birthdayDate){
+				that.setData({
+					birthdayDate: res.birthdayDate
+				});
 			}
 			if (res.wechatId) {
 				that.setData({
 					userWechat: res.wechatId,
-				})
+				});
 			}
 			if (res.QQ) {
 				that.setData({
 					userQQ: res.QQ,
-				})
+				});
 			}
 			if (res.mobilePhoneNumber) {
 				that.setData({
 					userPhone: res.mobilePhoneNumber,
-				})
+				});
 			}
-		})		
+			if(res.email){
+				that.setData({
+					userMail: res.email
+				});
+			}
+			if (res.selfIntroduction){
+				that.setData({
+					selfIntroduction: res.selfIntroudction
+				});
+			}
+			if (res.realName){
+				that.setData({
+					userRealName: res.realName
+				});
+			}
+		});		
 	},
 
+	/*
 	bindUniversityChange: function (e) {
 		console.log(university);
 		this.setData({
 			universityIndex: e.detail.value,
 			userUniversity: this.data.university[this.data.universityIndex]
 		})
-	},
+	},*/
 
 	bindCollegeChange: function (e) {
 		this.setData({
 			collegeIndex: e.detail.value,
-			userCollege: this.data.college[this.data.collegeIndex]
-		})
+			userCollege: this.data.college[e.detail.value]
+		});
+		//console.log(this.data.userCollege);
 	},
+
 	bindEducationChange: function (e) {
 		this.setData({
 			educationIndex: e.detail.value,
-			userEducation: this.data.education[this.data.educationIndex]
-		})
+			userEducation: this.data.education[e.detail.value]
+		});
+		//console.log(this.data.userEducation);
 	},
+
 	bindEntryYearChange: function (e) {
 		this.setData({
 			entryYearIndex: e.detail.value,
-			userEntryYear: this.data.entryYear[this.data.entryYearIndex]
-		})
+			userEntryYear: this.data.entryYear[e.detail.value]
+		});
+		//console.log(this.data.userEntryYear);
 	},
+
 	bindBirthdayDateChange: function (e) {
 		this.setData({
 			birthdayDate: e.detail.value,
-		})
+		});
+		//console.log(this.data.birthdayDate);
 	},
+
+	bindEmailInput: function(e) {
+		this.setData({
+			userMail: e.detail.value
+		});
+		//console.log(this.data.userMail);
+	},
+
+	bindSelfIntroduction: function (e) {
+		this.setData({
+			selfIntroduction: e.detail.value
+		});
+		//console.log(this.data.selfIntroduction)
+	},
+
+	bindRealNameInput: function(e) {
+		this.setData({
+			userRealName: e.detail.value
+		});
+		//console.log(this.data.userRealName);
+	},
+
 	bindWechatInput: function (e) {
 		this.setData({
 			userWechat: e.detail.value
-		})
+		});
+		//console.log(this.data.userWechat);
 	},
+
 	bindQQInput: function (e) {
 		this.setData({
 			userQQ: e.detail.value
-		})
+		});
 	},
+
 	bindPhoneInput: function (e) {
 		this.setData({
-			selfIntroduction: e.detail.value
-		})
-	},
-	cbindSelfIntroduction: function (e) {
-		this.setData({
 			userPhone: e.detail.value
-		})
+		});
 	},
+	
 	bindSubmit: function () {
 		let that = this;
 		this.setData({
@@ -148,6 +197,10 @@ Page({
 			res.set("college", that.data.userCollege);
 			res.set("education", that.data.userEducation);
 			res.set("entryYear", that.data.userEntryYear);
+			res.set("email", that.data.userMail);
+			res.set("selfIntroduction", that.data.selfIntroduction);
+			res.set("realName", that.data.userRealName);
+			res.set("birthdayDate", that.data.birthdayDate);
 			res.save();
 			that.setData({
 				buttonLoading: false
@@ -155,7 +208,7 @@ Page({
 			wx.showToast({
 				title: '修改成功',
 				icon: 'success',
-				duration: 2000,
+				duration: 1500,
 			});
 		});
 	},
