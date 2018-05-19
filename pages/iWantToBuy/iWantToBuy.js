@@ -11,10 +11,7 @@ Page({
 		allSelected: false,
 		noSelect: true,
 		saveHidden: true,
-		iWantToBuy: [
-			//{ baseInfo: { businessId: 0, name: "QAQ", price: 200, pic: '../../images/goods01.png', clickTimes: 5, sbWantsToBuy: false }, active: false },
-			//{ baseInfo: { businessId: 1, name: "QAQ", price: 200, pic: '../../images/goods02.png', clickTimes: 6, sbWantsToBuy: false }, active: false }
-		],
+		iWantToBuy: [],
 		iWantToBuyLength: 5,
 		totalPrice: '',
 		userInfo: {}
@@ -195,20 +192,16 @@ Page({
 					title: '提示',
 					content: '您确定要取消交易吗？',
 					success: function (res) {
-						/*
-						该部分为确认交易完成的demo
-						实际使用需要对数据库商品表进行修改
-						*/
 						if (res.confirm) {
 							/*
 							yhr 5-17:
 							在此添加对数据库的修改操作
 							使用数据库后demo中的tmpIWantToBuy可以删去
 							*/
-							const db = Bmob.Query("goods");
+							let db = Bmob.Query("goods");
 							let goodsVec = new Array();
-							for (let i = 0; i < tmpIWantToBuy_2.length; ++i) {
-								goodsVec[i] = tmpIWantToBuy_2[i]["objectId"];
+							for (let item of tmpIWantToBuy_2) {
+								goodsVec.push(item.objectId);
 							}
 							db.containedIn("objectId", goodsVec);
 							db.find().then(res => {

@@ -9,14 +9,7 @@ Page({
 		saveHidden: true,
 		userInfo: {},
 		noSelect: true,
-		/*
-			issuedGood用于存储用户发布的商品信息
-			active属性代表着是否被选中
-			 */
-		issuedGood: [
-			//{businessId: 0, name: "QAQ", price: 200, img: '../../images/goods01.png', clickTimes: 5, state: 1, active: false },
-			//{businessId: 1, name: "QAQ", price: 200, img: '../../images/goods02.png', clickTimes: 6, state: 1, active: false }
-		],
+		issuedGood: [],
 		issuedGoodLength: 1,
 		totalPrice: ''
 	},
@@ -214,14 +207,37 @@ Page({
 			wx.showModal({
 				title: '提示',
 				content: '确认交易完成？',
-				success: function (res) {
-					/*
-					tmpIssuedGood_2存储着被选中的商品信息
-					在此处对数据库进行操作
-					然后重新获取数据库信息修改data
-					*/
-				}
-			});
+				/*
+				tmpIssuedGood_2存储着被选中的商品信息
+				在此处对数据库进行操作
+				然后重新获取数据库信息修改data
+				*/
+				success: res => {
+					if(res.confirm){
+						let db = Bmob.Query("goods");
+						let goodsVec = new Array();
+						for (let item of tmpIssuedGood_2) {
+							goodsVec.push(item.objectId);
+						}
+						db.containedIn("objectId", goodsVec);
+						db.find().then(res => {
+							res.set("state", 2);
+							res.saveAll().then(res => {
+								that.fetchGoods();
+							});
+							wx.showToast({
+								title: '交易成功',
+								icon: 'success',
+								duration: 1000,
+							});
+							that.sleep(1200);
+							wx.reLaunch({
+								url: '../../pages/index/index',
+							});
+						});
+					}
+				},
+			})
 		}
 	},
 
@@ -253,13 +269,49 @@ Page({
 			wx.showModal({
 				title: '提示',
 				content: '撤销发布会将商品从数据库中删除，您确定要撤销吗？',
-				success: function (res) {
+				success: res => {
 					/*
 					tmpIssuedGood_2存储着被选中的商品信息
 					在此处对数据库进行操作
 					删除对应商品的数据
 					并重新获取数据库数据来渲染页面
 					*/
+					if (res.confirm) {
+						let goodsVec = new Array();
+						for (let item of tmpIssuedGood_2) {
+							goodsVec.push(item.objectId);
+						}
+						let dbGoods = Bmob.Query("goods");
+						dbGoods.containedIn("objectId", goodsVec);
+						dbGoods.find().then(res => {
+							res.destroyAll();
+						});
+						let dbStars = Bmob.Query("stars");
+						dbStars.containedIn("goodsObjectId", goodsVec);
+						dbStars.find().then(res => {
+							res.destroyAll();
+						});
+						let dbImgs = Bmob.Query("goodsImgs");
+						dbImgs.containedIn("goodsObjectId", goodsVec);						
+						dbImgs.find().then(res => {
+							let destroyQueue = new Array();
+							for(let item of res){
+								destroyQueue.push(item.imgUrl);
+							}
+							res.destroyAll();
+							let destroyTrigger = Bmob.File();
+							destroyTrigger.destroy(destroyQueue);
+						});
+						wx.showToast({
+							title: '撤销成功',
+							icon: 'success',
+							duration: 1000,
+						});
+						that.sleep(1200);
+						wx.reLaunch({
+							url: '../../pages/index/index',
+						});
+					}
 				}
 			});
 		}
@@ -273,8 +325,14 @@ Page({
 		that.setData({
 			userInfo: app.globalData.userInfo
 		});
+		that.fetchGoods();
+	},
+
+	fetchGoods: function(){
+		let that = this;
 		let db = Bmob.Query("goods");
 		db.equalTo("seller", "==", app.globalData.userOpenId);
+		db.equalTo("state", "!=", 2);
 		db.order("-createdAt");
 		db.find().then(res => {
 			that.setData({ issuedGoodLength: res.length });
@@ -286,6 +344,10 @@ Page({
 				issuedGood: issuedGood,
 			});
 		});
+	},
+
+	sleep: function (sleepTime) {
+		for (var start = Date.now(); Date.now() - start <= sleepTime;) { }
 	},
 
 	/**

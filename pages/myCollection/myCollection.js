@@ -20,10 +20,7 @@ Page({
 		active属性代表着是否被选中
 		被选中则该商品会被勾选
 		 */
-		myCollection: [
-			//{ baseInfo: { businessId: 0, name: "QAQ", price: 200, pic: '../../images/goods01.png', clickTimes: 5, sbWantsToBuy: false }, active: false },
-			//{ baseInfo: { businessId: 1, name: "QAQ", price: 200, pic: '../../images/goods02.png', clickTimes: 6, sbWantsToBuy: false }, active: false }
-		],
+		myCollection: [],
 		myCollectionLength: 5,
 		totalPrice: ''
 	},
@@ -289,31 +286,14 @@ Page({
 							res.set("state", 1);
 							res.set("buyer", app.globalData.userOpenId);
 							res.saveAll();
-							let starredVec = new Array();
-							let myCollection = that.data.myCollection;
-							for (let i = 0; i < myCollection.length; ++i){
-								starredVec.push(myCollection[i].objectId);
-							}
-							/**岳翔5-17
-							 * 购买后重新渲染我的收藏
-							 */
-							db.containedIn("objectId", starredVec);
-							db.order("-updatedAt");
-							db.find().then(res => {
-								for (let i = 0; i < myCollection.length; ++i) {
-									myCollection[i].state = res[i].state;
-								}
-								that.setData({ myCollection: myCollection });
-							});
 						});
-
-            /*
-            yhr 5-17
-            点击我想购买后直接进入我想购买的页面
-            */
-            wx.redirectTo({
-              url: '../../pages/iWantToBuy/iWantToBuy',
-            });
+						/*
+						yhr 5-17
+						点击我想购买后直接进入我想购买的页面
+						*/
+						wx.redirectTo({
+							url: '../../pages/iWantToBuy/iWantToBuy',
+						});
 					}
 				}
 			});
@@ -341,7 +321,7 @@ Page({
 		that.setData({
 			userInfo: app.globalData.userInfo
 		});
-		const db = Bmob.Query("stars");
+		let db = Bmob.Query("stars");
 		db.equalTo("userOpenId", "==", app.globalData.userOpenId);
 		db.order("-createdAt");
 		db.find().then(res => {

@@ -131,6 +131,7 @@ Page({
 		if(categoryName != "全部"){
 			db.equalTo("category", "==", categoryName);
 		}
+		db.equalTo("state", "!=", 2);
 		db.order("-createdAt");
 		db.find().then(res => {
 			let goods = res;
