@@ -80,7 +80,7 @@ Page({
 		this.setData({
 			searchInput: e.detail.value
 		})
-		//console.log(this.data.searchInput);
+		console.log(this.data.searchInput);
 	},
 
 	//搜索函数，需要与服务器交互，待实现
@@ -88,8 +88,8 @@ Page({
 		//获取搜索结果
 
 		wx.navigateTo({
-			url: "/pages/search_results/search_results?resultsList=" // + 搜索结果
-		})
+			url: "/pages/search_results/search_results?searchInput=" + this.data.searchInput
+		});
 	},
 
 	//商品种类栏点击事件监听，更新页面下部的商品信息
@@ -142,5 +142,5 @@ Page({
 			let goods = res;
 			that.setData({ goods: goods });
 		});
-	},
+	}
 })
