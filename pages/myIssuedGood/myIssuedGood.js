@@ -107,12 +107,15 @@ Page({
 		let that = this;
 		let tmpIssuedGood = that.data.issuedGood;
 		if (!tmpIssuedGood[e.currentTarget.id].active) {
-			if (tmpIssuedGood[e.currentTarget.id].state == 0) {
+			if (tmpIssuedGood[e.currentTarget.id].state == 0 && that.data.saveHidden) {
 				//若商品state为0，则无人想购买，非编辑状态下无法选中
 				wx.showModal({
 					title: '提示',
 					content: '该商品无人求购，在非编辑状态下无法选中',
 				});
+			}
+			else if (tmpIssuedGood[e.currentTarget.id].state == 0 && !that.data.saveHidden){
+				tmpIssuedGood[e.currentTarget.id].active = true;
 			}
 			else if (tmpIssuedGood[e.currentTarget.id].state == 1) {
 				tmpIssuedGood[e.currentTarget.id].active = true;
