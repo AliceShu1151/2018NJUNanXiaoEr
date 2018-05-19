@@ -81,7 +81,16 @@ Page({
 		else if (Number(e.detail.value) > 10000) {
 			wx.showModal({
 				title: '提示',
-				content: '亲~您的物品价格太高了哟，这个小平台承受不起呢，换个地方卖吧~，',
+				content: '亲~您的物品价格太高了哟，这个小平台承受不起呢，换个地方卖吧~',
+			});
+			that.setData({
+				product_price: Number(e.detail.value)
+			});
+		}
+		else if (Number(e.detail.value) <= 0) {
+			wx.showModal({
+				title: '提示',
+				content: '物品价格要大于0哦~',
 			});
 			that.setData({
 				product_price: Number(e.detail.value)
