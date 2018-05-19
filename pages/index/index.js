@@ -142,5 +142,5 @@ Page({
 			let goods = res;
 			that.setData({ goods: goods });
 		});
-	}
+	},
 })

@@ -29,7 +29,7 @@ Page({
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad: function () {
-		let that = this
+		let that = this;
 		this.setData({
 			userUniversity: this.data.university[0],
 			userCollege: this.data.college[0],
@@ -39,100 +39,48 @@ Page({
 			userQQ: '',
 			userPhone: ''
 		})
-		let User = Bmob.Object.extend("_User");
-		let query = new Bmob.Query(User);
-		query.get(Bmob.User.current().id, {
-			success: function (result) {
-				console.log('修改前', result)
-				if (result.get("university")) {
-					console.log('haha')
-					that.setData({
-						userUniversity: result.get("university"),
-						universityIndex: that.data.university.indexOf(that.data.userUniversity)
-					})
-				}
-				if (result.get("college")) {
-					that.setData({
-						userCollege: result.get("college"),
-						collegeIndex: that.data.college.indexOf(that.data.userCollege)
-					})
-				}
-				if (result.get("education")) {
-					that.setData({
-						userEducation: result.get("education"),
-						educationIndex: that.data.education.indexOf(that.data.userEducation)
-					})
-				}
-				if (result.get("entryYear")) {
-					that.setData({
-						userEntryYear: result.get("entryYear"),
-						entryYearIndex: that.data.entryYear.indexOf(that.data.userEntryYear)
-					})
-				}
-				if (result.get("wechatId")) {
-					that.setData({
-						userWechat: result.get("wechatId")
-					})
-				}
-				if (result.get("QQ")) {
-					that.setData({
-						userQQ: result.get("QQ")
-					})
-				}
-				if (result.get("mobilePhoneNumber")) {
-					that.setData({
-						userPhone: result.get("mobilePhoneNumber")
-					})
-				}
-
-				console.log(that.data)
-			},
-			error: function (object, error) {
-				console.log('查询失败', error)
+		let db = Bmob.Query("_User");
+		db.get(app.globalData.userObjectId).then(res => {
+			if (res.university) {
+				that.setData({
+					userUniversity: res.university,
+					universityIndex: that.data.university.indexOf(that.data.userUniversity)
+				})
 			}
-		});
-	},
-
-	/**
-	 * 生命周期函数--监听页面初次渲染完成
-	 */
-	onReady: function () {
-
-	},
-
-	/**
-	 * 生命周期函数--监听页面显示
-	 */
-	onShow: function () {
-
-	},
-
-	/**
-	 * 生命周期函数--监听页面隐藏
-	 */
-	onHide: function () {
-
-	},
-
-	/**
-	 * 生命周期函数--监听页面卸载
-	 */
-	onUnload: function () {
-
-	},
-
-	/**
-	 * 页面相关事件处理函数--监听用户下拉动作
-	 */
-	onPullDownRefresh: function () {
-
-	},
-
-	/**
-	 * 页面上拉触底事件的处理函数
-	 */
-	onReachBottom: function () {
-
+			if (res.college) {
+				that.setData({
+					userCollege: res.college,
+					collegeIndex: that.data.college.indexOf(that.data.userCollege)
+				})
+			}
+			if (res.education) {
+				that.setData({
+					userEducation: res.education,
+					educationIndex: that.data.education.indexOf(that.data.userEducation)
+				})
+			}
+			if (res.entryYear) {
+				that.setData({
+					userEntryYear: res.entryYear,
+					entryYearIndex: that.data.entryYear.indexOf(that.data.userEntryYear)
+				})
+			}
+			if (res.wechatId) {
+				that.setData({
+					userWechat: res.wechatId,
+				})
+			}
+			if (res.QQ) {
+				that.setData({
+					userQQ: res.QQ,
+				})
+			}
+			if (res.mobilePhoneNumber) {
+				that.setData({
+					userPhone: res.mobilePhoneNumber,
+				})
+			}
+		})		
 	},
 
 	bindUniversityChange: function (e) {
@@ -191,31 +139,24 @@ Page({
 		this.setData({
 			buttonLoading: true
 		})
-		let User = Bmob.Object.extend("_User");
-		let query = new Bmob.Query(User);
-		query.get(Bmob.User.current().id, {
-			success: function (result) {
-				console.log('点击按钮', result)
-				result.set("wechatId", that.data.userWechat);
-				result.set("QQ", that.data.userQQ);
-				result.set("mobilePhoneNumber", that.data.userPhone);
-				result.set("university", that.data.userUniversity);
-				result.set("college", that.data.userCollege);
-				result.set("education", that.data.userEducation);
-				result.set("entryYear", that.data.userEntryYear);
-				result.save();
-				that.setData({
-					buttonLoading: false
-				});
-				wx.showToast({
-					title: '修改成功',
-					icon: 'success',
-					duration: 3000
-				})
-			},
-			error: function (object, error) {
-				console.log('失败', object, error)
-			}
-		})
-	}
+		let db = Bmob.Query("_User");
+		db.get(app.globalData.userObjectId).then(res => {
+			res.set("wechatId", that.data.userWechat);
+			res.set("QQ", that.data.userQQ);
+			res.set("mobilePhoneNumber", that.data.userPhone);
+			res.set("university", that.data.userUniversity);
+			res.set("college", that.data.userCollege);
+			res.set("education", that.data.userEducation);
+			res.set("entryYear", that.data.userEntryYear);
+			res.save();
+			that.setData({
+				buttonLoading: false
+			});
+			wx.showToast({
+				title: '修改成功',
+				icon: 'success',
+				duration: 2000,
+			});
+		});
+	},
 })

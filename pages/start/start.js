@@ -2,6 +2,8 @@
 //获取应用实例
 let app = getApp();
 let Bmob = app.globalData.Bmob;
+app.globalData.userObjectId = Bmob.User.current().objectId;
+
 Page({
 	data: {
 		showModal: false,
@@ -52,15 +54,11 @@ Page({
 	//获取用户信息
 	userInfoHandler: function (e) {
 		app.globalData.userInfo = e.detail.userInfo;
-		//console.log(app.globalData.userInfo);
-
 		//头像设置
 		let db = Bmob.Query("_User");
-		db.equalTo("username", "==", app.globalData.userOpenId);
-		db.find().then(res => {
-			//console.log(app.globalData.userInfo.avatarUrl);
+		db.get(app.globalData.userObjectId).then(res => {
 			res.set("avatarUrl", app.globalData.userInfo.avatarUrl);
-			res.saveAll();
+			res.save();
 		})
 	},
 
