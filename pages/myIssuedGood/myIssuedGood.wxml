@@ -21,7 +21,7 @@
                     </view>
                     <view class="text-box">
                         <view class="goods-title" bindtap="selectTap" id="{{index}}">{{item.name}}</view>
-                        <view class="goods-label" bindtap="selectTap" id="{{index}}">浏览次数：{{item.clicks}}</view>
+                        <view class="goods-label" bindtap="selectTap" id="{{index}}">种类：{{item.category}} 浏览次数：{{item.clicks}}</view>
                         <view class="goods-price" bindtap="selectTap" id="{{index}}">¥ {{item.price}}</view>
                         <!--后续将头像应该为买家头像-->
                         <image class="logo" src="{{userInfo.avatarUrl}}"></image>

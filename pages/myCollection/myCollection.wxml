@@ -20,7 +20,7 @@
                     </view>
                     <view class="text-box">
                         <view class="goods-title">{{item.name}}</view>
-                        <view class="goods-label">浏览次数：{{item.clicks}}</view>
+                        <view class="goods-label">种类：{{item.category}} 浏览次数：{{item.clicks}}</view>
                         <view class="goods-price">¥ {{item.price}}</view>
                         <image class="logo" src="{{userInfo.avatarUrl}}"></image>
                     </view>
