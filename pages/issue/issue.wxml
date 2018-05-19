@@ -30,7 +30,7 @@
             <image class="delete" src="../../images/issue/deleteImage.png" data-index="{{index}}" bindtap="deleteImage"></image>
         </view>
 
-        <image class="thumb" src="../../images/issue/upload.png"  bindtap="upImg"/>
+        <image class="thumb" hidden="{{isFull}}" src="../../images/issue/upload.png"  bindtap="upImg"/>
         
     </view>
     
