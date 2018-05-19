@@ -1,5 +1,6 @@
 // pages/iWantToBuy/iWantToBuy.js
 var app = getApp();
+let Bmob = app.globalData.Bmob;
 
 Page({
 
@@ -204,7 +205,7 @@ Page({
 							在此添加对数据库的修改操作
 							使用数据库后demo中的tmpIWantToBuy可以删去
 							*/
-							const db = app.globalData.Bmob.Query("goods");
+							const db = Bmob.Query("goods");
 							let goodsVec = new Array();
 							for (let i = 0; i < tmpIWantToBuy_2.length; ++i) {
 								goodsVec[i] = tmpIWantToBuy_2[i]["objectId"];
@@ -272,8 +273,7 @@ Page({
 	 */
 	fetchGoods: function(){
 		let that = this;
-		let Bmob = app.globalData.Bmob;
-		const db = Bmob.Query("goods");
+		let db = Bmob.Query("goods");
 		db.equalTo("buyer", "==", app.globalData.userOpenId);
 		db.equalTo("state", "==", 1);
 		db.order("-updatedAt");
