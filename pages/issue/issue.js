@@ -21,7 +21,7 @@ Page({
 		//化妆品种类是默认值
 		product_category: '化妆品',
 		//urlArr: [],
-		tempFiles: {},
+		tempFiles: [],
 		value: [],
 		items: [{ name: 'A', value: '化妆品' }, { name: 'B', value: '服饰装扮' }, { name: 'C', value: '食品饮料' }, { name: 'D', value: '演出门票' }, { name: 'E', value: '数码电子' }, { name: 'F', value: '其他' }]
 
@@ -133,27 +133,68 @@ Page({
 	（原来使用的是tempFilePaths）
 	deletImage方法也做了相应的改动
 	*/
+	choosePics: function(tempFiles, counts) {
+		let that = this;
+		//console.log(tempFiles);
+		wx.chooseImage({
+			count: counts,
+			sizeType: ['compressed'],
+			sourceType: ['album', 'camera'],
+			success: function(res) {
+				let newTempFiles = tempFiles.concat(res.tempFiles);
+				that.setData({
+					tempFiles: newTempFiles
+				});
+				console.log(that.data.tempFiles);
+				if (that.data.tempFiles.length == 4) {
+					that.setData({
+						isFull: true
+					});
+				}
+			},
+		});
+	},
+
 	upImg: function () {
 		let that = this;
+		let tempFiles = that.data.tempFiles;
+		console.log(tempFiles);
+		if(tempFiles.length == 0){
+			that.choosePics(tempFiles, 4);
+		}
+		else if (tempFiles.length == 1){
+			that.choosePics(tempFiles, 3);
+		}
+		else if(tempFiles.length == 2){
+			that.choosePics(tempFiles, 2);
+		}
+		else if(tempFiles.length == 3){
+			that.choosePics(tempFiles, 1);
+		}
+
+		/*
 		wx.chooseImage({
 			count: 4,
 			sizeType: ['compressed'], // 可以指定是原图还是压缩图，默认二者都有
 			sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
 			success: function (res) {
-				console.log(res);
+				//console.log(res);
 				// 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片  
-				let tempFiles = res.tempFiles;
+				//let tempFiles = res.tempFiles;
+				let tempFiles = [];
+				tempFiles.push(res.tempFiles);
 				that.setData({
 					tempFiles: tempFiles
 				});
-				//console.log(that.data.tempFilePaths);
-				if (res.tempFilePaths.length == 4) {
+				console.log(that.data.tempFiles);
+				if (res.tempFiles.length == 4) {
 					that.setData({
 						isFull: true
 					});
 				}
 			}
 		})
+		*/
 	},
 
 	//删除已上传图片的方法
