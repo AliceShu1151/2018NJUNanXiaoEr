@@ -41,6 +41,7 @@ Page({
 		})
 		let db = Bmob.Query("_User");
 		db.get(app.globalData.userObjectId).then(res => {
+			//console.log(res);
 			if (res.university) {
 				that.setData({
 					userUniversity: res.university,
@@ -95,9 +96,9 @@ Page({
 					selfIntroduction: res.selfIntroduction
 				});
 			}
-			if (res.realName){
+			if (res.userRealName){
 				that.setData({
-					userRealName: res.realName
+					userRealName: res.userRealName
 				});
 			}
 		});		
@@ -199,7 +200,7 @@ Page({
 			res.set("entryYear", that.data.userEntryYear);
 			res.set("email", that.data.userMail);
 			res.set("selfIntroduction", that.data.selfIntroduction);
-			res.set("realName", that.data.userRealName);
+			res.set("userRealName", that.data.userRealName);
 			res.set("birthdayDate", that.data.birthdayDate);
 			res.save();
 			that.setData({
