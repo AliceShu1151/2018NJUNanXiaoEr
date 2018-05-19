@@ -1,21 +1,21 @@
 <!--pages/mySoldOut/mySoldOut.wxml-->
-    <view class="title-box" wx:if="{{soldOutLength == 0}}">
-        看来你还没卖出过东西哦~
-    </view>
-    <view class="to-index-btn" bindtap="toIssuePage" wx:if="{{soldOutLength == 0}}">
-            去发布
-    </view>
+<view class="title-box" wx:if="{{soldOutLength == 0}}">
+    看来你还没卖出过东西哦~
+</view>
+<view class="to-index-btn" bindtap="toIssuePage" wx:if="{{soldOutLength == 0}}">
+    去发布
+</view>
 
 <view wx:if="{{soldOutLength != 0}}">
     <view class="list-top">
         <view class="label">南小二</view>
     </view>
     <view class="goodsList">
-        <view class="a-gooods" wx:for="{{soldOut}}"  wx:key="{{index}}" >
+        <view class="a-gooods" wx:for="{{soldOut}}" wx:key="{{index}}">
             <view wx:if="{{saveHidden}}" class="a-goods-conts-none" bindtap="clickTap" style="{{item.left}}" id="{{index}}">
                 <view class="goods-info">
-                    <view class="img-box" >
-                        <image src="{{item.img}}" class="img"/>
+                    <view class="img-box">
+                        <image src="{{item.imgUrl}}" class="img" />
                     </view>
                     <view class="text-box">
                         <view class="goods-title">{{item.name}}</view>
