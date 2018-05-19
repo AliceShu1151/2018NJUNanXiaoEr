@@ -2,18 +2,18 @@
     <image class="remind-img" src="/images/more/loading.gif"></image>
 </view>
 <block wx:else>
-<view class="list-top">
+    <view class="list-top">
         <view class="label">南小二</view>
-</view>
-<view class="goods-container">
-            <view class="goods-box" wx:for="{{ goods }}" wx:key="{{ index }}" bindtap="toDetailsTap" id="{{ item.objectId }}">
-                <view class="img-box">
-                    <image src="{{ item.imgUrl }}" class="image" mode="aspectFit" lazy-load="true" />
-                </view>
-                <view class="goods-title">{{ item.name }}</view>
-                <view style='display:flex;'>
-                    <view class="goods-price">¥ {{ item.price }}</view>
-                </view>
+    </view>
+    <view class="goods-container">
+        <view class="goods-box" wx:for="{{ goods }}" wx:key="{{ index }}" bindtap="toDetailsTap" id="{{ item.objectId }}">
+            <view class="img-box">
+                <image src="{{ item.imgUrl }}" class="image" mode="aspectFit" lazy-load="true" />
+            </view>
+            <view class="goods-title">{{ item.name }}</view>
+            <view style='display:flex;'>
+                <view class="goods-price">¥ {{ item.price }}</view>
             </view>
         </view>
-		</block>
+    </view>
+</block>

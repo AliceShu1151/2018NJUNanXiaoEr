@@ -77,16 +77,13 @@ Page({
 
 	//获取用户在搜索框输入的内容
 	listenerSearchInput: function (e) {
-		this.setData({
-			searchInput: e.detail.value
-		})
-		console.log(this.data.searchInput);
+		this.data.searchInput = e.detail.value;
+		//console.log(this.data.searchInput);
 	},
 
 	//搜索函数，需要与服务器交互，待实现
 	toSearch: function () {
 		//获取搜索结果
-
 		wx.navigateTo({
 			url: "/pages/search_results/search_results?searchInput=" + this.data.searchInput
 		});
