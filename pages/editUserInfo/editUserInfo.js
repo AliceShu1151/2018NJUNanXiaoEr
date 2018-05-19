@@ -66,7 +66,7 @@ Page({
 					entryYearIndex: that.data.entryYear.indexOf(res.entryYear)
 				});
 			}
-			if (res.birthdayDate){
+			if (res.birthdayDate) {
 				that.setData({
 					birthdayDate: res.birthdayDate
 				});
@@ -86,22 +86,22 @@ Page({
 					userPhone: res.mobilePhoneNumber,
 				});
 			}
-			if(res.email){
+			if (res.email) {
 				that.setData({
 					userMail: res.email
 				});
 			}
-			if (res.selfIntroduction){
+			if (res.selfIntroduction) {
 				that.setData({
 					selfIntroduction: res.selfIntroduction
 				});
 			}
-			if (res.userRealName){
+			if (res.userRealName) {
 				that.setData({
 					userRealName: res.userRealName
 				});
 			}
-		});		
+		});
 	},
 
 	/*
@@ -144,7 +144,7 @@ Page({
 		//console.log(this.data.birthdayDate);
 	},
 
-	bindEmailInput: function(e) {
+	bindEmailInput: function (e) {
 		this.setData({
 			userMail: e.detail.value
 		});
@@ -158,7 +158,7 @@ Page({
 		//console.log(this.data.selfIntroduction)
 	},
 
-	bindRealNameInput: function(e) {
+	bindRealNameInput: function (e) {
 		this.setData({
 			userRealName: e.detail.value
 		});
@@ -183,7 +183,7 @@ Page({
 			userPhone: e.detail.value
 		});
 	},
-	
+
 	bindSubmit: function () {
 		let that = this;
 		this.setData({
