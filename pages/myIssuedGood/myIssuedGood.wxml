@@ -1,10 +1,10 @@
 <!--pages/myIssuedGood/myIssuedGood.wxml-->
-    <view class="title-box" wx:if="{{issuedGoodLength == 0}}">
-        您没有任何物品处于发布状态哦～
-    </view>
-    <view class="to-index-btn" bindtap="toIssuePage" wx:if="{{issuedGoodLength == 0}}">
-            去发布
-    </view>
+<view class="title-box" wx:if="{{issuedGoodLength == 0}}">
+    您没有任何物品处于发布状态哦～
+</view>
+<view class="to-index-btn" bindtap="toIssuePage" wx:if="{{issuedGoodLength == 0}}">
+    去发布
+</view>
 
 <view wx:if="{{issuedGoodLength != 0}}">
     <view class="list-top">
@@ -13,11 +13,11 @@
         <view class="edit-btn" hidden="{{saveHidden}}" bindtap="saveTap">完成</view>
     </view>
     <view class="goodsList">
-        <view class="a-gooods" wx:for="{{issuedGood}}"  wx:key="{{index}}" >
+        <view class="a-gooods" wx:for="{{issuedGood}}" wx:key="{{index}}">
             <view class="a-goods-conts {{item.active? 'active':''}}" style="{{item.left}}">
                 <view class="goods-info">
                     <view class="img-box" bindtap="selectTap" id="{{index}}">
-                        <image src="{{item.img}}" mode="aspectFit" class="img"/>
+                        <image src="{{item.imgUrl}}" mode="aspectFit" class="img" />
                     </view>
                     <view class="text-box">
                         <view class="goods-title" bindtap="selectTap" id="{{index}}">{{item.name}}</view>
@@ -28,7 +28,7 @@
                     </view>
                 </view>
                 <view class="delete-btn" data-index="{{index}}" catchtap="delItem">
-                  删除
+                    删除
                 </view>
             </view>
         </view>
