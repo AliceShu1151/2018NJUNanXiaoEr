@@ -207,7 +207,7 @@
 }
 
 .submitBottom{
-  position: fixed;
+  position: relative;
   bottom: 10rpx;
   width: 60%;
   height:70rpx;
