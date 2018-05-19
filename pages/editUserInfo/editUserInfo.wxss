@@ -36,6 +36,7 @@
 }
 .weui-cells_after-title {
   margin-top: 0;
+  bottom: 90rpx;
 }
 .weui-cells__tips {
   margin-top: .3em;
@@ -141,7 +142,7 @@
 }
 .weui-cell_input {
   padding-top: 0;
-  padding-bottom: 0;
+  bottom: 0;
 }
 .weui-label {
   width: 105px;
@@ -207,7 +208,7 @@
 }
 
 .submitBottom{
-  position: relative;
+  position: fixed;
   bottom: 10rpx;
   width: 60%;
   height:70rpx;
@@ -219,7 +220,7 @@
   display:flex;
   justify-content:center;
   align-items:center;
-
+  z-index: 999;
 }
     
 .view-content_hd{
