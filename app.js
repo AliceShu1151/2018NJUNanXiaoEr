@@ -18,16 +18,12 @@ App({
 		Bmob.initialize("e663c7332cbc5d0c48349e5609048c99", "e24aad5768f2b86e7a86b6f5dea6bc65");
 		that.globalData.Bmob = Bmob;
 
-		//岳翔：5-16  获取userOpenId并检查是否db内是否已存在userOpenId
+		//岳翔 5-19：获取openId并进行bmob的登录或注册
 		that.getUserOpenId();
-
-		//岳翔：5-17 假装登录Bmob，因为上传文件需要登录……真心被这个坑了，文档也没给出说明……
-		Bmob.User.login('123', '456');
 	},
 
-	/**岳翔 5-19
-	 * 之前用云函数成功造了个getOpenId的轮子，现在直接改为用官方接口，详细吐槽请看unUsed.js
-	 */
+
+	//岳翔 5-19：之前用云函数成功造了个getOpenId的轮子，现在直接改为用官方接口，详细吐槽请看unUsed.js
 	getUserOpenId: function(){
 		let that = this;
 		let Bmob = that.globalData.Bmob;
@@ -35,8 +31,30 @@ App({
 			success: res => {
 				Bmob.User.requestOpenId(res.code).then(res => {
 					that.globalData.userOpenId = res.openid;
+					that.bmobLogIn();
 				});
 			}
 		});
 	},
+
+	//岳翔：5-19 登录或注册Bmob用户
+	bmobLogIn: function() {	
+		let that = this;
+		let Bmob = that.globalData.Bmob;
+		let db = Bmob.Query("_User");
+		db.equalTo("username", "==", that.globalData.userOpenId);
+		db.find().then(res => {
+			if (res.length == 0) {
+				console.log({ openId: that.globalData.userOpenId, status: "register" });
+				Bmob.User.register({
+					username: that.globalData.userOpenId,
+					password: "123",
+				});
+			}
+			else {
+				console.log({ openId: that.globalData.userOpenId, status: "log in" });
+				Bmob.User.login(that.globalData.userOpenId, "123")
+			}
+		});
+	}
 })

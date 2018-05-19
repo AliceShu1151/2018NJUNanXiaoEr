@@ -55,8 +55,8 @@ Page({
 		//console.log(app.globalData.userInfo);
 
 		//头像设置
-		let db = Bmob.Query("users");
-		db.equalTo("userOpenId", "==", app.globalData.userOpenId);
+		let db = Bmob.Query("_User");
+		db.equalTo("username", "==", app.globalData.userOpenId);
 		db.find().then(res => {
 			//console.log(app.globalData.userInfo.avatarUrl);
 			res.set("avatarUrl", app.globalData.userInfo.avatarUrl);
