@@ -81,12 +81,27 @@ Page({
 		//console.log(this.data.searchInput);
 	},
 
+	isNull: function (str) {
+		if(str == "") return true;
+		var regu = "^[ ]+$";
+		var re = new RegExp(regu);
+		return re.test(str);
+	},
+
 	//搜索函数，需要与服务器交互，待实现
 	toSearch: function () {
-		//获取搜索结果
-		wx.navigateTo({
-			url: "/pages/search_results/search_results?searchInput=" + this.data.searchInput
-		});
+		if(this.isNull(this.data.searchInput)){
+			wx.showModal({
+				title: '提示',
+				content: '搜索内容不能为空',
+			});
+		}
+		else{
+			//获取搜索结果
+			wx.navigateTo({
+				url: "/pages/search_results/search_results?searchInput=" + this.data.searchInput
+			});
+		}
 	},
 
 	//商品种类栏点击事件监听，更新页面下部的商品信息
