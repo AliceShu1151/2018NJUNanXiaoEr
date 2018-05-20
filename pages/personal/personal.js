@@ -18,9 +18,9 @@ Page({
 		}, 1000);
 	},
 
-	toEdit: function() {
-    wx.navigateTo({
-      url: '../../pages/editUserInfo/editUserInfo',
-    })
-  }
+	toEdit: function () {
+		wx.navigateTo({
+			url: '../../pages/editUserInfo/editUserInfo',
+		})
+	}
 })

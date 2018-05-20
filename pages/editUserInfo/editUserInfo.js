@@ -176,12 +176,12 @@ Page({
 			let db = Bmob.Query("_User");
 			db.get(app.globalData.userObjectId).then(res => {
 				res.set("email", that.data.userMail);
-				res.save().then(res => {
-					Bmob.User.requestEmailVerify(that.data.userMail);
-					wx.showModal({
-						title: '提示',
-						content: '验证邮件已发送，请及时确认！',
-					});
+				return res.save();
+			}).then(res => {
+				Bmob.User.requestEmailVerify(that.data.userMail);
+				wx.showModal({
+					title: '提示',
+					content: '验证邮件已发送，请及时确认！',
 				});
 			});
 		}

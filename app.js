@@ -49,7 +49,6 @@ App({
 				Bmob.User.register({
 					username: that.globalData.userOpenId,
 					password: "123",
-					emailVerified: false,
 				});
 			}
 			else {
