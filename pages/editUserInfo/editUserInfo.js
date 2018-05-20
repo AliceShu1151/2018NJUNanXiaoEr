@@ -41,7 +41,6 @@ Page({
 		})
 		let db = Bmob.Query("_User");
 		db.get(app.globalData.userObjectId).then(res => {
-			//console.log(res);
 			if (res.university) {
 				that.setData({
 					userUniversity: res.university,
@@ -66,7 +65,7 @@ Page({
 					entryYearIndex: that.data.entryYear.indexOf(res.entryYear)
 				});
 			}
-			if (res.birthdayDate) {
+			if (res.birthdayDate){
 				that.setData({
 					birthdayDate: res.birthdayDate
 				});
@@ -86,22 +85,22 @@ Page({
 					userPhone: res.mobilePhoneNumber,
 				});
 			}
-			if (res.email) {
+			if(res.email){
 				that.setData({
 					userMail: res.email
 				});
 			}
-			if (res.selfIntroduction) {
+			if (res.selfIntroduction){
 				that.setData({
 					selfIntroduction: res.selfIntroduction
 				});
 			}
-			if (res.userRealName) {
+			if (res.realName){
 				that.setData({
-					userRealName: res.userRealName
+					userRealName: res.realName
 				});
 			}
-		});
+		});		
 	},
 
 	/*
@@ -144,11 +143,32 @@ Page({
 		//console.log(this.data.birthdayDate);
 	},
 
-	bindEmailInput: function (e) {
+	bindEmailInput: function(e) {
 		this.setData({
 			userMail: e.detail.value
 		});
 		//console.log(this.data.userMail);
+	},
+
+	/*
+	yhr 5-20:
+	邮箱验证
+	*/
+	toVerifyEmail: function() {
+		let reg = /^([0-9])+@smail.nju.edu.cn+/;
+		//console.log(reg.test(this.data.userMail));
+		if(reg.test(this.data.userMail)){
+			/*
+			正则表达匹配成功
+			调用云函数进行邮箱验证
+			*/
+		}
+		else{
+			wx.showModal({
+				title: '提示',
+				content: '您填入的不是南京大学学生邮箱地址！请重新填写。',
+			});
+		}
 	},
 
 	bindSelfIntroduction: function (e) {
@@ -158,7 +178,7 @@ Page({
 		//console.log(this.data.selfIntroduction)
 	},
 
-	bindRealNameInput: function (e) {
+	bindRealNameInput: function(e) {
 		this.setData({
 			userRealName: e.detail.value
 		});
@@ -183,7 +203,7 @@ Page({
 			userPhone: e.detail.value
 		});
 	},
-
+	
 	bindSubmit: function () {
 		let that = this;
 		this.setData({
@@ -200,7 +220,7 @@ Page({
 			res.set("entryYear", that.data.userEntryYear);
 			res.set("email", that.data.userMail);
 			res.set("selfIntroduction", that.data.selfIntroduction);
-			res.set("userRealName", that.data.userRealName);
+			res.set("realName", that.data.userRealName);
 			res.set("birthdayDate", that.data.birthdayDate);
 			res.save();
 			that.setData({
