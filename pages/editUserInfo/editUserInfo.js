@@ -22,7 +22,9 @@ Page({
 		birthdayDate: "1998-7-4",
 		userRealName: "",
 		selfIntroduction: "",
-		userMail: ""
+		userMail: "",
+		oldEmail: "",
+		emailVerified: false,
 	},
 
 	/**
@@ -86,8 +88,14 @@ Page({
 				});
 			}
 			if(res.email){
+				that.data.oldEmail = res.email;
 				that.setData({
-					userMail: res.email
+					userMail: res.email,
+				});
+			}
+			if (res.emailVerified){
+				that.setData({
+					emailVerified: res.emailVerified,
 				});
 			}
 			if (res.selfIntroduction){
@@ -155,13 +163,27 @@ Page({
 	邮箱验证
 	*/
 	toVerifyEmail: function() {
+		let that = this;
 		let reg = /^([0-9])+@smail.nju.edu.cn+/;
 		//console.log(reg.test(this.data.userMail));
-		if(reg.test(this.data.userMail)){
-			/*
-			正则表达匹配成功
-			调用云函数进行邮箱验证
-			*/
+		if (that.data.emailVerified && that.data.oldEmail == that.data.userMail){
+			wx.showModal({
+				title: '提示',
+				content: '您的邮箱已通过验证！',
+			});
+		}
+		else if (reg.test(that.data.userMail)){
+			let db = Bmob.Query("_User");
+			db.get(app.globalData.userObjectId).then(res => {
+				res.set("email", that.data.userMail);
+				res.save().then(res => {
+					Bmob.User.requestEmailVerify(that.data.userMail);
+					wx.showModal({
+						title: '提示',
+						content: '验证邮件已发送，请及时确认！',
+					});
+				});
+			});
 		}
 		else{
 			wx.showModal({
@@ -219,6 +241,7 @@ Page({
 			res.set("education", that.data.userEducation);
 			res.set("entryYear", that.data.userEntryYear);
 			res.set("email", that.data.userMail);
+			res.set("emailVerified", false);
 			res.set("selfIntroduction", that.data.selfIntroduction);
 			res.set("userRealName", that.data.userRealName);
 			res.set("birthdayDate", that.data.birthdayDate);
