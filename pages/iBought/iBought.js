@@ -6,6 +6,7 @@ Page({
 	 * 页面的初始数据
 	 */
 	data: {
+		remind: '加载中',
 		userInfo: {},
 		saveHidden: true,
 		goodBought: [],
@@ -44,6 +45,7 @@ Page({
 			let goodBought = res;
 			that.setData({
 				goodBought: goodBought,
+				remind: ''
 			});
 		});
 	},

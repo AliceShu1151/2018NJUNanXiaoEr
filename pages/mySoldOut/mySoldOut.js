@@ -8,6 +8,7 @@ Page({
 	 * 页面的初始数据
 	 */
 	data: {
+		remind: '加载中',
 		userInfo: {},
 		saveHidden: true,
 		soldOut: [],
@@ -46,6 +47,7 @@ Page({
 			let soldOut = res;
 			that.setData({
 				soldOut: soldOut,
+				remind: ''
 			});
 		});
 	},

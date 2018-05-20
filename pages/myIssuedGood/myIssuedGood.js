@@ -5,6 +5,7 @@ let Bmob = app.globalData.Bmob;
 Page({
 
 	data: {
+		remind: '加载中',
 		allSelected: false,
 		saveHidden: true,
 		userInfo: {},
@@ -345,6 +346,7 @@ Page({
 			}
 			that.setData({
 				issuedGood: issuedGood,
+				remind: ''
 			});
 		});
 	},

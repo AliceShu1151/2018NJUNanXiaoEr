@@ -8,6 +8,7 @@ Page({
 	 * 页面的初始数据
 	 */
 	data: {
+		remind: '加载中',
 		allSelected: false,
 		saveHidden: true,
 		userInfo: {},
@@ -337,6 +338,7 @@ Page({
 					myCollection[i]["active"] = false;
 					that.setData({
 						myCollection: myCollection,
+						remind: ''
 					});
 				});
 			}

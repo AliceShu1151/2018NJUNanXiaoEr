@@ -1,4 +1,8 @@
 <!--pages/myIssuedGood/myIssuedGood.wxml-->
+<view class="remind-box" wx:if="{{remind}}">
+    <image class="remind-img" src="/images/more/loading.gif"></image>
+</view>
+<block wx:else>
 <view class="title-box" wx:if="{{issuedGoodLength == 0}}">
     您没有任何物品处于发布状态哦～
 </view>
@@ -42,3 +46,4 @@
         <view class="to-pay-btn {{noSelect?'no-select':''}}" hidden="{{saveHidden}}" bindtap="cancelIssued">撤销发布</view>
     </view>
 </view>
+</block>

@@ -43,11 +43,6 @@
 
     <view class="my-item">
       <image src="/images/personal/1.png" class="logo"></image>
-      <navigator url="/pages/myFocus/myFocus" hover-class="navigator-hover">我关注的</navigator>
-    </view>
-
-    <view class="my-item">
-      <image src="/images/personal/1.png" class="logo"></image>
       <navigator url="/pages/iWantToBuy/iWantToBuy" hover-class="navigator-hover">我想购买的</navigator>
     </view>
 

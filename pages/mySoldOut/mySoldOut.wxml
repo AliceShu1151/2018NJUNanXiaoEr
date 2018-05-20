@@ -1,4 +1,8 @@
 <!--pages/mySoldOut/mySoldOut.wxml-->
+<view class="remind-box" wx:if="{{remind}}">
+    <image class="remind-img" src="/images/more/loading.gif"></image>
+</view>
+<block wx:else>
 <view class="title-box" wx:if="{{soldOutLength == 0}}">
     看来你还没卖出过东西哦~
 </view>
@@ -28,3 +32,4 @@
         </view>
     </view>
 </view>
+</block>

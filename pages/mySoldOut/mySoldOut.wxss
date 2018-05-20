@@ -1,4 +1,18 @@
 /* pages/mySoldOut/mySoldOut.wxss */
+.remind-box {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 300rpx;
+}
+
+.remind-img {
+    width: 250rpx;
+    height: 250rpx;
+    padding-bottom: 25rpx;
+}
 page{
     min-height: 100%;
   background-color: #F2f2f2;

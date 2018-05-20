@@ -8,6 +8,7 @@ Page({
 	 * 页面的初始数据
 	 */
 	data: {
+		remind: '加载中',
 		allSelected: false,
 		noSelect: true,
 		saveHidden: true,
@@ -257,6 +258,7 @@ Page({
 		});
 		that.fetchGoods();
 
+		console.log(that.data.iWantToBuy);
 		//计算收藏商品总价
 		that.caculateTotalPrice();
 	},
@@ -278,7 +280,9 @@ Page({
 			}
 			that.setData({
 				iWantToBuy: iWantToBuy,
+				remind: ''
 			});
+			//console.log(iWantToBuy);
 		});
 	},
 
