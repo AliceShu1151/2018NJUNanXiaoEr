@@ -29,7 +29,21 @@ Page({
 
 	//事件处理函数
 	onLoad: function () {
-
+		/*
+		yhr 5-20:
+		页面加载时判断用户是否进行过邮箱验证
+		若没验证过则将ableToClick置为false
+		*/
+		if (!Bmob.User.current().emailVerified || Bmob.User.current().emailVerified === undefined){
+			this.setData({
+				ableToClick: false
+			});
+		}
+		if (Bmob.User.current().mobilePhoneNumber === undefined && Bmob.User.current().wechatId === undefined && Bmob.User.current().QQ === undefined){
+			this.setData({
+				ableToClick: false
+			});
+		}
 	},
 	onModalOpen() {
 
@@ -180,30 +194,6 @@ Page({
 		else if(tempFiles.length == 3){
 			that.choosePics(tempFiles, 1);
 		}
-
-		/*
-		wx.chooseImage({
-			count: 4,
-			sizeType: ['compressed'], // 可以指定是原图还是压缩图，默认二者都有
-			sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
-			success: function (res) {
-				//console.log(res);
-				// 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片  
-				//let tempFiles = res.tempFiles;
-				let tempFiles = [];
-				tempFiles.push(res.tempFiles);
-				that.setData({
-					tempFiles: tempFiles
-				});
-				console.log(that.data.tempFiles);
-				if (res.tempFiles.length == 4) {
-					that.setData({
-						isFull: true
-					});
-				}
-			}
-		})
-		*/
 	},
 
 	//删除已上传图片的方法
@@ -318,6 +308,44 @@ Page({
 							});
 						});
 					});
+				});
+			}
+		}
+		else{
+			if (!Bmob.User.current().emailVerified){
+				/*
+				如果ableToClick为false
+				且用户未验证则提醒用户去验证邮箱
+				*/
+				wx.showModal({
+					title: '提示',
+					content: '亲，请先验证邮箱后再发布商品哦~',
+					success: function(res) {
+						if(res.confirm){
+							wx.navigateTo({
+								url: '../../pages/editUserInfo/editUserInfo',
+							});
+						}
+					}
+				});
+			}
+			else if (Bmob.User.current().mobilePhoneNumber === undefined && Bmob.User.current().wechatId === undefined && Bmob.User.current().QQ === undefined){
+				wx.showModal({
+					title: '提示',
+					content: '亲，请先至少填写一种联系方式后再发布商品哦~',
+					success: function (res) {
+						if (res.confirm) {
+							wx.navigateTo({
+								url: '../../pages/editUserInfo/editUserInfo',
+							});
+						}
+					}
+				});
+			}
+			else{
+				wx.showModal({
+					title: '提示',
+					content: '请不要重复点击提交按钮',
 				});
 			}
 		}
