@@ -43,67 +43,67 @@ Page({
 		})
 		let db = Bmob.Query("_User");
 		db.get(app.globalData.userObjectId).then(res => {
-			if (res.university) {
+			if (res.university && !(res.university === undefined)) {
 				that.setData({
 					userUniversity: res.university,
 					universityIndex: that.data.university.indexOf(res.university)
 				});
 			}
-			if (res.college) {
+			if (res.college && !(res.college === undefined)) {
 				that.setData({
 					userCollege: res.college,
 					collegeIndex: that.data.college.indexOf(res.college)
 				});
 			}
-			if (res.education) {
+			if (res.education && !(res.education === undefined)) {
 				that.setData({
 					userEducation: res.education,
 					educationIndex: that.data.education.indexOf(res.education)
 				});
 			}
-			if (res.entryYear) {
+			if (res.entryYear && !(res.entryYear === undefined)) {
 				that.setData({
 					userEntryYear: res.entryYear,
 					entryYearIndex: that.data.entryYear.indexOf(res.entryYear)
 				});
 			}
-			if (res.birthdayDate){
+			if (res.birthdayDate && !(res.birthdayDate === undefined)){
 				that.setData({
 					birthdayDate: res.birthdayDate
 				});
 			}
-			if (res.wechatId) {
+			if (res.wechatId && !(res.wechatId === undefined)) {
 				that.setData({
 					userWechat: res.wechatId,
 				});
 			}
-			if (res.QQ) {
+			if (res.QQ && !(res.QQ === undefined)) {
 				that.setData({
 					userQQ: res.QQ,
 				});
 			}
-			if (res.mobilePhoneNumber) {
+			if (res.mobilePhoneNumber && !(res.mobilePhoneNumber === undefined)) {
 				that.setData({
 					userPhone: res.mobilePhoneNumber,
 				});
 			}
-			if(res.email){
+			if(res.email && !(res.email === undefined)){
 				that.data.oldEmail = res.email;
 				that.setData({
 					userMail: res.email,
 				});
 			}
-			if (res.emailVerified){
+			if (res.emailVerified && !(res.emailVerified === undefined)){
 				that.setData({
 					emailVerified: res.emailVerified,
 				});
 			}
-			if (res.selfIntroduction){
+			if (res.selfIntroduction && !(res.selfIntroduction === undefined)){
 				that.setData({
 					selfIntroduction: res.selfIntroduction
 				});
 			}
-			if (res.userRealName){
+			if (res.userRealName && !(res.userRealName === undefined)){
 				that.setData({
 					userRealName: res.userRealName
 				});
