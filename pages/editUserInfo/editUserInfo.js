@@ -241,7 +241,6 @@ Page({
 			res.set("education", that.data.userEducation);
 			res.set("entryYear", that.data.userEntryYear);
 			res.set("email", that.data.userMail);
-			res.set("emailVerified", false);
 			res.set("selfIntroduction", that.data.selfIntroduction);
 			res.set("userRealName", that.data.userRealName);
 			res.set("birthdayDate", that.data.birthdayDate);
