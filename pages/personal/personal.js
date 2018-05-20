@@ -1,4 +1,5 @@
-var app = getApp()
+let app = getApp()
+let Bmob = app.globalData.Bmob;
 
 Page({
 	data: {
@@ -7,9 +8,11 @@ Page({
 	},
 
 	onReady() {
-		var that = this;
+		let that = this;
 		that.setData({
-			userInfo: app.globalData.userInfo
+			userInfo: app.globalData.userInfo,
+			"userInfo.college": Bmob.User.current().college,
+			"userInfo.entryYear": Bmob.User.current().entryYear,
 		});
 		setTimeout(function () {
 			that.setData({
