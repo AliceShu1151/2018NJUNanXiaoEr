@@ -3,9 +3,6 @@ let app = getApp();
 let Bmob = app.globalData.Bmob;
 Page({
 	data: {
-		userWechat: '',
-		userQQ: '',
-		userPhone: '',
 		userUniversity: '',
 		userCollege: '',
 		userEducation: '',
@@ -25,6 +22,9 @@ Page({
 		userMail: "",
 		oldEmail: "",
 		emailVerified: false,
+		mobilePhoneNumber: '',
+		QQ: '',
+		wechatId: ''
 	},
 
 	/**
@@ -240,6 +240,7 @@ Page({
 	
 	bindSubmit: function () {
 		let that = this;
+		console.log(that.data.wechatId);
 		this.setData({
 			buttonLoading: true
 		})
