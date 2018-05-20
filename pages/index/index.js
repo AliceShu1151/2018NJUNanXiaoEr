@@ -134,13 +134,21 @@ Page({
 		this.getGoodsList(this.data.activeCategoryId);
 	},
 
-	//点击页面下部商品列表事件监听，跳转至商品详情页面
-	toDetailsTap: function (e) {
-		//console.log(e.currentTarget.id);
-		wx.navigateTo({
-			url: "/pages/good_details/good_details?businessId=" + e.currentTarget.id
-		})
-	},
+  //点击页面下部商品列表事件监听，跳转至商品详情页面
+  toDetailsTap: function (e) {
+    //console.log(e.currentTarget.id);
+    wx.navigateTo({
+      url: "/pages/good_details/good_details?businessId=" + e.currentTarget.id
+    })
+  },
+
+  //点击公告，跳转页面
+  toNotice: function (e) {
+    //console.log(e.currentTarget.id);
+    wx.navigateTo({
+      url: "/pages/notice/notice?noticId=" + e.currentTarget.id
+    })
+  },
 
 	//轮播图渲染
 	renderBanners: function() {

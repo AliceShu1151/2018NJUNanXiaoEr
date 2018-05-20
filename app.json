@@ -12,6 +12,7 @@
     "pages/editUserInfo/editUserInfo",
     "pages/myIssuedGood/myIssuedGood",
     "pages/mySoldOut/mySoldOut",
+    "pages/notice/notice",
     "pages/iBought/iBought"
   ],
 
