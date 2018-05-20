@@ -182,6 +182,18 @@ Page({
 				wx.showModal({
 					title: '提示',
 					content: '验证邮件已发送，请及时确认！',
+					success: function(res) {
+						if(res.confirm){
+							wx.reLaunch({
+								url: '../../pages/index/index',
+							});
+						}
+						else if(res.cancel){
+							wx.reLaunch({
+								url: '../../pages/index/index',
+							});
+						}
+					}
 				});
 			});
 		}
@@ -251,8 +263,16 @@ Page({
 			wx.showToast({
 				title: '修改成功',
 				icon: 'success',
-				duration: 1500,
+				duration: 1000,
+			});
+			that.sleep(1100);
+			wx.reLaunch({
+				url: '../../pages/personal/personal',
 			});
 		});
 	},
+
+	sleep: function (sleepTime) {
+		for (var start = Date.now(); Date.now() - start <= sleepTime;) { }
+	}
 })
