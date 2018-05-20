@@ -10,9 +10,7 @@ Page({
 		goods: {},
 		banners: {},
 		db: {},
-		noticeList: {
-			dataList: ['嘻嘻嘻', '嘤嘤嘤', '嘿嘿嘿']
-		},
+		noticeList: [],
 		categories: [
 			{ id: 0, name: '全部' },
 			{ id: 1, name: '化妆品' },
@@ -33,7 +31,7 @@ Page({
 		searchInput: '',
 	},
 
-	onPullDownRefresh: function() {
+	onPullDownRefresh: function () {
 		wx.stopPullDownRefresh();
 		wx.reLaunch({
 			url: '../../pages/index/index',
@@ -45,23 +43,25 @@ Page({
 		let that = this;
 		//加载轮播图
 		that.renderBanners();
+		//加载公告栏
+		that.fetchNotices();
 		//加载全部商品
-		that.getGoodsList(0);
+		that.fetchGoods(0);
 		//未验证邮箱时进行提示
 		that.unverifiedNotice();
 	},
 
 	//未验证邮箱则进行提示
-	unverifiedNotice: function(){
+	unverifiedNotice: function () {
 		//console.log({ verified: Bmob.User.current().emailVerified });
-		if(Bmob.User.current().emailVerified){
+		if (Bmob.User.current().emailVerified) {
 			return;
 		}
 		wx.showModal({
 			title: '提示',
 			content: '您的邮箱还未验证，请及时验证邮箱以享受更多功能！',
 			success: res => {
-				if(res.confirm){
+				if (res.confirm) {
 					wx.navigateTo({
 						url: "../../pages/editUserInfo/editUserInfo",
 					});
@@ -103,7 +103,7 @@ Page({
 	},
 
 	isNull: function (str) {
-		if(str == "") return true;
+		if (str == "") return true;
 		var regu = "^[ ]+$";
 		var re = new RegExp(regu);
 		return re.test(str);
@@ -111,13 +111,13 @@ Page({
 
 	//搜索函数，需要与服务器交互，待实现
 	toSearch: function () {
-		if(this.isNull(this.data.searchInput)){
+		if (this.isNull(this.data.searchInput)) {
 			wx.showModal({
 				title: '提示',
 				content: '搜索内容不能为空',
 			});
 		}
-		else{
+		else {
 			//获取搜索结果
 			wx.navigateTo({
 				url: "/pages/search_results/search_results?searchInput=" + this.data.searchInput
@@ -131,27 +131,26 @@ Page({
 			activeCategoryId: e.currentTarget.id
 		});
 		this.setData({ goods: null });
-		this.getGoodsList(this.data.activeCategoryId);
+		this.fetchGoods(this.data.activeCategoryId);
 	},
 
-  //点击页面下部商品列表事件监听，跳转至商品详情页面
-  toDetailsTap: function (e) {
-    //console.log(e.currentTarget.id);
-    wx.navigateTo({
-      url: "/pages/good_details/good_details?businessId=" + e.currentTarget.id
-    })
-  },
+	//点击页面下部商品列表事件监听，跳转至商品详情页面
+	toDetailsTap: function (e) {
+		//console.log(e.currentTarget.id);
+		wx.navigateTo({
+			url: "/pages/good_details/good_details?businessId=" + e.currentTarget.id
+		})
+	},
 
-  //点击公告，跳转页面
-  toNotice: function (e) {
-    //console.log(e.currentTarget.id);
-    wx.navigateTo({
-      url: "/pages/notice/notice?noticId=" + e.currentTarget.id
-    })
-  },
+	//点击公告，跳转页面
+	toNotice: function (e) {
+		wx.navigateTo({
+			url: "/pages/notice/notice?noticeId=" + e.currentTarget.id
+		})
+	},
 
 	//轮播图渲染
-	renderBanners: function() {
+	renderBanners: function () {
 		let that = this;
 		let db = Bmob.Query("goods");
 		db.limit(4); //banners数量
@@ -163,18 +162,29 @@ Page({
 		});
 	},
 
+	fetchNotices: function(){
+		let that = this;
+		let db = Bmob.Query("notices");
+		db.order("-createdAt");
+		db.find().then(res => {
+			that.setData({
+				noticeList: res,
+			});
+		});
+	},
+
 	//商品加载
-	getGoodsList: function (categoryId) {
+	fetchGoods: function (categoryId) {
 		/**
 		 * 岳翔 5-18：
 		 * 图片获取机制更新
 		 */
 		let that = this;
 		let categoryNameList = new Array("全部", "化妆品", "服饰装扮", "食品饮料", "演出门票", "数码电子", "其他");
-		let	categoryName = categoryNameList[categoryId];
+		let categoryName = categoryNameList[categoryId];
 
 		let db = Bmob.Query("goods");
-		if(categoryName != "全部"){
+		if (categoryName != "全部") {
 			db.equalTo("category", "==", categoryName);
 		}
 		db.equalTo("state", "!=", 2);

@@ -40,20 +40,14 @@
         <view wx:if="{{noticeList}}" class="notice">
             <view class="notice_iteml">公告：</view>
             <swiper wx:if="{{noticeList}}" class="notice_swiper" vertical="true" autoplay="true" circular="true" interval="3000">
-                <navigator wx:for-items="{{noticeList.dataList}}" wx:key="{{index}}" id="{{ index }}" bindtap="toNotice" open-type="navigate">
+                <navigator wx:for-items="{{noticeList}}" wx:key="{{index}}" id="{{ item.objectId }}" bindtap="toNotice" open-type="navigate">
                     <swiper-item>
-                        <view class="notice_itemr">{{item}}</view>
+                        <view class="notice_itemr">{{item.title}}</view>
                     </swiper-item>
                 </navigator>
             </swiper>
         </view>
-		<!--
-			岳翔 5-13:
-			循环渲染商品起始位置
-			列表循环数据被放置在index.js中
-			绑定函数：bindtap = functionName, functionName定义可在.js文件中找到
-		-->
-		<view class="goods-container">
+        <view class="goods-container">
             <view class="goods-box" wx:for="{{ goods }}" wx:key="{{ index }}" bindtap="toDetailsTap" id="{{ item.objectId }}">
                 <view class="img-box">
                     <image src="{{ item.imgUrl }}" class="image" mode="aspectFit" lazy-load="true" />
@@ -64,19 +58,6 @@
                 </view>
             </view>
         </view>
-		<!--原代码-->
-		<!--<view class="goods-container">
-            <view class="goods-box" wx:for="{{ goods }}" wx:key="{{ index }}" bindtap="toDetailsTap" id="{{ item.businessId }}">
-                <view class="img-box">
-                    <image src="{{ item.pic }}" class="image" mode="aspectFill" lazy-load="true" />
-                </view>
-                <view class="goods-title">{{ item.name }}</view>
-                <view style='display:flex;'>
-                    <view class="goods-price">¥ {{ item.price }}</view>
-                </view>
-            </view>
-        </view>-->
-        <!--渲染结束-->
         <view hidden="{{loadingMoreHidden ? true : false}}" class="no-more-goods">没有更多啦</view>
     </view>
 </block>

@@ -1,9 +1,8 @@
-
 <view class="notice">
-  <view class="title">公告标题：{{noticeTitle}}</view>
-  <view class="time">发布时间：{{noticeTime}}</view>  
-  <view class="time_after"></view> 
-  <view class="text">
-      {{noticeContent}}
+    <view class="title">{{ notice.title }}</view>
+    <view class="time">发布时间：{{ notice.createdAt }}</view>
+    <view class="time_after"></view>
+    <view class="text">
+        {{ notice.content }}
     </view>
 </view>
