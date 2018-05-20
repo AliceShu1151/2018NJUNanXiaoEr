@@ -26,6 +26,7 @@ Page({
 		let that = this;
 		let db = Bmob.Query("goods");
 		db.order("-createdAt");
+		db.equalTo("state", "!=", 2);
 		db.find().then(res => {
 			let goods = new Array();
 			for(let item of res){

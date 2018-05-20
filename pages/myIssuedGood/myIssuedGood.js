@@ -293,7 +293,9 @@ Page({
 						let dbStars = Bmob.Query("stars");
 						dbStars.containedIn("goodsObjectId", goodsVec);
 						dbStars.find().then(res => {
-							res.destroyAll();
+							if(res.length != 0){
+								res.destroyAll();
+							}
 						});
 						let dbImgs = Bmob.Query("goodsImgs");
 						dbImgs.containedIn("goodsObjectId", goodsVec);						
