@@ -3,7 +3,10 @@ let Bmob = app.globalData.Bmob;
 
 Page({
   data: {
-    userInfo: {}
+    userInfo: {},
+	gender: '',
+	showNickName: false,
+	nick: ''
   },
 
   onLoad(options) {
@@ -15,9 +18,16 @@ Page({
     db.find().then(res => {
     // db.get(seller).then(res => {
       that.setData({
-        userInfo: res[0]
+        userInfo: res[0],
+		gender: app.globalData.userInfo.gender,
+		nickName: app.globalData.userInfo.nickName
       });
-      console.log(that.data.userInfo);
+	  if (that.data.userInfo.userRealName == '' || that.data.userInfo.userRealName === undefined){
+		  that.setData({
+				showNickName: true
+		  });
+	  }
+      console.log(that.data.userInfo.userRealName);
     });
   },
 })
