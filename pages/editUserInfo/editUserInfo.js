@@ -37,9 +37,9 @@ Page({
 			userCollege: this.data.college[0],
 			userEducation: this.data.education[0],
 			userEntryYear: this.data.entryYear[4],
-			userWechat: '',
-			userQQ: '',
-			userPhone: ''
+			wechatId: '',
+			QQ: '',
+			mobilePhoneNumber: ''
 		})
 		let db = Bmob.Query("_User");
 		db.get(app.globalData.userObjectId).then(res => {
@@ -74,17 +74,18 @@ Page({
 			}
 			if (res.wechatId && !(res.wechatId === undefined)) {
 				that.setData({
-					userWechat: res.wechatId,
+					wechatId: res.wechatId,
 				});
+				console.log(that.data.wechatId);
 			}
 			if (res.QQ && !(res.QQ === undefined)) {
 				that.setData({
-					userQQ: res.QQ,
+					QQ: res.QQ,
 				});
 			}
 			if (res.mobilePhoneNumber && !(res.mobilePhoneNumber === undefined)) {
 				that.setData({
-					userPhone: res.mobilePhoneNumber,
+					mobilePhoneNumber: res.mobilePhoneNumber,
 				});
 			}
 			if(res.email && !(res.email === undefined)){
@@ -221,20 +222,20 @@ Page({
 
 	bindWechatInput: function (e) {
 		this.setData({
-			userWechat: e.detail.value
+			WechatId: e.detail.value
 		});
-		//console.log(this.data.userWechat);
+		console.log(this.data.wechatId);
 	},
 
 	bindQQInput: function (e) {
 		this.setData({
-			userQQ: e.detail.value
+			QQ: e.detail.value
 		});
 	},
 
 	bindPhoneInput: function (e) {
 		this.setData({
-			userPhone: e.detail.value
+			mobilePhoneNumber: e.detail.value
 		});
 	},
 	
@@ -246,9 +247,9 @@ Page({
 		})
 		let db = Bmob.Query("_User");
 		db.get(app.globalData.userObjectId).then(res => {
-			res.set("wechatId", that.data.userWechat);
-			res.set("QQ", that.data.userQQ);
-			res.set("mobilePhoneNumber", that.data.userPhone);
+			res.set("wechatId", that.data.wechatId);
+			res.set("QQ", that.data.QQ);
+			res.set("mobilePhoneNumber", that.data.mobilePhoneNumber);
 			res.set("university", that.data.userUniversity);
 			res.set("college", that.data.userCollege);
 			res.set("education", that.data.userEducation);
