@@ -3,12 +3,19 @@
     <image class="photo" src="{{userInfo.avatarUrl}}"></image>
     <view class="name">{{userInfo.nickName}}</view>
   </view>
-
+  <view wx:if="{{!showNickName}}" class="text">
+    <view style='width:30%'>真名： </view>
+    <view> {{ userInfo.userRealName }}</view>
+  </view>
+  <view wx:if="{{showNickName}}" class="text">
+    <view style='width:30%'>昵称： </view>
+    <view> {{ nickName }}</view>
+  </view>
   <view class="text">
     <view style='width:30%'>性别： </view>
-    <view wx:if="{{userInfo.gender == 1}}">男</view>
-    <view wx:if="{{userInfo.gender == 2}}">女</view>
-    <view wx:if="{{userInfo.gender == 0}}">未知</view>
+    <view wx:if="{{gender == 1}}">男</view>
+    <view wx:if="{{gender == 2}}">女</view>
+    <view wx:if="{{gender == 0}}">未知</view>
   </view>
 
   <view class="text">
@@ -22,10 +29,6 @@
   <view class="text">
     <view style='width:30%'>年级： </view>
     <view> {{ userInfo.entryYear }}</view>
-  </view>
-  <view class="text">
-    <view style='width:30%'>真名： </view>
-    <view> {{ userInfo.userRealName }}</view>
   </view>
   <view class="text">
     <view style='width:30%'>出生日期： </view>
