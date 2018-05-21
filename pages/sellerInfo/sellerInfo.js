@@ -3,8 +3,7 @@ let Bmob = app.globalData.Bmob;
 
 Page({
   data: {
-    userInfo: {},
-    seller: ''
+    userInfo: {}
   },
 
   onLoad(options) {
