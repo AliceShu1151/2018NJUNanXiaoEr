@@ -54,10 +54,15 @@ Page({
 	//获取用户信息
 	userInfoHandler: function (e) {
 		app.globalData.userInfo = e.detail.userInfo;
-		//头像设置
+		//头像 & 性别设置
 		let db = Bmob.Query("_User");
 		db.get(app.globalData.userObjectId).then(res => {
 			res.set("avatarUrl", app.globalData.userInfo.avatarUrl);
+			switch (app.globalData.userInfo.gender){
+				case 1: res.set("gender", "♂"); break;
+				case 2: res.set("gender", "♀"); break;
+				case 0: res.set("gender", "未知"); break;
+			}
 			res.save();
 		})
 	},

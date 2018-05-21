@@ -243,9 +243,6 @@ Page({
 	
 	bindSubmit: function () {
 		let that = this;
-		console.log(that.data.wechatId);
-		console.log(that.data.QQ);
-		console.log(that.data.mobilePhoneNumber);
 		this.setData({
 			buttonLoading: true
 		});
@@ -253,8 +250,12 @@ Page({
 		db.get(app.globalData.userObjectId).then(res => {
 			res.set("wechatId", that.data.wechatId);
 			res.set("QQ", that.data.QQ);
-			console.log(that.data.mobilePhoneNumber);
-			res.set("mobilePhoneNumber", that.data.mobilePhoneNumber);
+			if (that.data.mobilePhoneNumber == ""){
+				res.unset("mobilePhoneNumber");
+			}
+			else{
+				res.set("mobilePhoneNumber", that.data.mobilePhoneNumber);
+			}
 			res.set("university", that.data.userUniversity);
 			res.set("college", that.data.userCollege);
 			res.set("education", that.data.userEducation);
@@ -263,7 +264,11 @@ Page({
 			res.set("selfIntroduction", that.data.selfIntroduction);
 			res.set("userRealName", that.data.userRealName);
 			res.set("birthdayDate", that.data.birthdayDate);
-			res.save();
+			res.save().then(res => {
+				console.log(res);
+			}).catch(err => {
+				console.log(err);
+			});
 			that.setData({
 				buttonLoading: false
 			});

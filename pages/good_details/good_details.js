@@ -80,7 +80,7 @@ Page({
 	 */
 	toSellerInfo: function () {
 		let that = this;
-		console.log(that.data.goodsData);
+		//console.log(that.data.goodsData);
 		wx.navigateTo({
 			url: '../../pages/sellerInfo/sellerInfo?seller=' + that.data.goodsData.seller
 		});

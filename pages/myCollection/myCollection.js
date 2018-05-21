@@ -328,6 +328,13 @@ Page({
 		db.order("-createdAt");
 		db.find().then(res => {
 			that.setData({ myCollectionLength: res.length });
+			console.log(res);
+			if(res.length == 0){
+				that.setData({
+					remind: '',
+				});
+				return;
+			}
 			for (let i = 0; i < res.length; ++i) {
 				let myCollection = that.data.myCollection;
 				const db = Bmob.Query("goods");
