@@ -20,7 +20,7 @@
     <view class="view-price_hd">
       <view class="price">分类(点击修改)：  </view>
     
-      <multi-selector class='selector' value='{{value}}' bindchange='bindCheckboxChange' bindmodalopen='onModalOpen' placeholder='请选择分类（默认为化妆品）' items='{{items}}' bindmodalclose='onModalClose' show-value='{{false}}'></multi-selector>
+      <multi-selector class='selector' value='{{product_category}}' bindchange='bindCheckboxChange' bindmodalopen='onModalOpen' placeholder='点击选择分类' items='{{items}}' bindmodalclose='onModalClose' show-value='{{false}}'></multi-selector>
     </view>
     
     <text class="imageTitle">上传图片:<text style="color:#737373;font-size:20rpx;">(至少一张，至多四张)</text></text>

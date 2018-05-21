@@ -57,6 +57,7 @@ Page({
 					canBuy: true
 				});
 			}
+      console.log(that.data.goodsData);
 		});
 		/*
 		此处编写函数来获取data中的goodsData
