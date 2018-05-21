@@ -222,33 +222,38 @@ Page({
 
 	bindWechatInput: function (e) {
 		this.setData({
-			WechatId: e.detail.value
+			wechatId: e.detail.value
 		});
-		console.log(this.data.wechatId);
+		//console.log(this.data.wechatId);
 	},
 
 	bindQQInput: function (e) {
 		this.setData({
 			QQ: e.detail.value
 		});
+		//console.log(this.data.QQ);
 	},
 
 	bindPhoneInput: function (e) {
 		this.setData({
 			mobilePhoneNumber: e.detail.value
 		});
+		//console.log(this.data.mobilePhoneNumber);
 	},
 	
 	bindSubmit: function () {
 		let that = this;
 		console.log(that.data.wechatId);
+		console.log(that.data.QQ);
+		console.log(that.data.mobilePhoneNumber);
 		this.setData({
 			buttonLoading: true
-		})
+		});
 		let db = Bmob.Query("_User");
 		db.get(app.globalData.userObjectId).then(res => {
 			res.set("wechatId", that.data.wechatId);
 			res.set("QQ", that.data.QQ);
+			console.log(that.data.mobilePhoneNumber);
 			res.set("mobilePhoneNumber", that.data.mobilePhoneNumber);
 			res.set("university", that.data.userUniversity);
 			res.set("college", that.data.userCollege);
