@@ -1,3 +1,17 @@
+.remind-box {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 300rpx;
+}
+
+.remind-img {
+    width: 250rpx;
+    height: 250rpx;
+    padding-bottom: 25rpx;
+}
 .weui-cells {
     position: relative;
     margin-top: 1.17647059em;

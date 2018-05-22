@@ -1,5 +1,8 @@
 <!--pages/editUserInfo/editUserInfo.wxml-->
-
+<view class="remind-box" wx:if="{{remind}}">
+    <image class="remind-img" src="/images/more/loading.gif"></image>
+</view>
+<block wx:else>
 <view class="weui-cells__title">以下信息必填哦</view>
 <view class="weui-panel weui-panel_access">
 
@@ -107,5 +110,4 @@
   </view>
   <button class='submitBottom' loading="{{buttonLoading}}" bindtap="bindSubmit"> 提交修改 </button>
 </view>
-
-
+</block>

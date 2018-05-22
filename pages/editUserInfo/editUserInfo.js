@@ -24,7 +24,8 @@ Page({
 		emailVerified: false,
 		mobilePhoneNumber: '',
 		QQ: '',
-		wechatId: ''
+		wechatId: '',
+		remind: '加载中'
 	},
 
 	/**
@@ -109,6 +110,9 @@ Page({
 					userRealName: res.userRealName
 				});
 			}
+			that.setData({
+				remind: ''
+			});
 		});		
 	},
 
