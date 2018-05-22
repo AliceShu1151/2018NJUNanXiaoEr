@@ -243,45 +243,53 @@ Page({
 	
 	bindSubmit: function () {
 		let that = this;
-		this.setData({
-			buttonLoading: true
-		});
-		let db = Bmob.Query("_User");
-		db.get(app.globalData.userObjectId).then(res => {
-			res.set("wechatId", that.data.wechatId);
-			res.set("QQ", that.data.QQ);
-			if (that.data.mobilePhoneNumber == ""){
-				res.unset("mobilePhoneNumber");
-			}
-			else{
-				res.set("mobilePhoneNumber", that.data.mobilePhoneNumber);
-			}
-			res.set("university", that.data.userUniversity);
-			res.set("college", that.data.userCollege);
-			res.set("education", that.data.userEducation);
-			res.set("entryYear", that.data.userEntryYear);
-			res.set("email", that.data.userMail);
-			res.set("selfIntroduction", that.data.selfIntroduction);
-			res.set("userRealName", that.data.userRealName);
-			res.set("birthdayDate", that.data.birthdayDate);
-			res.save().then(res => {
-				console.log(res);
-			}).catch(err => {
-				console.log(err);
+		if (that.data.mobilePhoneNumber.length == 0 || that.data.mobilePhoneNumber.length == 11){
+			this.setData({
+				buttonLoading: true
 			});
-			that.setData({
-				buttonLoading: false
+			let db = Bmob.Query("_User");
+			db.get(app.globalData.userObjectId).then(res => {
+				res.set("wechatId", that.data.wechatId);
+				res.set("QQ", that.data.QQ);
+				if (that.data.mobilePhoneNumber == "") {
+					res.unset("mobilePhoneNumber");
+				}
+				else {
+					res.set("mobilePhoneNumber", that.data.mobilePhoneNumber);
+				}
+				res.set("university", that.data.userUniversity);
+				res.set("college", that.data.userCollege);
+				res.set("education", that.data.userEducation);
+				res.set("entryYear", that.data.userEntryYear);
+				res.set("email", that.data.userMail);
+				res.set("selfIntroduction", that.data.selfIntroduction);
+				res.set("userRealName", that.data.userRealName);
+				res.set("birthdayDate", that.data.birthdayDate);
+				res.save().then(res => {
+					console.log(res);
+				}).catch(err => {
+					console.log(err);
+				});
+				that.setData({
+					buttonLoading: false
+				});
+				wx.showToast({
+					title: '修改成功',
+					icon: 'success',
+					duration: 1000,
+				});
+				that.sleep(1100);
+				wx.reLaunch({
+					url: '../../pages/personal/personal',
+				});
 			});
-			wx.showToast({
-				title: '修改成功',
-				icon: 'success',
-				duration: 1000,
+		}
+		else{
+			wx.showModal({
+				title: '提示',
+				content: '输入的手机号码格式不对。',
 			});
-			that.sleep(1100);
-			wx.reLaunch({
-				url: '../../pages/personal/personal',
-			});
-		});
+		}
 	},
 
 	sleep: function (sleepTime) {

@@ -62,7 +62,8 @@ Page({
 				case 1: res.set("gender", "♂"); break;
 				case 2: res.set("gender", "♀"); break;
 				case 0: res.set("gender", "未知"); break;
-			}
+			};
+			res.set("nickName", app.globalData.userInfo.nickName);
 			res.save();
 		})
 	},

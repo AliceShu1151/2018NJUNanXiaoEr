@@ -6,7 +6,6 @@ Page({
 		userInfo: {},
 		gender: '',
 		showNickName: false,
-		nick: ''
 	},
 
 	onLoad: function(options) {
@@ -16,9 +15,9 @@ Page({
 		let db = Bmob.Query("_User");
 		db.equalTo("username", "==", seller);
 		db.find().then(res => {
+			console.log(res);
 			that.setData({
 				userInfo: res[0],
-				nickName: app.globalData.userInfo.nickName,
 			});
 			if (that.data.userInfo.userRealName == '' || that.data.userInfo.userRealName === undefined) {
 				that.setData({

@@ -9,7 +9,7 @@
     </view>
     <view wx:if="{{showNickName}}" class="text">
         <view style='width:30%'>昵称： </view>
-        <view> {{ nickName }}</view>
+        <view> {{ userInfo.nickName }}</view>
     </view>
     <view class="text">
         <view style='width:30%'>性别： </view>
