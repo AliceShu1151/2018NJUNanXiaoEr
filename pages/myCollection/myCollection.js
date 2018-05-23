@@ -23,7 +23,8 @@ Page({
 		 */
 		myCollection: [],
 		myCollectionLength: 5,
-		totalPrice: ''
+		totalPrice: '',
+		verified: false
 	},
 
 	/*下面两个函数用于编辑收藏列表*/
@@ -115,7 +116,6 @@ Page({
 	*/
 	selectTap: function (e) {
 		//console.log(e.currentTarget.id);
-		let that = this;
 		let tmpCollection = that.data.myCollection;
 		//5-16 主要在第一个判断语句内进行了修改
 		if (!tmpCollection[e.currentTarget.id].active) {
@@ -258,6 +258,19 @@ Page({
 
 	wantToBuy: function () {
 		let that = this;
+		let that = this;
+		if (!that.data.verified) {
+			wx.showModal({
+				title: '提示',
+				content: '亲，您还没进行邮箱验证哦~',
+				success: function (res) {
+					wx.navigateTo({
+						url: '../../pages/editUserInfo.editUserInfo',
+					});
+				}
+			});
+			return;
+		}
 		let tmpCollection = [];
 		//tmpCollection_2存储被选中的商品信息
 		let tmpCollection_2 = [];
@@ -314,6 +327,25 @@ Page({
 		});
 	},
 
+	//邮箱验证检验
+	unverifiedNotice: function () {
+		//console.log({ verified: Bmob.User.current().emailVerified });
+		let db = Bmob.Query("_User");
+		return db.get(app.globalData.userObjectId).then(res => {
+			if (!res.emailVerified) {
+				this.setData({
+					verified: false
+				});
+			}
+			else {
+				this.setData({
+					verified: true
+				});
+			}
+			console.log(this.data.verified);
+		});
+	},
+
 	/**
 	 * 生命周期函数--监听页面加载
 	 */
@@ -345,14 +377,18 @@ Page({
 					myCollection[i]["active"] = false;
 					that.setData({
 						myCollection: myCollection,
+						//remind: ''
+					});
+				}).then(res => {
+					that.setData({
 						remind: ''
 					});
-				});
+					that.unverifiedNotice();
+				})
 			}
 		});
 
 		//计算收藏商品总价
 		that.caculateTotalPrice();
-	},
-
+	}
 })
