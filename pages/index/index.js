@@ -1,6 +1,6 @@
 //index.js
 //获取应用实例
-var app = getApp()
+let app = getApp()
 let Bmob = app.globalData.Bmob;
 
 Page({
@@ -54,20 +54,22 @@ Page({
 	//未验证邮箱则进行提示
 	unverifiedNotice: function () {
 		//console.log({ verified: Bmob.User.current().emailVerified });
-		if (Bmob.User.current().emailVerified) {
-			return;
-		}
-		wx.showModal({
-			title: '提示',
-			content: '您的邮箱还未验证，请及时验证邮箱以享受更多功能！',
-			success: res => {
-				if (res.confirm) {
-					wx.navigateTo({
-						url: "../../pages/editUserInfo/editUserInfo",
-					});
-				}
-			},
-		});
+		let db = Bmob.Query("_User");
+		db.get(app.globalData.userObjectId).then(res => {
+			if (!res.emailVerified){
+				wx.showModal({
+					title: '提示',
+					content: '您的邮箱还未验证，请及时验证邮箱以享受更多功能！',
+					success: res => {
+						if (res.confirm) {
+							wx.navigateTo({
+								url: "../../pages/editUserInfo/editUserInfo",
+							});
+						}
+					},
+				});
+			}
+		})		
 	},
 
 	//页面初次渲染完成后的操作
