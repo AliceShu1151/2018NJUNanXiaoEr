@@ -9,11 +9,14 @@ Page({
 
 	onReady() {
 		let that = this;
-		that.setData({
-			userInfo: app.globalData.userInfo,
-			"userInfo.college": Bmob.User.current().college,
-			"userInfo.entryYear": Bmob.User.current().entryYear,
-		});
+		let db = Bmob.Query("_User");
+		db.get(app.globalData.userObjectId).then(res => {
+			that.setData({
+				userInfo: app.globalData.userInfo,
+				"userInfo.college": res.college,
+				"userInfo.entryYear": res.entryYear,
+			});
+		})
 		setTimeout(function () {
 			that.setData({
 				remind: ''

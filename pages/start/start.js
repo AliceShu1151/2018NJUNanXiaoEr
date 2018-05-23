@@ -2,7 +2,6 @@
 //获取应用实例
 let app = getApp();
 let Bmob = app.globalData.Bmob;
-app.globalData.userObjectId = Bmob.User.current().objectId;
 
 Page({
 	data: {
@@ -57,6 +56,7 @@ Page({
 		//头像 & 性别设置
 		let db = Bmob.Query("_User");
 		db.get(app.globalData.userObjectId).then(res => {
+			console.log(res)
 			res.set("avatarUrl", app.globalData.userInfo.avatarUrl);
 			switch (app.globalData.userInfo.gender){
 				case 1: res.set("gender", "♂"); break;
@@ -64,8 +64,10 @@ Page({
 				case 0: res.set("gender", "未知"); break;
 			};
 			res.set("nickName", app.globalData.userInfo.nickName);
-			res.save();
-		})
+			res.save().then(res => {
+				console.log(res);
+			});
+		});
 	},
 
 	/**
