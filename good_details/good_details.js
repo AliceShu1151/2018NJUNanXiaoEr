@@ -52,12 +52,15 @@ Page({
 				}
 				goodsData["imgs"] = vec;
 				that.setData({ goodsData: goodsData });
+			}).then(res => {
+				return that.unverifiedNotice();
+			}).then(res =>{
+				if (that.data.goodsData.state == 0 && that.data.verified) {
+					that.setData({
+						canBuy: true
+					});
+				}
 			});
-			if (that.data.goodsData.state == 0 && that.data.verified) {
-				that.setData({
-					canBuy: true
-				});
-			}
       //console.log(that.data.goodsData);
 		});
 		/*
@@ -71,7 +74,7 @@ Page({
 	unverifiedNotice: function () {
 		//console.log({ verified: Bmob.User.current().emailVerified });
 		let db = Bmob.Query("_User");
-		db.get(app.globalData.userObjectId).then(res => {
+		return db.get(app.globalData.userObjectId).then(res => {
 			if (!res.emailVerified) {
 				this.setData({
 					verified: false
@@ -82,7 +85,7 @@ Page({
 					verified: true
 				});
 			}
-		})
+		});
 	},
 
 	//监听轮播图变换
