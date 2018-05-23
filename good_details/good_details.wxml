@@ -1,0 +1,48 @@
+<view class="container"> 
+   <view class="swiper-container">
+        <swiper class="swiper_box" autoplay="true" interval="3000" duration="1000" bindchange="swiperchange">
+            <block wx:for="{{ goodsData.imgs }}">
+                <swiper-item>
+                    <image src="{{ item }}" class="slide-image" width="355" height="150" mode="aspectFit" lazy-load="true"/>
+                </swiper-item>
+            </block>
+        </swiper>
+        <view class="dots">  
+            <block wx:for="{{ goodsData.imgs }}">  
+                <view class="dot{{index == swiperCurrent ? ' active' : ''}}"></view>
+            </block>  
+        </view>  
+   </view>
+   <view class="goods-info">
+        <view class="goods-title">{{goodsData.name}}</view>
+        <view class="goods-price" style="padding-left:35rpx;">¥ {{ goodsData.price }}</view>
+        <view class="goods-price" style="color:#999;font-size:24rpx;">浏览{{ goodsData.clicks + 1 }}次</view>
+        <!--view class="goods-price" style="color:#999;font-size:22rpx;">卖家：{{goodsData.seller}}</view-->
+
+        <!--注意，等待数据库接入后要将下一句代码的src改为卖家的头像URL-->
+        <!--image class="logo" src="{{userInfo.avatarUrl}}"></image-->
+   </view>
+    <view class="goods-des-info">
+        <view class="label-title">商品介绍</view>
+        <view class="goods-text">
+            <!--template is="wxParse" data="{{wxParseData:article.nodes}}"/-->
+            {{goodsData.description}}
+         </view>
+    </view>
+    <view class="footer-box">        
+        <!--view class="contact">
+          <button style="opacity:0;position:absolute;" size="27" bindtap="toSellerInfo"></button>
+          <view style='position:absolute;bottom:10rpx;'> 卖家信息 </view>
+        </view-->
+        <view class="contact" bindtap="toSellerInfo">
+            <!--view class="shop-num">({{shopNum}})</view-->
+            <view style='position:absolute;bottom:10rpx;'> 卖家信息 </view>
+        </view>
+        <view class="shop-cart-btn" bindtap="toMyCollection">
+            <!--view class="shop-num">({{shopNum}})</view-->
+            <view style='position:absolute;bottom:10rpx;'> 我的收藏 </view>
+        </view>
+        <view class="join-shop-cart" bindtap="toAddCollection">加入收藏</view>
+        <view class="now-buy {{canBuy?'':'no-select'}}" bindtap="toBuy">我想购买</view>
+   </view>
+</view>
