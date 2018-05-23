@@ -13,7 +13,8 @@ Page({
 		//此处goodsData只是一个demo
 		goodsData: {},
 		userInfo: {},
-		swiperCurrent: 0
+		swiperCurrent: 0,
+		verified: false
 	},
 
 	onLoad: function (options) {
@@ -51,19 +52,40 @@ Page({
 				}
 				goodsData["imgs"] = vec;
 				that.setData({ goodsData: goodsData });
+			}).then(res => {
+				return that.unverifiedNotice();
+			}).then(res =>{
+				if (that.data.goodsData.state == 0 && that.data.verified) {
+					that.setData({
+						canBuy: true
+					});
+				}
 			});
-			if (that.data.goodsData.state == 0) {
-				that.setData({
-					canBuy: true
-				});
-			}
-      console.log(that.data.goodsData);
+      //console.log(that.data.goodsData);
 		});
 		/*
 		此处编写函数来获取data中的goodsData
 		这是一个object类型的变量
 		他的properties有名称、文字描述、图片等
 		*/
+	},
+
+	//邮箱验证检验
+	unverifiedNotice: function () {
+		//console.log({ verified: Bmob.User.current().emailVerified });
+		let db = Bmob.Query("_User");
+		return db.get(app.globalData.userObjectId).then(res => {
+			if (!res.emailVerified) {
+				this.setData({
+					verified: false
+				});
+			}
+			else{
+				this.setData({
+					verified: true
+				});
+			}
+		});
 	},
 
 	//监听轮播图变换
@@ -81,10 +103,24 @@ Page({
 	 */
 	toSellerInfo: function () {
 		let that = this;
-		//console.log(that.data.goodsData);
-		wx.navigateTo({
-			url: '../../pages/sellerInfo/sellerInfo?seller=' + that.data.goodsData.seller
-		});
+		if(that.data.verified){
+			wx.navigateTo({
+				url: '../../pages/sellerInfo/sellerInfo?seller=' + that.data.goodsData.seller
+			});
+		}
+		else{
+			wx.showModal({
+				title: '提示',
+				content: '亲，您还未进行邮箱验证，不能查看他人信息~',
+				success: function (res) {
+					if (res.confirm) {
+						wx.navigateTo({
+							url: '../../pages/editUserInfo/editUserInfo',
+						});
+					}
+				}
+			});
+		}
 	},
 
 	/*
@@ -153,7 +189,20 @@ Page({
 	*/
 	toBuy: function () {
 		let that = this;
-		if (that.data.goodsData.state == 1) {
+		if(!that.data.verified){
+			wx.showModal({
+				title: '提示',
+				content: '亲，您还未进行邮箱验证，无法将商品加入待购买列表~',
+				success: function (res) {
+					if (res.confirm) {
+						wx.navigateTo({
+							url: '../../pages/editUserInfo/editUserInfo',
+						});
+					}
+				}
+			});
+		}
+		else if (that.data.goodsData.state == 1) {
 			//console.log(that.data.goodsData.state);
 			wx.showModal({
 				title: '提示',
