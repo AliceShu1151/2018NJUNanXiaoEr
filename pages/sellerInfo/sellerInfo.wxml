@@ -1,55 +1,60 @@
 <view class="page">
-    <view class="head">
-        <image class="photo" src="{{userInfo.avatarUrl}}"></image>
-        <view class="name">{{userInfo.nickName}}</view>
-    </view>
+  <view class="head">
+    <image class="photo" src="{{userInfo.avatarUrl}}"></image>
+    <view class="name">{{userInfo.nickName}}</view>
+  </view>
+  <view class='infoList'>
     <view wx:if="{{!showNickName}}" class="text">
-        <view style='width:30%'>真名： </view>
-        <view> {{ userInfo.userRealName }}</view>
+      <view style='width:30%'>真名： </view>
+      <view> {{ userInfo.userRealName }}</view>
     </view>
     <view wx:if="{{showNickName}}" class="text">
-        <view style='width:30%'>昵称： </view>
-        <view> {{ userInfo.nickName }}</view>
+      <view style='width:30%'>昵称： </view>
+      <view> {{ userInfo.nickName }}</view>
     </view>
     <view class="text">
-        <view style='width:30%'>性别： </view>
-        <view >{{ userInfo.gender }}</view>
+      <view style='width:30%'>性别： </view>
+      <view>{{ userInfo.gender }}</view>
     </view>
 
     <view class="text">
-        <view style='width:30%'>院系： </view>
-        <view> {{ userInfo.college }}</view>
+      <view style='width:30%'>院系： </view>
+      <view> {{ userInfo.college }}</view>
     </view>
     <view class="text">
-        <view style='width:30%'>学历： </view>
-        <view> {{ userInfo.education }}</view>
+      <view style='width:30%'>学历： </view>
+      <view> {{ userInfo.education }}</view>
     </view>
     <view class="text">
-        <view style='width:30%'>年级： </view>
-        <view> {{ userInfo.entryYear }}</view>
+      <view style='width:30%'>年级： </view>
+      <view> {{ userInfo.entryYear }}</view>
     </view>
     <view class="text">
-        <view style='width:30%'>出生日期： </view>
-        <view> {{ userInfo.birthdayDate }}</view>
+      <view style='width:30%'>出生日期： </view>
+      <view> {{ userInfo.birthdayDate }}</view>
     </view>
     <view class="text">
-        <view style='width:30%'>QQ号： </view>
-        <view> {{ userInfo.QQ }}</view>
+      <view style='width:30%'>QQ号： </view>
+      <view> {{ userInfo.QQ }}</view>
     </view>
     <view class="text">
-        <view style='width:30%'>微信号： </view>
-        <view> {{ userInfo.wechatId }}</view>
+      <view style='width:30%'>微信号： </view>
+      <view> {{ userInfo.wechatId }}</view>
     </view>
     <view class="text">
-        <view style='width:30%'>手机号： </view>
-        <view> {{ userInfo.mobilePhoneNumber }}</view>
+      <view style='width:30%'>手机号： </view>
+      <view> {{ userInfo.mobilePhoneNumber }}</view>
     </view>
     <view class="text">
-        <view style='width:30%'>邮箱： </view>
-        <view style> {{ userInfo.email }}</view>
+      <view style='width:30%'>邮箱： </view>
+      <view style> {{ userInfo.email }}</view>
     </view>
     <view class="text">
-        <view style='width:30%'>自我介绍： </view>
-        <view> {{ userInfo.selfIntroduction }}</view>
+      <view style='width:30%'>自我介绍： </view>
+      <view> {{ userInfo.selfIntroduction }}</view>
     </view>
+  </view>
+  <view>
+    <bottom class='commitBottom' bindtap='toCommitList'>他收到的评价 </bottom>
+  </view>
 </view>

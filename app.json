@@ -13,7 +13,8 @@
     "pages/myIssuedGood/myIssuedGood",
     "pages/mySoldOut/mySoldOut",
     "pages/notice/notice",
-    "pages/iBought/iBought"
+    "pages/iBought/iBought",
+    "pages/commitList/commitList"
   ],
 
   "window":{

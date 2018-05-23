@@ -26,4 +26,10 @@ Page({
 			}
 		});
 	},
+
+  toCommitList: function() {
+    wx.navigateTo({
+      url: '../../pages/commitList/commitList'
+    });
+  }
 })

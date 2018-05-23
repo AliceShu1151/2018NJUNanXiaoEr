@@ -29,3 +29,21 @@
   display: flex;
 	flex-direction: row;
 }
+
+.commitBottom {
+    position: fixed;
+    bottom: 0rpx;
+    width: 100%;
+    height: 80rpx;
+    background-color: #6A005F;
+    border-radius: 30px;
+    color: #fff;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+.infoList{
+  margin-bottom: 90rpx;
+}
