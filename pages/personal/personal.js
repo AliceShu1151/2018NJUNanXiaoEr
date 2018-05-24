@@ -24,6 +24,12 @@ Page({
 		}, 1000);
 	},
 
+  toCommit:function() {
+    wx.navigateTo({
+      url: '../../pages/commitList/commitList?aim='  +Bmob.User.current().username
+    })
+  },
+
 	toEdit: function () {
 		wx.navigateTo({
 			url: '../../pages/editUserInfo/editUserInfo',

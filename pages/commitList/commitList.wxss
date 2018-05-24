@@ -64,11 +64,15 @@ page{
 .goodsList{
     width: 100%;
     background-color: #fff;
+    padding-top: 20rpx;
     padding-bottom: 50rpx;
 }
 .a-gooods{
     width: 100%;
     overflow: hidden;
+    padding-top: 20rpx;
+    border-bottom: 1px solid #eee;
+
 }
 .a-goods-conts{
     display: flex;
@@ -85,22 +89,24 @@ page{
     background-size: 40rpx auto; 
 }
 .goods-info{
-    border-bottom: 1px solid #eee;
+    
     display: flex;
     justify-content:space-between;
-    padding: 30rpx 0 30rpx 70rpx; 
+    padding: 80rpx 0 30rpx 70rpx; 
     width: 720rpx;
+    min-height: 160rpx;
     box-sizing: border-box;
 }
 .goods-info .img-box{
     width: 160rpx;
-    height:160rpx;
-    overflow: hidden;
+    height:260rpx; 
+    overflow: auto;
     margin-right: 20rpx;
     background-color: #ffffff;
 }
 .goods-info .text-box{
     width: 440rpx;
+    margin-top: -15rpx;
     position: relative;
 }
 .goods-info .text-box .goods-title{
@@ -110,6 +116,7 @@ page{
     white-space: nowrap;
     overflow: hidden;
     padding: 10rpx 20rpx 5rpx 0;
+    text-align: left;
 }
 .goods-info .text-box .goods-label{
     font-size: 21rpx;
@@ -117,10 +124,12 @@ page{
     height: 30rpx;
     line-height: 38rpx;
     margin: 8rpx 0 25rpx 0;
+    text-align: left;
 }
 .goods-info .text-box .goods-price{
     font-size: 26rpx;
     color:#e64340;
+    text-align: left;
 }
 
 .goods-info .img-box .img{
@@ -181,4 +190,74 @@ page{
 }
 .jiesuan-box .total{
     color: #e64340;
+}
+.commit-time{
+  position: absolute;
+  left: 30rpx; 
+  margin-top:30rpx;
+  font-size: 30rpx;
+}
+.commit-box{
+  position: absolute;
+  left: 80rpx; 
+  margin-top:200rpx;
+  font-size: 30rpx;
+}
+
+.swiper-tab {
+
+  line-height: 80rpx;
+
+  border: 1px solid #ccc;
+
+  display: flex;
+
+  justify-content: space-around;
+
+  align-items: center;
+
+}
+
+
+
+.swiper-tab-list {
+
+  font-size: 30rpx;
+
+  color: #777;
+
+  text-align: center;
+
+}
+
+
+
+.active {
+
+  color: #da7c0c;
+
+  border-bottom: 5rpx solid #da7c0c;
+
+}
+
+
+
+.swiper-box {
+
+  display: block;
+
+  height: 100%;
+
+  width: 100%;
+
+  overflow: hidden;
+
+}
+
+
+
+.swiper-box view {
+
+  text-align: center;
+
 }

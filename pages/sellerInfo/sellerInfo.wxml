@@ -55,6 +55,6 @@
     </view>
   </view>
   <view>
-    <bottom class='commitBottom' bindtap='toCommitList'>他收到的评价 </bottom>
+    <bottom class='commitBottom' bindtap='toCommitList'>收到/发出的评价 </bottom>
   </view>
 </view>

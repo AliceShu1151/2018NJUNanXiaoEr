@@ -48,7 +48,7 @@
 
         <view class="my-item">
             <image src="/images/personal/1.png" class="logo"></image>
-            <navigator url="/pages/commitList/commitList" hover-class="navigator-hover">收到的评价</navigator>
+            <navigator bindtap='toCommit' hover-class="navigator-hover">相关评价</navigator>
         </view>
 
         <image src="/images/addr-line.png" style="height: 4rpx;"></image>
