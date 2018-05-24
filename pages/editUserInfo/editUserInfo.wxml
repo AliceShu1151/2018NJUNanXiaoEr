@@ -55,7 +55,7 @@
       <view class="weui-label">邮箱</view>
     </view>
     <view class="weui-cell__bd">
-      <input class="weui-input" placeholder="请输入邮箱" bindinput="bindEmailInput" value="{{userMail}}" />
+      <input class="weui-input" disabled="{{emailDisabled}}" placeholder="请输入邮箱" bindinput="bindEmailInput" value="{{userMail}}" />
     </view>
     <image wx:if="{{!emailVerified}}"class="remind-img" bindtap="toVerifyEmail" src="/images/editUserInfo/验证.png"></image>
 	<image wx:if="{{emailVerified}}"class="remind-img" bindtap="toVerifyEmail" src="/images/gou-red.png"></image>

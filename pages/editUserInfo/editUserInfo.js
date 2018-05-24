@@ -25,7 +25,8 @@ Page({
 		mobilePhoneNumber: '',
 		QQ: '',
 		wechatId: '',
-		remind: '加载中'
+		remind: '加载中',
+		emailDisabled: false
 	},
 
 	/**
@@ -99,6 +100,11 @@ Page({
 				that.setData({
 					emailVerified: res.emailVerified,
 				});
+				if(that.data.emailVerified){
+					that.setData({
+						emailDisabled: true
+					});
+				}
 			}
 			if (res.selfIntroduction && !(res.selfIntroduction === undefined)){
 				that.setData({
@@ -180,7 +186,23 @@ Page({
 		else if (reg.test(that.data.userMail)){
 			let db = Bmob.Query("_User");
 			db.get(app.globalData.userObjectId).then(res => {
+				//res.set("email", that.data.userMail);
+				res.set("wechatId", that.data.wechatId);
+				res.set("QQ", that.data.QQ);
+				if (that.data.mobilePhoneNumber == "") {
+					res.unset("mobilePhoneNumber");
+				}
+				else {
+					res.set("mobilePhoneNumber", that.data.mobilePhoneNumber);
+				}
+				res.set("university", that.data.userUniversity);
+				res.set("college", that.data.userCollege);
+				res.set("education", that.data.userEducation);
+				res.set("entryYear", that.data.userEntryYear);
 				res.set("email", that.data.userMail);
+				res.set("selfIntroduction", that.data.selfIntroduction);
+				res.set("userRealName", that.data.userRealName);
+				res.set("birthdayDate", that.data.birthdayDate);
 				return res.save();
 			}).then(res => {
 				Bmob.User.requestEmailVerify(that.data.userMail);
@@ -190,12 +212,12 @@ Page({
 					success: function(res) {
 						if(res.confirm){
 							wx.reLaunch({
-								url: '../../pages/index/index',
+								url: '../../pages/personal/personal',
 							});
 						}
 						else if(res.cancel){
 							wx.reLaunch({
-								url: '../../pages/index/index',
+								url: '../../pages/personal/personal',
 							});
 						}
 					}
@@ -265,7 +287,7 @@ Page({
 				res.set("college", that.data.userCollege);
 				res.set("education", that.data.userEducation);
 				res.set("entryYear", that.data.userEntryYear);
-				res.set("email", that.data.userMail);
+				//res.set("email", that.data.userMail);
 				res.set("selfIntroduction", that.data.selfIntroduction);
 				res.set("userRealName", that.data.userRealName);
 				res.set("birthdayDate", that.data.birthdayDate);
