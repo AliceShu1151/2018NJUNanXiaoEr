@@ -116,6 +116,7 @@ Page({
 	*/
 	selectTap: function (e) {
 		//console.log(e.currentTarget.id);
+		let that = this;
 		let tmpCollection = that.data.myCollection;
 		//5-16 主要在第一个判断语句内进行了修改
 		if (!tmpCollection[e.currentTarget.id].active) {
@@ -257,7 +258,6 @@ Page({
 	},
 
 	wantToBuy: function () {
-		let that = this;
 		let that = this;
 		if (!that.data.verified) {
 			wx.showModal({
