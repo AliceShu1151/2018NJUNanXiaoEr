@@ -1,2 +1,73 @@
 <!--pages/message/message.wxml-->
-<text>pages/message/message.wxml</text>
+
+<view class="modal-mask" bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{showModal}}"></view>
+<view class="modal-dialog" wx:if="{{showModal}}">
+    <view class="modal-title">提示</view>
+    <view class="modal-content">
+        给卖家进行一次评价吧~
+    </view>
+	<input bindblur='commentInput' class="input-holder"></input>
+    <view class="modal-footer">
+        <button class="btn-cancel" bindtap="onCancel" data-status="cancel">以后再说吧</button>
+        <button class="btn-confirm" open-type="getUserInfo" bindgetuserinfo="userInfoHandler" bindtap="onConfirm" data-status="confirm">提交评价</button>
+    </view>
+</view>
+<view class="remind-box" wx:if="{{remind}}">
+    <image class="remind-img" src="/images/more/loading.gif"></image>
+</view>
+<block wx:else>
+    <view class="title-box" wx:if="{{messageListLength == 0}}">
+        看来您没有收到什么消息哦~
+    </view>
+
+<view wx:if="{{messageListLength != 0}}">
+    <view class="list-top">
+        <view class="label">南小二</view>
+        <view class="edit-btn" hidden="{{!saveHidden}}" bindtap="editTap">编辑</view>
+        <view class="edit-btn" hidden="{{saveHidden}}" bindtap="saveTap">完成</view>
+    </view>
+    <view class="goodsList">
+        <view class="a-gooods" wx:for="{{messageList}}"  wx:key="{{index}}" >
+            <view wx:if="{{!saveHidden}}" class="a-goods-conts {{item.active? 'active':''}}" bindtap="selectTap" style="{{item.left}}" id="{{index}}">
+               <view class="goods-info">
+                    <view class="img-box" >
+                        <image src="/images/message/ring.png" class="img"/>
+                    </view>
+                    <view class="text-box">
+                        <view wx:if="{{item.category == 'transaction'}}" class="goods-title">交易通知</view>
+						<view wx:if="{{item.category == 'system'}}" class="goods-title">系统通知</view>
+                        <view wx:if="{{item.category == 'transaction' && item.state == 1}}" class="goods-price">您发布的“{{item.goodName}}”商品被其他用户置为想购买状态，为了避免您的损失，请及时联系买家哟(＾Ｕ＾)ノ（点击本条消息跳转至买家信息页）</view>
+						<view wx:if="{{item.category == 'transaction' && item.state == 2}}" class="goods-price">您购买的“{{item.goodName}}”商品已由卖家确认完成交易，点击本条消息，对卖家进行评价吧(#^.^#)</view>
+						<view wx:if="{{item.category == 'system' && item.state == 1}}" class="goods-price">您收藏的“{{item.goodName}}”商品已被其他买家置入待购买行列了呢QAQ</view>
+						<view wx:if="{{item.category == 'system' && item.state == 2}}" class="goods-price">您收藏的“{{item.goodName}}”商品已被其他买家买走了呢QAQ</view>
+						<view wx:if="{{item.category == 'system' && item.state == 3}}" class="goods-price">您收藏的“{{item.goodName}}”商品已被卖家撤销上架了呢QAQ</view>
+                    </view>
+                </view>
+            </view>
+            <view wx:if="{{saveHidden}}" class="a-goods-conts-none" bindtap="selectTap" style="{{item.left}}" id="{{index}}">
+                <view class="goods-info">
+                    <view class="img-box" >
+                        <image src="/images/message/ring.png" class="img"/>
+                    </view>
+                    <view class="text-box">
+                        <view wx:if="{{item.category == 'transaction'}}" class="goods-title">交易通知</view>
+						<view wx:if="{{item.category == 'system'}}" class="goods-title">系统通知</view>
+                        <view wx:if="{{item.category == 'transaction' && item.state == 1}}" class="goods-price">您发布的“{{item.goodName}}”商品被其他用户置为想购买状态，为了避免您的损失，请及时联系买家哟(＾Ｕ＾)ノ（点击本条消息跳转至买家信息页）</view>
+						<view wx:if="{{item.category == 'transaction' && item.state == 2}}" class="goods-price">您购买的“{{item.goodName}}”商品已由卖家确认完成交易，点击本条消息，对卖家进行评价吧(#^.^#)</view>
+						<view wx:if="{{item.category == 'system' && item.state == 1}}" class="goods-price">您收藏的“{{item.goodName}}”商品已被其他买家置入待购买行列了呢QAQ</view>
+						<view wx:if="{{item.category == 'system' && item.state == 2}}" class="goods-price">您收藏的“{{item.goodName}}”商品已被其他买家买走了呢QAQ</view>
+						<view wx:if="{{item.category == 'system' && item.state == 3}}" class="goods-price">您收藏的“{{item.goodName}}”商品已被卖家撤销上架了呢QAQ</view>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+    <view class="jiesuan-box">
+        <view class="left-price">
+            <view class="all-selected  {{allSelected?'active':''}}" bindtap="bindAllSelect">全选</view>
+        </view>
+        <!--view class="to-pay-btn {{noSelect?'no-select':''}}" hidden="{{!saveHidden}}" bindtap="viewDetails">查看详情</view-->
+        <view class="to-pay-btn {{noSelect?'no-select':''}}" bindtap="deleteMessage">删除</view>
+    </view>
+</view>
+</block>
