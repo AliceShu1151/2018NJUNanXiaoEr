@@ -1,3 +1,4 @@
+
 .notice {
   width: 750rpx;
   padding: 25rpx;
@@ -22,6 +23,13 @@
   color: #D9D9D9;
 }
 .text {
-  margin-top: 20rpx;
+  margin-left: 20rpx;
+  margin-right: 50rpx;
   font-size: 35rpx;
+}
+.content-list {
+  display:flex;
+  flex-direction:column;
+  padding-right: 30rpx;
+  padding-top: 20rpx;
 }

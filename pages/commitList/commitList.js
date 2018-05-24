@@ -1,3 +1,4 @@
+
 // pages/commitList/commitList.js
 let app = getApp();
 let Bmob = app.globalData.Bmob;
@@ -17,7 +18,7 @@ Page({
     length1: -1,
     length2: -1,
     currentTab: 0,
-    tabCont: [{ "title": "收到的评价","index": 0 }, { "title": "发出的评价", "index": 1 }]
+    tabCont: [{ "title": "收到的评价", "index": 0 }, { "title": "发出的评价", "index": 1 }]
   },
 
 	/**
@@ -34,7 +35,7 @@ Page({
     let sendCommitList = that.data.receiveCommitList;
     let db = Bmob.Query("comments");
     db.equalTo("receiver", "==", aim);
-    db.order("-score");
+    db.order("-createdAt");
     db.find().then(res => {
       receiveCommitList = res;
       that.setData({
@@ -52,11 +53,11 @@ Page({
         //     length: index
         //   });
         // });
-        
+
         db = Bmob.Query("goods");
         db.equalTo("objectId", "==", receiveCommitList[index].goodsID);
         db.find().then(res => {
-          // console.log(res);
+          console.log(res);
           let goodsInfo = res[0];
           goodsList1.push(goodsInfo);
           // console.log(goodsList1);
@@ -72,7 +73,7 @@ Page({
 
     db = Bmob.Query("comments");
     db.equalTo("sender", "==", aim);
-    db.order("-score");
+    db.order("-createdAt");
     db.find().then(res => {
       sendCommitList = res;
       that.setData({
@@ -143,6 +144,7 @@ Page({
   },
   clickTap1: function (e) {
     let that = this;
+    console.log(e);
     wx.navigateTo({
       url: "/pages/good_details/good_details?businessId=" + that.data.receiveGoods[e.currentTarget.id].objectId,
     });

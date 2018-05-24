@@ -2,7 +2,9 @@
     <view class="title">{{ notice.title }}</view>
     <view class="time">发布时间：{{ notice.createdAt }}</view>
     <view class="time_after"></view>
-    <view class="text">
-        {{ notice.content }}
+    <view wx:for="{{content}}" wx:key="{{index}}" class='content-list'>
+      <block class="text">
+          {{ content[index] }}
+      </block>
     </view>
 </view>
