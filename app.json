@@ -14,7 +14,8 @@
     "pages/mySoldOut/mySoldOut",
     "pages/notice/notice",
     "pages/iBought/iBought",
-    "pages/commitList/commitList"
+    "pages/commitList/commitList",
+	"pages/message/message"
   ],
 
   "window":{
@@ -41,6 +42,11 @@
       "selectedIconPath": "images/nav/order-on.png",
       "text": "发布"
     },{
+		"pagePath": "pages/message/message",
+		"iconPath": "images/nav/message-off.png",
+		"selectedIconPath": "images/nav/message-on.png",
+		"text": "消息"
+	},{
       "pagePath": "pages/personal/personal",
       "iconPath": "images/nav/my-off.png",
       "selectedIconPath": "images/nav/my-on.png",

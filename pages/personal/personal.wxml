@@ -27,22 +27,22 @@
         </view>
 
         <view class="my-item">
-            <image src="/images/nav/cart-off.png" class="logo"></image>
+            <image src="/images/personal/shop.png" class="logo"></image>
             <navigator url="/pages/mySoldOut/mySoldOut" hover-class="navigator-hover">我卖出的</navigator>
         </view>
 
         <view class="my-item">
-            <image src="/images/nav/cart-on.png" class="logo"></image>
+            <image src="/images/personal/topic.png" class="logo"></image>
             <navigator url="/pages/iBought/iBought" hover-class="navigator-hover">我买到的</navigator>
         </view>
 
         <view class="my-item">
-            <image src="/images/personal/1.png" class="logo"></image>
+            <image src="/images/personal/collection.png" class="logo"></image>
             <navigator url="/pages/myCollection/myCollection" hover-class="navigator-hover">我收藏的</navigator>
         </view>
 
         <view class="my-item">
-            <image src="/images/personal/1.png" class="logo"></image>
+            <image src="/images/personal/like.png" class="logo"></image>
             <navigator url="/pages/iWantToBuy/iWantToBuy" hover-class="navigator-hover">我想购买的</navigator>
         </view>
 
