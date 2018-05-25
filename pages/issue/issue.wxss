@@ -275,7 +275,7 @@ page{
 
 .imageTitle{
   display: flex;
-  color: #fe4c40;
+  color: #6A005F;
   margin-top: 30rpx;
   padding-left: 15rpx;
   padding: 30rpx 0rpx 20rpx 20rpx;
@@ -335,7 +335,7 @@ page{
   bottom: 10rpx;
   width: 60%;
   height:70rpx;
-  background-color:#fe4c40;
+  background-color:#6A005F;
   border-radius:30px;
   color:#fff;
   margin: auto;
