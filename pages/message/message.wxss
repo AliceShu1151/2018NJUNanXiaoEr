@@ -41,6 +41,9 @@
 .input-holder {
  color: black;
  width: 90%;
+ margin: auto;
+ margin-left: 5%;
+ margin-bottom: 5%;
  font-size: 28rpx;
  background: #fff;
 }
@@ -165,6 +168,10 @@ page{
     overflow: hidden;
     margin-right: 20rpx;
     background-color: #d8d8d8;
+}
+.goods-info .img-box .img{
+	width: 160rpx;
+	height: 160rpx;
 }
 .goods-info .text-box{
     width: 440rpx;
