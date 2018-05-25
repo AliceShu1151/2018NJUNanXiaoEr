@@ -253,7 +253,7 @@
     bottom: 10rpx;
     width: 60%;
     height: 70rpx;
-    background-color: #fe4c40;
+    background-color: #6A005F;
     border-radius: 30px;
     color: #fff;
     margin: auto;
