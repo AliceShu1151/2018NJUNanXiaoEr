@@ -322,7 +322,7 @@ Page({
 						dbStars.containedIn("goodsObjectId", goodsVec);
 						dbStars.equalTo("userOpenId", "!=", app.globalData.userOpenId); //不给自己发消息
 						dbStars.find().then(res => {
-							console.log(res);
+							//console.log(res);
 							for (let item of res) {
 								let obj = Bmob.Query("messages");
 								obj.set("receiver", item.userOpenId);

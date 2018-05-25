@@ -194,7 +194,7 @@ Page({
 			wx.showModal({
 				title: '提示',
 				content: '亲，您还未进行邮箱验证，无法将商品加入待购买列表~',
-				success: function (res) {
+				success: res => {
 					if (res.confirm) {
 						wx.navigateTo({
 							url: '../../pages/editUserInfo/editUserInfo',
@@ -220,7 +220,7 @@ Page({
 			wx.showModal({
 				title: '提示',
 				content: '点击“我想购买”后，该商品将无法被其他用户购买，请务必尽快与卖家联系。',
-				success: function (res) {
+				success: res => {
 					if (res.confirm) {
 						//对商品表进行修改
 						//并跳转至卖家信息页
@@ -231,21 +231,37 @@ Page({
 						db.get(that.data.goodsObjectId).then(res => {
 							res.set("state", 1);
 							res.set("buyer", app.globalData.userOpenId);
-							res.save();
+							return res.save();
+						}).then(res => {
+							wx.redirectTo({
+								url: '../../pages/sellerInfo/sellerInfo?seller=' + that.data.goodsData.seller
+							});
 						});
-						/*
-						yhr 5-18:
-						实现思路：
-						如商品处于可购买状态
-						点击我想购买，会将页面更改至卖家信息（不是跳转，是重新加载）
-						由于目前没有写卖家信息
-						所以该功能无效
-						因此在商品详情页点击我想购买后购买按钮仍有效
-						………………………………
-						db没有定义
-						*/
-						wx.redirectTo({
-							url: '../../pages/sellerInfo/sellerInfo?seller=' + that.data.goodsData.seller
+						let goodsData = that.data.goodsData;
+						let dbStars = Bmob.Query("stars");
+						let msgQueue = new Array();
+						let obj = Bmob.Query("messages");
+						obj.set("receiver", goodsData.seller);
+						obj.set("goodsObjectId", goodsData.objectId);
+						obj.set("goodsName", goodsData.name);
+						obj.set("category", "transaction");
+						obj.set("state", 1);
+						msgQueue.push(obj);
+						dbStars.equalTo("goodsObjectId", "==", goodsData.objectId);
+						dbStars.equalTo("userOpenId", "!=", app.globalData.userOpenId); //如果自己收藏过，则不给自己发消息
+						dbStars.find().then(res => {
+							//console.log(res);
+							for (let item of res) {
+								let obj = Bmob.Query("messages");
+								obj.set("receiver", item.userOpenId);
+								obj.set("goodsObjectId", item.goodsObjectId);
+								obj.set("goodsName", item.goodsName);
+								obj.set("category", "system");
+								obj.set("state", 1);
+								msgQueue.push(obj);
+							}
+						}).then(res => {
+							Bmob.Query("messages").saveAll(msgQueue);
 						});
 						that.setData({
 							canBuy: false
