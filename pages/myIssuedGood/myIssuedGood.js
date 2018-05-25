@@ -218,26 +218,49 @@ Page({
 				*/
 				success: res => {
 					if(res.confirm){
-						let db = Bmob.Query("goods");
+						let dbGoods = Bmob.Query("goods");
 						let goodsVec = new Array();
+						let msgQueue = new Array();
 						for (let item of tmpIssuedGood_2) {
 							goodsVec.push(item.objectId);
+							let obj = Bmob.Query("messages");
+							obj.set("receiver", item.buyer);
+							obj.set("goodsObjectId", item.objectId);
+							obj.set("goodsName", item.name);
+							obj.set("category", "transaction");
+							obj.set("state", 2);
+							msgQueue.push(obj);
 						}
-						db.containedIn("objectId", goodsVec);
-						db.find().then(res => {
+						dbGoods.containedIn("objectId", goodsVec);
+						dbGoods.find().then(res => {
 							res.set("state", 2);
-							res.saveAll().then(res => {
-								that.fetchGoods();
-							});
+							return res.saveAll();
+						}).then(res => {
 							wx.showToast({
 								title: '交易成功',
 								icon: 'success',
-								duration: 1000,
+								duration: 3000,
 							});
-							that.sleep(1200);
 							wx.reLaunch({
 								url: '../../pages/index/index',
 							});
+						});
+						let dbStars = Bmob.Query("stars");
+						dbStars.containedIn("goodsObjectId", goodsVec);
+						dbStars.equalTo("userOpenId", "!=", app.globalData.userOpenId); //不给自己发消息
+						dbStars.find().then(res => {
+							//console.log(res);
+							for (let item of res) {
+								let obj = Bmob.Query("messages");
+								obj.set("receiver", item.userOpenId);
+								obj.set("goodsObjectId", item.goodsObjectId);
+								obj.set("goodsName", item.goodsName);
+								obj.set("category", "system");
+								obj.set("state", 2);
+								msgQueue.push(obj);
+							}
+						}).then(res => {
+							Bmob.Query("messages").saveAll(msgQueue);
 						});
 					}
 				},
@@ -291,11 +314,32 @@ Page({
 							res.destroyAll();
 						});
 						let dbStars = Bmob.Query("stars");
+						let msgQueue = new Array();
 						dbStars.containedIn("goodsObjectId", goodsVec);
 						dbStars.find().then(res => {
-							if(res.length != 0){
-								res.destroyAll();
+							for (let item of res) {
+								let obj = Bmob.Query("messages");
+								obj.set("receiver", item.userOpenId);
+								obj.set("goodsObjectId", item.goodsObjectId);
+								obj.set("goodsName", item.goodsName);
+								obj.set("category", "system");
+								obj.set("state", 3);
+								msgQueue.push(obj);
 							}
+							if(res.length != 0){
+								return res.destroyAll();
+							}
+						}).then(res => {
+							return Bmob.Query("messages").saveAll(msgQueue);
+						}).then(res => {
+							wx.showToast({
+								title: '撤销成功',
+								icon: 'success',
+								duration: 3000,
+							});
+							wx.reLaunch({
+								url: '../../pages/index/index',
+							});
 						});
 						let dbImgs = Bmob.Query("goodsImgs");
 						dbImgs.containedIn("goodsObjectId", goodsVec);						
@@ -307,15 +351,6 @@ Page({
 							res.destroyAll();
 							let destroyTrigger = Bmob.File();
 							destroyTrigger.destroy(destroyQueue);
-						});
-						wx.showToast({
-							title: '撤销成功',
-							icon: 'success',
-							duration: 1000,
-						});
-						that.sleep(1200);
-						wx.reLaunch({
-							url: '../../pages/index/index',
 						});
 					}
 				}
