@@ -239,8 +239,9 @@ Page({
 							wx.showToast({
 								title: '交易成功',
 								icon: 'success',
-								duration: 3000,
+								duration: 1000,
 							});
+							that.sleep(1300);
 							wx.reLaunch({
 								url: '../../pages/index/index',
 							});
@@ -305,8 +306,16 @@ Page({
 					*/
 					if (res.confirm) {
 						let goodsVec = new Array();
+						let msgQueue = new Array();
 						for (let item of tmpIssuedGood_2) {
 							goodsVec.push(item.objectId);
+							let obj = Bmob.Query("messages");
+							obj.set("receiver", item.buyer);
+							obj.set("goodsObjectId", item.objectId);
+							obj.set("goodsName", item.name);
+							obj.set("category", "system");
+							obj.set("state", 4);
+							msgQueue.push(obj);
 						}
 						let dbGoods = Bmob.Query("goods");
 						dbGoods.containedIn("objectId", goodsVec);
@@ -314,7 +323,6 @@ Page({
 							res.destroyAll();
 						});
 						let dbStars = Bmob.Query("stars");
-						let msgQueue = new Array();
 						dbStars.containedIn("goodsObjectId", goodsVec);
 						dbStars.find().then(res => {
 							for (let item of res) {
@@ -335,8 +343,9 @@ Page({
 							wx.showToast({
 								title: '撤销成功',
 								icon: 'success',
-								duration: 3000,
+								duration: 1000,
 							});
+							that.sleep(1300);
 							wx.reLaunch({
 								url: '../../pages/index/index',
 							});
