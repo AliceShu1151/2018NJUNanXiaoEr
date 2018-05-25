@@ -18,7 +18,7 @@ Page({
     product_name: '',
     product_description: '',
     product_price: null,
-    product_category: '',
+    product_category: '其他',
     //urlArr: [],
     tempFiles: [],
     items: [{ name: 'A', value: '化妆品' }, { name: 'B', value: '服饰装扮' }, { name: 'C', value: '食品饮料' }, { name: 'D', value: '演出门票' }, { name: 'E', value: '数码电子' }, { name: 'F', value: '其他' }]
@@ -71,7 +71,13 @@ Page({
     that.setData({
       product_description: e.detail.value
     });
-    //console.log(that.data.product_description);
+    console.log(that.data.product_description);
+  },
+
+  clearPrice: function() {
+    this.setData({
+      product_price: null
+    });
   },
 
 	/*
@@ -80,6 +86,7 @@ Page({
 	*/
   productPrice: function (e) {
     let that = this;
+    /*
     if (isNaN(Number(e.detail.value))) {
       wx.showModal({
         title: '提示',
@@ -113,7 +120,10 @@ Page({
         product_price: Number(e.detail.value)
       });
       //console.log(that.data.product_price);
-    }
+    }*/
+    that.setData({
+      product_price: Number(e.detail.value)
+    });
   },
 
 	/*
@@ -226,7 +236,7 @@ Page({
           content: '请选择商品类别',
         });
       }
-      else if (that.data.product_price == null || that.data.product_price <= 0 || that.data.product_price > 10000) {
+      else if (that.data.product_price == null || that.data.product_price <= 0 || that.data.product_price > 10000 || isNaN(that.data.product_price)) {
         wx.showModal({
           title: '提示',
           content: '请重新输入价格！',

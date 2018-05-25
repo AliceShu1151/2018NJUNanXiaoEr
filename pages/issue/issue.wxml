@@ -3,24 +3,24 @@
     <view class="allView">
     <view class="titleAndDetail">
           <view class="view-title_hd">
-            <input placeholder="宝贝标题" bindblur="productTitle" class="title" value="{{product_name}}"/>
+            <input placeholder="宝贝标题" bindinput="productTitle" class="title" value="{{product_name}}"/>
           </view>
           <view class="view-content_hd">
-            <textarea placeholder="宝贝的购买渠道，新旧/价格的描述" placeholder-class="view-content-style" class="baobei" bindblur="productDetail"  value="{{product_description}}"/>
+            <textarea placeholder="宝贝的购买渠道，新旧/价格的描述" placeholder-class="view-content-style" class="baobei" bindinput="productDetail"  value="{{product_description}}"/>
           </view>
       </view>
     </view>
     
     <view class="view-price_hd">
       <view class="price">价格：
-      <input class="priceInput" bindblur="productPrice" value="{{product_price}}"/></view> 
+      <input class="priceInput" bindinput="productPrice" bindfocus="clearPrice" value="{{product_price}}"/></view> 
     </view>
 
     <!-- 分类格式还需修改 -->
     <view class="view-price_hd">
-      <view class="price">分类(点击修改)：  </view>
+      <view class="price">分类：  </view>
     
-      <multi-selector class='selector' value='{{product_category}}' bindchange='bindCheckboxChange' bindmodalopen='onModalOpen' placeholder='点击选择分类' items='{{items}}' bindmodalclose='onModalClose' show-value='{{false}}'></multi-selector>
+      <multi-selector class='selector' value='{{product_category}}' bindchange='bindCheckboxChange' bindmodalopen='onModalOpen' placeholder='点击选择分类（默认为‘其他’）' items='{{items}}' bindmodalclose='onModalClose' show-value='{{false}}'></multi-selector>
     </view>
     
     <text class="imageTitle">上传图片:<text style="color:#737373;font-size:20rpx;">(至少一张，至多四张)</text></text>
