@@ -204,8 +204,17 @@ Page({
 				将这些消息从数据库中删除
 				然后relaunch消息页
 				*/
+				let deleteQueue = new Array();
+				let db = Bmob.Query("messages");
+				for(let item of tmpMessageList_2){
+					deleteQueue.push(item.objectId);
+				}
+				db.containedIn("objectId", deleteQueue);
+				db.find().then(res => {
+					res.destroyAll();
+				})
 				that.setData({
-					messageList: tmpMessageList_2
+					messageList: tmpMessageList,
 				});
 				wx.reLaunch({
 					url: '../../pages/message/message',
