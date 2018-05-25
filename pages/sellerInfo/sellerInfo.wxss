@@ -32,13 +32,14 @@
 
 .commitBottom {
     position: fixed;
-    bottom: 0rpx;
-    width: 100%;
-    height: 80rpx;
+    bottom: 10rpx;
+    width: 60%;
+    height: 70rpx;
     background-color: #6A005F;
     border-radius: 30px;
     color: #fff;
     margin: auto;
+	margin-left: 20%;
     display: flex;
     justify-content: center;
     align-items: center;
