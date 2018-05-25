@@ -1,4 +1,7 @@
 // pages/message/message.js
+let app = getApp();
+let Bmob = app.globalData.Bmob;
+
 Page({
 
 	/**
@@ -19,13 +22,7 @@ Page({
 		allSelected: false,
 		noSelect: true,
 		saveHidden: true,
-		messageList: [
-			{ id: 0, category: 'transaction', state: 1, goodId: 0, goodName: 'test1', active: false },
-			{ id: 1, category: 'transaction', state: 2, goodId: 1, goodName: 'test2', active: false },
-			{ id: 2, category: 'system', state: 1, goodId: 2, goodName: 'test3', active: false },
-			{ id: 3, category: 'system', state: 2, goodId: 3, goodName: 'test4', active: false },
-			{ id: 4, category: 'system', state: 3, goodId: 4, goodName: 'test5', active: false }
-		],
+		messageList: [],
 		messageListLength: 0,
 		comment: ''
 	},
@@ -230,9 +227,23 @@ Page({
 		/*
 		获取用户的消息列表
 		*/
-		this.setData({
-			messageListLength: this.data.messageList.length
+		let that = this;
+		let db = Bmob.Query("messages");
+		db.equalTo("receiver", "==", app.globalData.userOpenId);
+		db.find().then(res => {
+			console.log(res);
+			that.setData({
+				messageListLength: res.length,
+			});
+			that.data.messageList = res;
+			for (let item of that.data.messageList){
+				item.active = false;
+			}
+			that.setData({
+				messageList: that.data.messageList,
+			});
 		});
+		
 	},
 
 	/**

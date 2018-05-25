@@ -283,31 +283,57 @@ Page({
 			wx.showModal({
 				title: '提示',
 				content: '点击确认后商品进入待购买队列，为了避免卖家损失，请尽快与卖家联系',
-				success: function (res) {
+				success: res => {
 					/*
 					使用删除功能，
 					模拟将收藏商品移入待购买列表
 					此过程需要对商品表、用户收藏表进行修改
 					*/
 					if (res.confirm) {
-						const db = Bmob.Query("goods");
+						let dbGoods = Bmob.Query("goods");
+						let dbStars = Bmob.Query("stars");
 						let goodsVec = new Array();
-						for (let i = 0; i < tmpCollection_2.length; ++i) {
-							goodsVec[i] = tmpCollection_2[i]["objectId"];
+						let msgQueue = new Array();
+						for (let item of tmpCollection_2) {
+							let itemName = item.name;
+							goodsVec.push(item.objectId);
+							let obj = Bmob.Query("messages");
+							obj.set("receiver", item.seller);
+							obj.set("goodsObjectId", item.objectId);
+							obj.set("goodsName", item.name);
+							obj.set("category", "transaction");
+							obj.set("state", 1);
+							msgQueue.push(obj);
 						}
-						db.containedIn("objectId", goodsVec);
-						db.find().then(res => {
+						dbGoods.containedIn("objectId", goodsVec);
+						dbGoods.find().then(res => {
 							res.set("state", 1);
 							res.set("buyer", app.globalData.userOpenId);
-							res.saveAll().then(res => {
-								/*
-								yhr 5-17
-								点击我想购买后直接进入我想购买的页面
-								*/
-								wx.redirectTo({
-									url: '../../pages/iWantToBuy/iWantToBuy',
-								});
-							})
+							return res.saveAll();
+						}).then(res => {
+							/*
+							yhr 5-17
+							点击我想购买后直接进入我想购买的页面
+							*/
+							wx.redirectTo({
+								url: '../../pages/iWantToBuy/iWantToBuy',
+							});
+						});
+						dbStars.containedIn("goodsObjectId", goodsVec);
+						dbStars.equalTo("userOpenId", "!=", app.globalData.userOpenId); //不给自己发消息
+						dbStars.find().then(res => {
+							console.log(res);
+							for (let item of res) {
+								let obj = Bmob.Query("messages");
+								obj.set("receiver", item.userOpenId);
+								obj.set("goodsObjectId", item.goodsObjectId);
+								obj.set("goodsName", item.goodsName);
+								obj.set("category", "system");
+								obj.set("state", 1);
+								msgQueue.push(obj);
+							}
+						}).then(res => {
+							Bmob.Query("messages").saveAll(msgQueue);
 						});
 					}
 				}
@@ -360,7 +386,7 @@ Page({
 		db.order("-createdAt");
 		db.find().then(res => {
 			that.setData({ myCollectionLength: res.length });
-			console.log(res);
+			//console.log(res);
 			if(res.length == 0){
 				that.setData({
 					remind: '',

@@ -170,6 +170,7 @@ Page({
 				//console.log(goodsObjectId);
 				db.set("userOpenId", userOpenId);
 				db.set("goodsObjectId", goodsObjectId);
+				db.set("goodsName", that.data.goodsData.name);
 				db.save();
 				wx.showToast({
 					title: '添加成功',
