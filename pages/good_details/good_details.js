@@ -8,6 +8,7 @@ data中添加canBuy
 */
 Page({
 	data: {
+    remind: '加载中',
 		canBuy: false,
 		goodsObjectId: '',
 		//此处goodsData只是一个demo
@@ -55,11 +56,15 @@ Page({
 			}).then(res => {
 				return that.unverifiedNotice();
 			}).then(res =>{
+        console.log('233333333333333333');
 				if (that.data.goodsData.state == 0 && that.data.verified) {
 					that.setData({
-						canBuy: true
+						canBuy: true,
 					});
 				}
+        that.setData({
+          remind: ''
+        });
 			});
       //console.log(that.data.goodsData);
 		});
