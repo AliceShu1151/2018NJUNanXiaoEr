@@ -64,7 +64,7 @@ page{
 .goodsList{
     width: 100%;
     background-color: #fff;
-    padding-bottom: 50rpx;
+    padding-bottom: 100rpx;
 }
 .a-gooods{
     width: 100%;
