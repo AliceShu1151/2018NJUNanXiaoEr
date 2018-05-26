@@ -1,79 +1,79 @@
 <!-- pages/commitList/commitList.wxml -->
 <view class="remind-box" wx:if="{{remind}}">
-  <image class="remind-img" src="/images/more/loading.gif"></image>
+    <image class="remind-img" src="/images/more/loading.gif"></image>
 </view>
 <block wx:else>
     <view class="swiper-tab">
 
-      <view bindtap="swithNav" wx:for="{{tabCont}}" wx:key="item.index" class="swiper-tab-list {{currentTab==item.index?'active':''}}" data-current='{{item.index}}'>{{item.title}}</view>
+        <view bindtap="swithNav" wx:for="{{tabCont}}" wx:key="item.index" class="swiper-tab-list {{currentTab==item.index?'active':''}}" data-current='{{item.index}}'>{{item.title}}</view>
 
     </view>
 
     <swiper class="swiper-box" current="{{currentTab}}" duration="300" style="height:400px" bindchange="GetCurrentTab" data-current='6'>
 
-      <swiper-item wx:for="{{tabCont}}" wx:key="item.index">
-        <view wx:if="{{currentTab == 0}}">
-          <view class="title-box" wx:if="{{length1 == -1}}">
-            还没有收到评论哦~
-          </view>      
-          <view wx:else>
-            <view class="goodsList">
-              <view class="a-gooods" wx:for="{{receiveGoods}}" wx:key="{{index}}">
-                <view class='commit-time'>{{receiveCommitList[index].createdAt}}</view>
-                <view class="a-goods-conts-none" bindtap="clickTap1" style="{{item.left}}" id="{{index}}">
-                  <view class="goods-info">
-                    <view class="img-box">
-                      <image src="{{item.imgUrl}}" mode="aspectFit" class="img" />
-                    </view>
-                    <view class="text-box">
-                      <view class="goods-title">{{item.name}}</view>
-                      <view class="goods-label">种类：{{item.category}} 浏览次数：{{item.clicks}}</view>
-                      <view class="goods-label">卖家：{{receiveCommitList[index].seller}} 买家：{{receiveCommitList[index].buyer}}</view>
-                      <view class="goods-price">¥ {{item.price}}</view>
-                    </view>
-                    <view>
-                      <view class='commit-box'>收到评价： {{receiveCommitList[index].content}}</view>
-                    </view>
-                  </view>
-
+        <swiper-item wx:for="{{tabCont}}" wx:key="item.index">
+            <view wx:if="{{currentTab == 0}}">
+                <view class="title-box" wx:if="{{length1 == -1}}">
+                    还没有收到评论哦~
                 </view>
-              </view>
-            </view>
-            </view>
-        </view>
+                <view wx:else>
+                    <view class="goodsList">
+                        <view class="a-gooods" wx:for="{{receiveGoods}}" wx:key="{{index}}">
+                            <view class='commit-time'>{{receiveCommitList[index].createdAt}}</view>
+                            <view class="a-goods-conts-none" bindtap="clickTap1" style="{{item.left}}" id="{{index}}">
+                                <view class="goods-info">
+                                    <view class="img-box">
+                                        <image src="{{item.imgUrl}}" mode="aspectFit" class="img" />
+                                    </view>
+                                    <view class="text-box">
+                                        <view class="goods-title">{{item.name}}</view>
+                                        <view class="goods-label">种类：{{item.category}} 浏览次数：{{item.clicks}}</view>
+                                        <view class="goods-label">卖家：{{receiveCommitList[index].seller}} 买家：{{receiveCommitList[index].buyer}}</view>
+                                        <view class="goods-price">¥ {{item.price}}</view>
+                                    </view>
+                                    <view>
+                                        <view class='commit-box'>收到评价： {{receiveCommitList[index].content}}</view>
+                                    </view>
+                                </view>
 
-        <view wx:if="{{currentTab == 1}}">
-          <view class="title-box" wx:if="{{length2 == -1}}">
-            还没有发出评论哦~
-          </view>
-          <view wx:else>
-          <view class="goodsList">
-            <view class="a-gooods" wx:for="{{sendGoods}}" wx:key="{{index}}">
-              <view class='commit-time'>{{sendCommitList[index].createdAt}}</view>
-              <view class="a-goods-conts-none" bindtap="clickTap2" style="{{item.left}}" id="{{index}}">
-                <view class="goods-info">
-                  <view class="img-box">
-                    <image src="{{item.imgUrl}}" mode="aspectFit" class="img" />
-                  </view>
-                  <view class="text-box">
-                    <view class="goods-title">{{item.name}}</view>
-                    <view class="goods-label">种类：{{item.category}} 浏览次数：{{item.clicks}}</view>
-                    <view class="goods-label">卖家：{{sendCommitList[index].seller}} 买家：{{sendCommitList[index].buyer}}</view>
-                    <view class="goods-price">¥ {{item.price}}</view>
-                  </view>
-                  <view>
-                    <view class='commit-box'>作出评价： {{sendCommitList[index].content}}</view>
-                  </view>
-
+                            </view>
+                        </view>
+                    </view>
                 </view>
-
-              </view>
             </view>
-          </view>
-          </view>
-        </view>
 
-      </swiper-item>
+            <view wx:if="{{currentTab == 1}}">
+                <view class="title-box" wx:if="{{length2 == -1}}">
+                    还没有发出评论哦~
+                </view>
+                <view wx:else>
+                    <view class="goodsList">
+                        <view class="a-gooods" wx:for="{{sendGoods}}" wx:key="{{index}}">
+                            <view class='commit-time'>{{sendCommitList[index].createdAt}}</view>
+                            <view class="a-goods-conts-none" bindtap="clickTap2" style="{{item.left}}" id="{{index}}">
+                                <view class="goods-info">
+                                    <view class="img-box">
+                                        <image src="{{item.imgUrl}}" mode="aspectFit" class="img" />
+                                    </view>
+                                    <view class="text-box">
+                                        <view class="goods-title">{{item.name}}</view>
+                                        <view class="goods-label">种类：{{item.category}} 浏览次数：{{item.clicks}}</view>
+                                        <view class="goods-label">卖家：{{sendCommitList[index].seller}} 买家：{{sendCommitList[index].buyer}}</view>
+                                        <view class="goods-price">¥ {{item.price}}</view>
+                                    </view>
+                                    <view>
+                                        <view class='commit-box'>作出评价： {{sendCommitList[index].content}}</view>
+                                    </view>
+
+                                </view>
+
+                            </view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+
+        </swiper-item>
     </swiper>
 
 </block>

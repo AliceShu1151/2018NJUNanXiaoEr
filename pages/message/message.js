@@ -25,7 +25,8 @@ Page({
 		saveHidden: true,
 		messageList: [],
 		messageListLength: 0,
-		comment: ''
+		comment: '',
+		messageIndex: 0,
 	},
 
 	/*下面两个函数用于编辑消息列表*/
@@ -106,7 +107,8 @@ Page({
 				tmpMessageList[e.currentTarget.id].active = false;
 			}
 			that.setData({
-				messageList: tmpMessageList
+				messageList: tmpMessageList,
+				messageIndex: e.currentTarget.id,
 			});
 			that.isNoSelect();
 			that.isAllSelected();
@@ -115,7 +117,7 @@ Page({
 			if (tmpMessageList[e.currentTarget.id].category == 'transaction') {
 				if (tmpMessageList[e.currentTarget.id].state == 1) {
 					wx.navigateTo({
-						url: '../../pages/sellerInfo/sellerInfo?seller=' + buyer,
+						url: '../../pages/sellerInfo/sellerInfo?seller=' + tmpMessageList[e.currentTarget.id].buyer,
 					});
 				}
 				else if (tmpMessageList[e.currentTarget.id].state == 2) {
@@ -138,8 +140,38 @@ Page({
 		在此处写
 		对数据库进行的操作
 		*/
-		this.setData({
+		let that = this;
+		that.setData({
 			showModal: false
+		});
+		if (that.data.comment == ""){
+			return;
+		}
+		let dbComments = Bmob.Query("comments");
+		let messageIndex = that.data.messageIndex;
+		let seller = that.data.messageList[messageIndex].seller;
+		let goodsID = that.data.messageList[messageIndex].goodsObjectId;
+		let dbUser = Bmob.Query("_User");
+		let senderName = null;
+		let sellerName = null;
+		dbUser.equalTo("username", "==", seller);
+		dbUser.find().then(res => {
+			sellerName = res[0].nickName;
+		}).then(res => {
+			dbUser.equalTo("username", "==", app.globalData.userOpenId);
+			return dbUser.find();
+		}).then(res => {
+			senderName = res[0].nickName;
+		}).then(res => {
+			dbComments.set("sender", app.globalData.userOpenId);
+			dbComments.set("receiver", seller);
+			dbComments.set("seller", sellerName);
+			dbComments.set("buyer", senderName);
+			dbComments.set("goodsID", goodsID);
+			dbComments.set("content", that.data.comment);
+			dbComments.save().then(res => {
+				console.log(res);
+			});
 		});
 	},
 
@@ -240,6 +272,7 @@ Page({
 		let that = this;
 		let db = Bmob.Query("messages");
 		db.equalTo("receiver", "==", app.globalData.userOpenId);
+		db.order("-createdAt");
 		db.find().then(res => {
 			console.log(res);
 			that.setData({
