@@ -46,6 +46,8 @@ Page({
 				length1: res.length,
 			});
 			for (let item of receiveCommitList) {
+				let now = new Date();
+				while (new Date() - now < 100);
 				let dbGoods = Bmob.Query("goods");
 				dbGoods.get(item.goodsID).then(res => {
 					console.log(res);
@@ -56,8 +58,11 @@ Page({
 						receiveGoods: goodsList1,
 					});
 				});
-				setTimeout(() => { }, 500);
 			}
+		}).then(res => {
+			that.setData({
+				remind: ''
+			});
 		}).then(res => {
 			dbComments.equalTo("sender", "==", aim);
 			dbComments.order("-createdAt");
@@ -69,6 +74,8 @@ Page({
 					length2: res.length,
 				});
 				for (let item of sendCommitList) {
+					let now = new Date();
+					while (new Date() - now < 100);
 					let dbGoods = Bmob.Query("goods");
 					dbGoods.get(item.goodsID).then(res => {
 						 console.log(res);
@@ -79,12 +86,7 @@ Page({
 							sendGoods: goodsList2,
 						});
 					});
-					setTimeout(() => { }, 500);
 				}
-			});
-		}).then(res => {
-			that.setData({
-				remind: ''
 			});
 		});
 		//console.log(that.data);

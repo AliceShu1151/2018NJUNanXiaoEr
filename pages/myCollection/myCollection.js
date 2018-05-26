@@ -396,6 +396,8 @@ Page({
 				return;
 			}
 			for (let i = 0; i < res.length; ++i) {
+				let now = new Date();
+				while (new Date() - now < 100);
 				let myCollection = that.data.myCollection;
 				const db = Bmob.Query("goods");
 				let goodsObjectId = res[i]["goodsObjectId"];
