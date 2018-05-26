@@ -15,8 +15,8 @@ Page({
 		sendCommitList: [],     //发出的评价
 		// senderList: {},         //对应的用户
 		sendGoods: [],          //对应的商品
-		length1: 5,
-		length2: 5,
+		length1: 0,
+		length2: 0,
 		currentTab: 0,
 		tabCont: [{ "title": "收到的评价", "index": 0 }, { "title": "发出的评价", "index": 1 }]
 	},
@@ -45,6 +45,9 @@ Page({
 				receiveCommitList: receiveCommitList,
 				length1: res.length,
 			});
+			if (res.length == 0){
+				return;
+			}
 			for (let item of receiveCommitList) {
 				let now = new Date();
 				while (new Date() - now < 100);
@@ -73,6 +76,9 @@ Page({
 					sendCommitList: sendCommitList,
 					length2: res.length,
 				});
+				if(res.length == 0){
+					return;
+				}
 				for (let item of sendCommitList) {
 					let now = new Date();
 					while (new Date() - now < 100);

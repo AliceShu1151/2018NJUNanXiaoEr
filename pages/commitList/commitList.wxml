@@ -13,7 +13,7 @@
 
         <swiper-item wx:for="{{tabCont}}" wx:key="item.index">
             <view wx:if="{{currentTab == 0}}">
-                <view class="title-box" wx:if="{{length1 == -1}}">
+                <view class="title-box" wx:if="{{length1 == 0}}">
                     还没有收到评论哦~
                 </view>
                 <view wx:else>
@@ -43,7 +43,7 @@
             </view>
 
             <view wx:if="{{currentTab == 1}}">
-                <view class="title-box" wx:if="{{length2 == -1}}">
+                <view class="title-box" wx:if="{{length2 == 0}}">
                     还没有发出评论哦~
                 </view>
                 <view wx:else>
