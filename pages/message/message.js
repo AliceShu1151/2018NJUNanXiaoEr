@@ -108,7 +108,6 @@ Page({
 			}
 			that.setData({
 				messageList: tmpMessageList,
-				messageIndex: e.currentTarget.id,
 			});
 			that.isNoSelect();
 			that.isAllSelected();
@@ -122,8 +121,11 @@ Page({
 				}
 				else if (tmpMessageList[e.currentTarget.id].state == 2) {
 					that.setData({
-						showModal: true
+						showModal: true,
+						messageIndex: e.currentTarget.id,
 					});
+					//console.log(e.currentTarget.id);
+					//console.log(that.data.messageList[e.currentTarget.id].goodsObjectId);
 				}
 			}
 		}
