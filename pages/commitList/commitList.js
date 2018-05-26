@@ -34,18 +34,19 @@ Page({
 		let receiveCommitList = that.data.receiveCommitList;
 		let sendCommitList = that.data.receiveCommitList;
 
-		let dbGoods = Bmob.Query("goods");
 		let dbComments = Bmob.Query("comments");
 
 		dbComments.equalTo("receiver", "==", aim);
 		dbComments.order("-createdAt");
 		dbComments.find().then(res => {
+			console.log(res);
 			receiveCommitList = res;
 			that.setData({
 				receiveCommitList: receiveCommitList,
 				length1: res.length,
 			});
 			for (let item of receiveCommitList) {
+				let dbGoods = Bmob.Query("goods");
 				dbGoods.get(item.goodsID).then(res => {
 					console.log(res);
 					let goodsInfo = res;
@@ -55,19 +56,22 @@ Page({
 						receiveGoods: goodsList1,
 					});
 				});
+				setTimeout(() => { }, 500);
 			}
 		}).then(res => {
 			dbComments.equalTo("sender", "==", aim);
 			dbComments.order("-createdAt");
 			dbComments.find().then(res => {
+				console.log(res);
 				sendCommitList = res;
 				that.setData({
 					sendCommitList: sendCommitList,
 					length2: res.length,
 				});
 				for (let item of sendCommitList) {
+					let dbGoods = Bmob.Query("goods");
 					dbGoods.get(item.goodsID).then(res => {
-						// console.log(res);
+						 console.log(res);
 						let goodsInfo = res;
 						goodsList2.push(goodsInfo);
 						// console.log(goodsList2);
@@ -75,6 +79,7 @@ Page({
 							sendGoods: goodsList2,
 						});
 					});
+					setTimeout(() => { }, 500);
 				}
 			});
 		}).then(res => {
