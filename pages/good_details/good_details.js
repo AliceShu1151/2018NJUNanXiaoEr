@@ -8,14 +8,15 @@ data中添加canBuy
 */
 Page({
 	data: {
-    remind: '加载中',
+		remind: '加载中',
 		canBuy: false,
 		goodsObjectId: '',
 		//此处goodsData只是一个demo
 		goodsData: {},
 		userInfo: {},
 		swiperCurrent: 0,
-		verified: false
+		verified: false,
+		sellerAvatarUrl: null,
 	},
 
 	onLoad: function (options) {
@@ -30,22 +31,23 @@ Page({
 		/**岳翔 5-14：
 		 * 数据库获取商品信息
 		 */
-		const db = Bmob.Query("goods");
-
+		
 		let goodsObjectId = that.data.goodsObjectId;
-
-		db.equalTo("objectId", "==", goodsObjectId);
-		db.find().then(goodsTbl => {
+		let dbGoods = Bmob.Query("goods");
+		let seller = null;
+		dbGoods.equalTo("objectId", "==", goodsObjectId);
+		dbGoods.find().then(goodsTbl => {
 			//浏览量 + 1
 			let clicks = goodsTbl[0]["clicks"];
 			goodsTbl.set("clicks", clicks + 1);
 			goodsTbl.saveAll();
 			let goodsData = that.data.goodsData;
 			goodsData = goodsTbl[0];
+			seller = goodsData.seller;
 			that.setData({ goodsData: goodsData });
-			const db = Bmob.Query("goodsImgs");
-			db.equalTo("goodsObjectId", "==", goodsObjectId);
-			db.find().then(res => {
+			let dbGoodsImgs = Bmob.Query("goodsImgs");
+			dbGoodsImgs.equalTo("goodsObjectId", "==", goodsObjectId);
+			dbGoodsImgs.find().then(res => {
 				let goodsData = that.data.goodsData;
 				let vec = new Array();
 				for (let item of res) {
@@ -55,18 +57,23 @@ Page({
 				that.setData({ goodsData: goodsData });
 			}).then(res => {
 				return that.unverifiedNotice();
-			}).then(res =>{
-        console.log('233333333333333333');
+			}).then(res => {
+				let dbUser = Bmob.Query("_User");
+				dbUser.equalTo("username", "==", seller);
+				return dbUser.find();
+			}).then(res => {
+				that.setData({ sellerAvatarUrl: res[0].avatarUrl });
+			}).then(res => {
 				if (that.data.goodsData.state == 0 && that.data.verified) {
 					that.setData({
 						canBuy: true,
 					});
 				}
-        that.setData({
-          remind: ''
-        });
+				that.setData({
+					remind: ''
+				});
 			});
-      //console.log(that.data.goodsData);
+			//console.log(that.data.goodsData);
 		});
 		/*
 		此处编写函数来获取data中的goodsData
@@ -85,7 +92,7 @@ Page({
 					verified: false
 				});
 			}
-			else{
+			else {
 				this.setData({
 					verified: true
 				});
@@ -108,12 +115,12 @@ Page({
 	 */
 	toSellerInfo: function () {
 		let that = this;
-		if(that.data.verified){
+		if (that.data.verified) {
 			wx.navigateTo({
 				url: '../../pages/sellerInfo/sellerInfo?seller=' + that.data.goodsData.seller
 			});
 		}
-		else{
+		else {
 			wx.showModal({
 				title: '提示',
 				content: '亲，您还未进行邮箱验证，不能查看他人信息~',
@@ -195,7 +202,7 @@ Page({
 	*/
 	toBuy: function () {
 		let that = this;
-		if(!that.data.verified){
+		if (!that.data.verified) {
 			wx.showModal({
 				title: '提示',
 				content: '亲，您还未进行邮箱验证，无法将商品加入待购买列表~',

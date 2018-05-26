@@ -250,9 +250,9 @@ Page({
 						});
 						let dbStars = Bmob.Query("stars");
 						dbStars.containedIn("goodsObjectId", goodsVec);
-						dbStars.equalTo("userOpenId", "!=", app.globalData.userOpenId); //不给自己发消息
+						//dbStars.equalTo("userOpenId", "!=", app.globalData.userOpenId); //不给自己发消息
 						dbStars.find().then(res => {
-							//console.log(res);
+							console.log(res);
 							for (let item of res) {
 								let obj = Bmob.Query("messages");
 								obj.set("receiver", item.userOpenId);
@@ -311,7 +311,11 @@ Page({
 						let msgQueue = new Array();
 						for (let item of tmpIssuedGood_2) {
 							goodsVec.push(item.objectId);
+							if(item.state != 1){
+								continue;
+							}
 							let obj = Bmob.Query("messages");
+							//console.log(item);
 							obj.set("receiver", item.buyer);
 							obj.set("goodsObjectId", item.objectId);
 							obj.set("goodsName", item.name);
@@ -322,11 +326,13 @@ Page({
 						let dbGoods = Bmob.Query("goods");
 						dbGoods.containedIn("objectId", goodsVec);
 						dbGoods.find().then(res => {
+							//console.log(res);
 							res.destroyAll();
 						});
 						let dbStars = Bmob.Query("stars");
 						dbStars.containedIn("goodsObjectId", goodsVec);
 						dbStars.find().then(res => {
+							//console.log(res);
 							for (let item of res) {
 								let obj = Bmob.Query("messages");
 								obj.set("receiver", item.userOpenId);
@@ -355,6 +361,7 @@ Page({
 						let dbImgs = Bmob.Query("goodsImgs");
 						dbImgs.containedIn("goodsObjectId", goodsVec);						
 						dbImgs.find().then(res => {
+							//console.log(res);
 							let destroyQueue = new Array();
 							for(let item of res){
 								destroyQueue.push(item.imgUrl);
