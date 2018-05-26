@@ -41,6 +41,7 @@
                             <view wx:if="{{item.category == 'system' && item.state == 1}}" class="goods-price">您收藏的“{{item.goodsName}}”商品已被其他买家置入待购买行列了呢QAQ</view>
                             <view wx:if="{{item.category == 'system' && item.state == 2}}" class="goods-price">您收藏的“{{item.goodsName}}”商品已被其他买家买走了呢QAQ</view>
                             <view wx:if="{{item.category == 'system' && item.state == 3}}" class="goods-price">您收藏的“{{item.goodsName}}”商品已被卖家撤销上架了呢QAQ</view>
+							<view wx:if="{{item.category == 'system' && item.state == 4}}" class="goods-price">您想购买的“{{item.goodsName}}”商品已被卖家撤销上架了呢QAQ</view>
                         </view>
                     </view>
                 </view>
@@ -57,6 +58,7 @@
                             <view wx:if="{{item.category == 'system' && item.state == 1}}" class="goods-price">您收藏的“{{item.goodsName}}”商品已被其他买家置入待购买行列了呢QAQ</view>
                             <view wx:if="{{item.category == 'system' && item.state == 2}}" class="goods-price">您收藏的“{{item.goodsName}}”商品已被其他买家买走了呢QAQ</view>
                             <view wx:if="{{item.category == 'system' && item.state == 3}}" class="goods-price">您收藏的“{{item.goodsName}}”商品已被卖家撤销上架了呢QAQ</view>
+							<view wx:if="{{item.category == 'system' && item.state == 4}}" class="goods-price">您想购买的“{{item.goodsName}}”商品已被卖家撤销上架了呢QAQ</view>
                         </view>
                     </view>
                 </view>
