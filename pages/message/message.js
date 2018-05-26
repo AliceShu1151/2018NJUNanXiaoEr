@@ -18,6 +18,7 @@ Page({
 	3、你的xx收藏品已被卖家撤销上架，已从你的收藏列表移除
 	*/
 	data: {
+		remind: '加载中',
 		showModal: false,
 		allSelected: false,
 		noSelect: true,
@@ -250,6 +251,7 @@ Page({
 			}
 			that.setData({
 				messageList: that.data.messageList,
+				remind: ''
 			});
 		});
 		

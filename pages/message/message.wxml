@@ -1,5 +1,8 @@
 <!--pages/message/message.wxml-->
-
+<view class="remind-box" wx:if="{{remind}}">
+    <image class="remind-img" src="/images/more/loading.gif"></image>
+</view>
+<block wx:else>
 <view class="modal-mask" bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{showModal}}"></view>
 <view class="modal-dialog" wx:if="{{showModal}}">
     <view class="modal-title">提示</view>
@@ -72,4 +75,5 @@
             <view class="to-pay-btn {{noSelect?'no-select':''}}" bindtap="deleteMessage">删除</view>
         </view>
     </view>
+</block>
 </block>

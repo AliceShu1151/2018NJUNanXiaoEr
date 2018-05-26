@@ -1,5 +1,18 @@
 /* pages/message/message.wxss */
+.remind-box {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 300rpx;
+}
 
+.remind-img {
+    width: 250rpx;
+    height: 250rpx;
+    padding-bottom: 25rpx;
+}
 .modal-mask {
  width: 100%;
  height: 100%;
