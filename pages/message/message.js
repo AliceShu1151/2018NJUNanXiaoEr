@@ -247,13 +247,13 @@ Page({
 				db.containedIn("objectId", deleteQueue);
 				db.find().then(res => {
 					res.destroyAll();
+          that.setData({
+            messageList: tmpMessageList,
+          });
+          wx.reLaunch({
+            url: '../../pages/message/message',
+          });
 				})
-				that.setData({
-					messageList: tmpMessageList,
-				});
-				wx.reLaunch({
-					url: '../../pages/message/message',
-				});
 			}
 			else {
 				wx.showModal({
