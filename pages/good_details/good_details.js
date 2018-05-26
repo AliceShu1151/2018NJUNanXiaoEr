@@ -247,6 +247,7 @@ Page({
 						let msgQueue = new Array();
 						let obj = Bmob.Query("messages");
 						obj.set("receiver", goodsData.seller);
+						obj.set("buyer", app.globalData.userOpenId);
 						obj.set("goodsObjectId", goodsData.objectId);
 						obj.set("goodsName", goodsData.name);
 						obj.set("category", "transaction");

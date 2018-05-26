@@ -225,6 +225,8 @@ Page({
 							goodsVec.push(item.objectId);
 							let obj = Bmob.Query("messages");
 							obj.set("receiver", item.buyer);
+							obj.set("buyer", item.buyer);
+							obj.set("seller", app.globalData.userOpenId);
 							obj.set("goodsObjectId", item.objectId);
 							obj.set("goodsName", item.name);
 							obj.set("category", "transaction");
