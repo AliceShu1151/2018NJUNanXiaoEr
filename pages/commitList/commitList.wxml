@@ -9,7 +9,7 @@
 
     </view>
 
-    <swiper class="swiper-box" current="{{currentTab}}" duration="300" style="height:400px" bindchange="GetCurrentTab" data-current='6'>
+    <swiper class="swiper-box" current="{{currentTab}}" duration="300"bindchange="GetCurrentTab" data-current='6'>
 
         <swiper-item wx:for="{{tabCont}}" wx:key="item.index">
             <view wx:if="{{currentTab == 0}}">
