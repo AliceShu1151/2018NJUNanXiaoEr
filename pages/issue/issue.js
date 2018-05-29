@@ -101,41 +101,6 @@ Page({
 	*/
 	productPrice: function (e) {
 		let that = this;
-		/*
-		if (isNaN(Number(e.detail.value))) {
-		  wx.showModal({
-			title: '提示',
-			content: '价格输入必须为数字！',
-		  });
-		  that.setData({
-			product_price: null
-		  });
-		  console.log(that.data.product_price);
-		}
-		else if (Number(e.detail.value) > 10000) {
-		  wx.showModal({
-			title: '提示',
-			content: '亲~您的物品价格太高了哟，这个小平台承受不起呢，换个地方卖吧~',
-		  });
-		  that.setData({
-			product_price: Number(e.detail.value)
-		  });
-		}
-		else if (Number(e.detail.value) <= 0) {
-		  wx.showModal({
-			title: '提示',
-			content: '物品价格要大于0哦~',
-		  });
-		  that.setData({
-			product_price: Number(e.detail.value)
-		  });
-		}
-		else {
-		  that.setData({
-			product_price: Number(e.detail.value)
-		  });
-		  //console.log(that.data.product_price);
-		}*/
 		that.setData({
 			product_price: Number(e.detail.value)
 		});
@@ -150,7 +115,8 @@ Page({
 		for (let i = 0; i < that.data.items.length; i++) {
 			if (that.data.items[i].name == e.detail.value) {
 				that.setData({
-					product_category: that.data.items[i].value
+					product_category: that.data.items[i].value,
+          placeholder: ''
 				});
 			}
 		}
