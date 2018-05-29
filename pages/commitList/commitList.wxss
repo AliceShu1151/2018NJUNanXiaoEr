@@ -29,7 +29,7 @@ page{
     color:#999;
     background: url(https://cdn.it120.cc/images/weappshop/icon-cart.png) no-repeat center 205rpx;
     background-size: 100rpx auto;
-    margin-bottom: 50rpx;
+    margin-bottom: 50rpx; 
 }
 .to-index-btn{
     color:#fff;
@@ -65,11 +65,11 @@ page{
     width: 100%;
     background-color: #fff;
     padding-top: 20rpx;
-    padding-bottom: 50rpx;
+     padding-bottom: 50rpx; 
 }
 .a-gooods{
     width: 100%;
-    overflow: hidden;
+    overflow: auto;
     padding-top: 20rpx;
     border-bottom: 1px solid #eee;
 
@@ -114,7 +114,7 @@ page{
     color:#000;
     text-overflow: ellipsis;
     white-space: nowrap;
-    overflow: hidden;
+    overflow: auto;
     padding: 10rpx 20rpx 5rpx 0;
     text-align: left;
 }
@@ -144,52 +144,6 @@ page{
     background:#e64340;
     font-size: 24rpx;
     color: #fff;
-}
-.jiesuan-box{
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    height: 100rpx;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    border-bottom:1px solid #eee; 
-    border-top:1px solid #eee; 
-    background-color: #fff;
-}
-.jiesuan-box .to-pay-btn{
-    width:240rpx;
-    text-align: center;
-    line-height: 100rpx;
-    background-color: #e64340;
-    font-size:32rpx;
-    color:#ffffff;
-}
-.jiesuan-box .to-pay-btn.no-select{
-    background-color: #ccc;
-}
-
-.jiesuan-box  .left-price{
-    display: flex;
-    width: 510rpx;
-    justify-content: space-between;
-    line-height: 100rpx;
-    padding: 0 30rpx 0 0;
-    font-size:28rpx;
-    box-sizing: border-box;
-}
-.jiesuan-box .all-selected{
-    padding-left: 90rpx;
-    color:#000000;
-    background: url(https://cdn.it120.cc/images/weappshop/gou.png) no-repeat 30rpx center;
-    background-size: 40rpx auto; 
-}
-.jiesuan-box .all-selected.active{
-    background: url(https://cdn.it120.cc/images/weappshop/gou-red.png) no-repeat 30rpx center;
-    background-size: 40rpx auto; 
-}
-.jiesuan-box .total{
-    color: #e64340;
 }
 .commit-time{
   position: absolute;
@@ -225,11 +179,7 @@ page{
 
 .swiper-box {
   display: block;
-  height: 100vh;
+  /* height: 100vh; */
   width: 100%;
-  overflow: hidden;
-}
-
-.swiper-box view {
-  text-align: center;
+  overflow: auto;
 }

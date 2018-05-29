@@ -17,6 +17,7 @@ Page({
 		sendGoods: [],          //对应的商品
 		length1: 0,
 		length2: 0,
+    swiperHeight: '',
 		currentTab: 0,
 		tabCont: [{ "title": "收到的评价", "index": 0 }, { "title": "发出的评价", "index": 1 }]
 	},
@@ -25,12 +26,15 @@ Page({
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad: function (options) {
+    console.log(options.aim);
 		let that = this;
 		let aim = options.aim;
 		let goodsList1 = new Array();
 		let goodsList2 = new Array();
 		let receiverList = new Array();
 		let senderList = new Array();
+    let height1 = 0;
+    let height2 = 0;
 		let receiveCommitList = that.data.receiveCommitList;
 		let sendCommitList = that.data.receiveCommitList;
 
@@ -39,7 +43,7 @@ Page({
 		dbComments.equalTo("receiver", "==", aim);
 		dbComments.order("-createdAt");
 		dbComments.find().then(res => {
-			console.log(res);
+			// console.log(res);
 			receiveCommitList = res;
 			that.setData({
 				receiveCommitList: receiveCommitList,
@@ -53,13 +57,19 @@ Page({
 				while (new Date() - now < 100);
 				let dbGoods = Bmob.Query("goods");
 				dbGoods.get(item.goodsID).then(res => {
-					console.log(res);
+					// console.log(res);
 					let goodsInfo = res;
 					goodsList1.push(goodsInfo);
 					// console.log(goodsList1);
 					that.setData({
 						receiveGoods: goodsList1,
 					});
+          height1 = that.data.length1 * 340 + 340;
+          var x1 = height1.toString();
+          var y1 = x1 + 'rpx';
+          that.setData({
+            swiperHeight: y1,
+          });	
 				});
 			}
 		}).then(res => {
@@ -70,12 +80,20 @@ Page({
 			dbComments.equalTo("sender", "==", aim);
 			dbComments.order("-createdAt");
 			dbComments.find().then(res => {
-				console.log(res);
+				// console.log(res);
 				sendCommitList = res;
 				that.setData({
 					sendCommitList: sendCommitList,
 					length2: res.length,
 				});
+        height2 = that.data.length2 * 340 + 340;
+        if(height1 < height2){
+          var x2 = height2.toString();
+          var y2 = x2 + 'rpx';
+          that.setData({
+            swiperHeight: y2,
+          });	
+        }
 				if(res.length == 0){
 					return;
 				}
@@ -84,7 +102,7 @@ Page({
 					while (new Date() - now < 100);
 					let dbGoods = Bmob.Query("goods");
 					dbGoods.get(item.goodsID).then(res => {
-						 console.log(res);
+						//  console.log(res);
 						let goodsInfo = res;
 						goodsList2.push(goodsInfo);
 						// console.log(goodsList2);
@@ -95,7 +113,8 @@ Page({
 				}
 			});
 		});
-		//console.log(that.data);
+
+    console.log(that.data);
 	},
 
 	GetCurrentTab: function (e) {
