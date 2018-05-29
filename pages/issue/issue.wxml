@@ -13,14 +13,14 @@
     
     <view class="view-price_hd">
       <view class="price">价格：
-      <input type="number" class="priceInput" bindinput="productPrice" bindfocus="clearPrice" value="{{product_price}}"/></view> 
+      <input class="priceInput" bindinput="productPrice" bindfocus="clearPrice" value="{{product_price}}"/></view> 
     </view>
 
     <!-- 分类格式还需修改 -->
     <view class="view-price_hd">
       <view class="price">分类：  </view>
     
-      <multi-selector class='selector' value='{{product_category}}' bindchange='bindCheckboxChange' bindmodalopen='onModalOpen' placeholder='点击选择分类（默认为‘其他’）' items='{{items}}' bindmodalclose='onModalClose' show-value='{{false}}'></multi-selector>
+      <multi-selector class='selector' value='{{product_category}}' bindchange='bindCheckboxChange' bindmodalopen='onModalOpen' placeholder="{{placeholder}}" items='{{items}}' bindmodalclose='onModalClose' show-value='{{showvalue}}'></multi-selector>
     </view>
     
     <text class="imageTitle">上传图片:<text style="color:#737373;font-size:20rpx;">(至少一张，至多四张)</text></text>
