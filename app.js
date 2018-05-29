@@ -46,7 +46,7 @@ App({
 		db.equalTo("username", "==", that.globalData.userOpenId);
 		db.find().then(res => {
 			if (res.length == 0) {
-				console.log({ openId: that.globalData.userOpenId, status: "register" });
+				//console.log({ openId: that.globalData.userOpenId, status: "register" });
 				return Bmob.User.register({
 					username: that.globalData.userOpenId,
 					password: "123",

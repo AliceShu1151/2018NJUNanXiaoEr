@@ -156,6 +156,7 @@ Page({
 		let that = this;
 		let db = Bmob.Query("goods");
 		db.limit(4); //banners数量
+		db.equalTo("state", "!=", 2);
 		db.order("-clicks");
 		db.find().then(res => {
 			let banners = res;

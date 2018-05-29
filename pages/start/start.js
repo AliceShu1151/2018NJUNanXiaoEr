@@ -60,7 +60,7 @@ Page({
 		//头像 & 性别设置
 		let db = Bmob.Query("_User");
 		db.get(app.globalData.userObjectId).then(res => {
-			console.log(res)
+			//console.log(res)
 			res.set("avatarUrl", app.globalData.userInfo.avatarUrl);
 			switch (app.globalData.userInfo.gender) {
 				case 1: res.set("gender", "♂"); break;
