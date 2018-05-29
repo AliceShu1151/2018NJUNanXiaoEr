@@ -174,7 +174,11 @@ Page({
 			dbComments.save().then(res => {
 				console.log(res);
 			});
-		});
+		}).then(res => {
+      wx.showToast({
+        title: '评论成功',
+      });
+    });
 	},
 
 	commentInput: function (e) {
