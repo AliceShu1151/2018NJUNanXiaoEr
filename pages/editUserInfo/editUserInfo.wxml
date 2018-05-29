@@ -80,7 +80,7 @@
       <view class="weui-label">真实姓名</view>
     </view>
     <view class="weui-cell__bd">
-      <input class="weui-input" placeholder="请输入姓名" bindinput="bindRealNameInput" value="{{userRealName}}" type="number" />
+      <input class="weui-input" placeholder="请输入姓名" bindinput="bindRealNameInput" value="{{userRealName}}" type="text" />
     </view>
   </view>
   <view class="weui-cell weui-cell_input">
