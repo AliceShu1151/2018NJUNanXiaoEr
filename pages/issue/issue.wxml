@@ -13,7 +13,7 @@
     
     <view class="view-price_hd">
       <view class="price">价格：
-      <input class="priceInput" bindinput="productPrice" bindfocus="clearPrice" value="{{product_price}}"/></view> 
+      <input type="number" class="priceInput" bindinput="productPrice" bindfocus="clearPrice" value="{{product_price}}"/></view> 
     </view>
 
     <!-- 分类格式还需修改 -->
