@@ -223,15 +223,24 @@ Page({
 						let msgQueue = new Array();
 						for (let item of tmpIssuedGood_2) {
 							goodsVec.push(item.objectId);
-							let obj = Bmob.Query("messages");
-							obj.set("receiver", item.buyer);
-							obj.set("buyer", item.buyer);
-							obj.set("seller", app.globalData.userOpenId);
-							obj.set("goodsObjectId", item.objectId);
-							obj.set("goodsName", item.name);
-							obj.set("category", "transaction");
-							obj.set("state", 2);
-							msgQueue.push(obj);
+							let objBuyer = Bmob.Query("messages");
+							let objSeller = Bmob.Query("messages");
+							objBuyer.set("receiver", item.buyer);
+							objBuyer.set("buyer", item.buyer);
+							objBuyer.set("seller", app.globalData.userOpenId);
+							objBuyer.set("goodsObjectId", item.objectId);
+							objBuyer.set("goodsName", item.name);
+							objBuyer.set("category", "transaction");
+							objBuyer.set("state", 2);
+							objSeller.set("receiver", app.globalData.userOpenId);
+							objSeller.set("buyer", item.buyer);
+							objSeller.set("seller", app.globalData.userOpenId);
+							objSeller.set("goodsObjectId", item.objectId);
+							objSeller.set("goodsName", item.name);
+							objSeller.set("category", "transaction");
+							objSeller.set("state", 3);
+							msgQueue.push(objBuyer);
+							msgQueue.push(objSeller);
 						}
 						dbGoods.containedIn("objectId", goodsVec);
 						dbGoods.find().then(res => {
