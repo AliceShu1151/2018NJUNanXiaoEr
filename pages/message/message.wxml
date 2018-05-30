@@ -41,6 +41,7 @@
                                 <view wx:if="{{item.category == 'system'}}" class="goods-title">系统通知</view>
                                 <view wx:if="{{item.category == 'transaction' && item.state == 1}}" class="goods-price">您发布的“{{ item.goodsName }}”商品被其他用户置为想购买状态，为了避免您的损失，请及时联系买家哟(＾Ｕ＾)ノ（点击本条消息跳转至买家信息页）</view>
                                 <view wx:if="{{item.category == 'transaction' && item.state == 2}}" class="goods-price">您购买的“{{item.goodsName}}”商品已由卖家确认完成交易，点击本条消息，对卖家进行评价吧(#^.^#)</view>
+                                <view wx:if="{{item.category == 'transaction' && item.state == 3}}" class="goods-price">您发布的“{{item.goodsName}}”商品已经交易完成(#^.^#)</view>
                                 <view wx:if="{{item.category == 'system' && item.state == 1}}" class="goods-price">您收藏的“{{item.goodsName}}”商品已被其他买家置入待购买行列了呢QAQ</view>
                                 <view wx:if="{{item.category == 'system' && item.state == 2}}" class="goods-price">您收藏的“{{item.goodsName}}”商品已被其他买家买走了呢QAQ</view>
                                 <view wx:if="{{item.category == 'system' && item.state == 3}}" class="goods-price">您收藏的“{{item.goodsName}}”商品已被卖家撤销上架了呢QAQ</view>
@@ -58,6 +59,7 @@
                                 <view wx:if="{{item.category == 'system'}}" class="goods-title">系统通知</view>
                                 <view wx:if="{{item.category == 'transaction' && item.state == 1}}" class="goods-price">您发布的“{{item.goodsName}}”商品被其他用户置为想购买状态，为了避免您的损失，请及时联系买家哟(＾Ｕ＾)ノ（点击本条消息跳转至买家信息页）</view>
                                 <view wx:if="{{item.category == 'transaction' && item.state == 2}}" class="goods-price">您购买的“{{item.goodsName}}”商品已由卖家确认完成交易，点击本条消息，对卖家进行评价吧(#^.^#)</view>
+                                <view wx:if="{{item.category == 'transaction' && item.state == 3}}" class="goods-price">您发布的“{{item.goodsName}}”商品已经交易完成(#^.^#)</view>
                                 <view wx:if="{{item.category == 'system' && item.state == 1}}" class="goods-price">您收藏的“{{item.goodsName}}”商品已被其他买家置入待购买行列了呢QAQ</view>
                                 <view wx:if="{{item.category == 'system' && item.state == 2}}" class="goods-price">您收藏的“{{item.goodsName}}”商品已被其他买家买走了呢QAQ</view>
                                 <view wx:if="{{item.category == 'system' && item.state == 3}}" class="goods-price">您收藏的“{{item.goodsName}}”商品已被卖家撤销上架了呢QAQ</view>
